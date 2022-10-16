@@ -2,14 +2,19 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '@styles/Home.module.css'
-import RadioButton from '@components/common/RadioButton'
-import PrimaryButton from '@components/common/PrimaryButton'
+import {
+  Card,
+  Input,
+  Select,
+  Textarea,
+  PrimaryButton,
+} from '@components/common'
 
-// import { useRecoilState } from 'recoil'
-// import { userState } from '@components/store/Auth/auth'
+import { useRecoilState } from 'recoil'
+import { userState } from '@components/store/Auth/auth'
 
 const Home: NextPage = () => {
-  // const [user, setUser] = useRecoilState(userState)
+  const [user, setUser] = useRecoilState(userState)
   // console.log(user)
 
   // const handler = () => {
@@ -29,7 +34,19 @@ const Home: NextPage = () => {
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
 
-        <PrimaryButton>primary button</PrimaryButton>
+        <Card>
+          <PrimaryButton>primary button</PrimaryButton>
+          <Select>
+            <option key={1} value={'name'}>
+              name
+            </option>
+            <option key={2} value={'user'}>
+              user
+            </option>
+          </Select>
+          <Input placeholder="input" className={'mt-2'} />
+          <Textarea placeholder="textarea" className={'mt-2'} />
+        </Card>
 
         <p className={styles.description}>
           Get started by editing{' '}
