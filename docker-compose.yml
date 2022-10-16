@@ -1,0 +1,38 @@
+version: '3'
+services:
+  db:
+    image: mysql:8.0
+    container_name: "jphacks-db"
+    volumes:
+      - ./mysql/db:/docker-entrypoint-initdb.d # 初期データ
+    environment:
+      MYSQL_DATABASE: jphacks_db
+      MYSQL_USER: jphacks
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: root
+      TZ: 'Asia/Tokyo'
+    ports:
+      - "3306:3306"
+    restart: always
+
+  view:
+    build: ./frontend
+    container_name: "jphacks-view"
+    volumes:
+      - ./frontend:/app
+    command: sh -c "npm install && npm run dev"
+    ports:
+      - "3000:3000"
+    stdin_open: true
+    tty: true
+
+  api:
+    build: ./backend
+    container_name: "jphacks-api"
+    volumes:
+      - ./backend:/gojphacks
+    command: "./start.sh"
+    ports:
+      - "1323:1323"
+    stdin_open: true
+    tty: true
