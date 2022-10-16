@@ -1,6 +1,6 @@
 FROM golang:latest
 
-WORKDIR /gojphacks
+WORKDIR /usr/local/go/src/api
 
 RUN apt-get update
 RUN apt-get upgrade -y
