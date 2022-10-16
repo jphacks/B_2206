@@ -2,6 +2,9 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '@styles/Home.module.css'
+import RadioButton from '@components/common/RadioButton'
+import PrimaryButton from '@components/common/PrimaryButton'
+
 // import { useRecoilState } from 'recoil'
 // import { userState } from '@components/store/Auth/auth'
 
@@ -25,6 +28,8 @@ const Home: NextPage = () => {
         <h1 className={styles.title}>
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
+
+        <PrimaryButton>primary button</PrimaryButton>
 
         <p className={styles.description}>
           Get started by editing{' '}
