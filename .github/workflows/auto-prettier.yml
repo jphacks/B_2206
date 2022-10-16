@@ -22,8 +22,10 @@ jobs:
           cache: npm
           cache-dependency-path: ./frontend/src/package-lock.json
       - name: format
+        working-directory: ./frontend/src
         run: npm run format
       - name: Lint
+        working-directory: ./frontend/src
         run: npm run lint:fix
       - uses: stefanzweifel/git-auto-commit-action@v3.0.0
         with:
