@@ -7,7 +7,8 @@
     "plugin:react/recommended",
     "standard-with-typescript",
     "eslint-plugin-prettier", // eslintとprettierの衝突回避
-    "plugin:tailwindcss/recommended"
+    "plugin:tailwindcss/recommended",
+    "plugin:prettier/recommended"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -20,6 +21,7 @@
   "plugins": ["react", "@typescript-eslint", "prettier"],
   "rules": {
     "react/react-in-jsx-scope": "off", // v17からReactをimport不要になった
+    "prettier/prettier": "error", // prettierのエラーをeslintで検知
     // importをアルファベット順にする
     "import/order": [
       "error",
