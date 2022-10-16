@@ -1,9 +1,18 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+import styles from '@styles/Home.module.css'
+// import { useRecoilState } from 'recoil'
+// import { userState } from '@components/store/Auth/auth'
 
 const Home: NextPage = () => {
+  // const [user, setUser] = useRecoilState(userState)
+  // console.log(user)
+
+  // const handler = () => {
+  // setUser({ name: 'test user', email: 'test email' })
+  // }
+
   return (
     <div className={styles.container}>
       <Head>
