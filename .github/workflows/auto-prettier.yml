@@ -21,8 +21,6 @@ jobs:
           node-version: 16
           cache: npm
           cache-dependency-path: ./frontend/src/package-lock.json
-      - name: npm install
-        run: npm install
       - name: format
         run: npm run format
       - name: Lint
