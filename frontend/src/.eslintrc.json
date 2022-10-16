@@ -6,7 +6,7 @@
   "extends": [
     "plugin:react/recommended",
     "standard-with-typescript",
-    "prettier", // eslintとprettierの衝突回避
+    "eslint-plugin-prettier", // eslintとprettierの衝突回避
     "plugin:tailwindcss/recommended"
   ],
   "parser": "@typescript-eslint/parser",
