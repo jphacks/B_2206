@@ -30,8 +30,8 @@ services:
     build: ./backend
     container_name: "jphacks-api"
     volumes:
-      - ./backend:/app
-    #command: go run cmd/main.go
+      - ./backend:/gojphacks
+    command: "./start.sh"
     ports:
       - "1323:1323"
     stdin_open: true
