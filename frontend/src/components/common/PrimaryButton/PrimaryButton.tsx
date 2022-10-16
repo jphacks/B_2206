@@ -6,12 +6,14 @@ interface Props {
   className?: string
   onClick?: () => void
   children?: React.ReactNode
+  width?: string
 }
 
 function PrimaryButton(props: Props): JSX.Element {
   const className =
-    'text-white-0 font-bold text-md rounded-full bg-primary-1 shadow-lg ' +
-    (props.className ? ` ${props.className}` : '')
+    'text-white-0 faont-bold text-md rounded-full bg-primary-1 shadow-lg ' +
+    (props.className ? ` ${props.className}` : '') +
+    (props.width ? ` ${props.width}` : '')
   return (
     <button className={clsx(className, s.btn)} onClick={props.onClick}>
       <div className={clsx('flex items-center px-5 py-1')}>
