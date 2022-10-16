@@ -21,6 +21,9 @@ jobs:
           node-version: 16
           cache: npm
           cache-dependency-path: ./frontend/src/package-lock.json
+      - name: npm install
+        working-directory: ./frontend/src
+        run: npm install
       - name: format
         working-directory: ./frontend/src
         run: npm run format
