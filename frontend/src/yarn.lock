@@ -56,7 +56,7 @@
   "resolved" "https://registry.npmjs.org/@next/env/-/env-12.3.1.tgz"
   "version" "12.3.1"
 
-"@next/eslint-plugin-next@12.3.1":
+"@next/eslint-plugin-next@^12.3.1", "@next/eslint-plugin-next@12.3.1":
   "integrity" "sha512-sw+lTf6r6P0j+g/n9y4qdWWI2syPqZx+uc0+B/fRENqfR3KpSid6MIKqc9gNwGhJASazEQ5b3w8h4cAET213jw=="
   "resolved" "https://registry.npmjs.org/@next/eslint-plugin-next/-/eslint-plugin-next-12.3.1.tgz"
   "version" "12.3.1"

@@ -7,6 +7,7 @@
     "plugin:react/recommended",
     "standard-with-typescript",
     // "eslint-plugin-prettier", // eslintとprettierの衝突回避
+    "plugin:@next/next/recommended",
     "plugin:tailwindcss/recommended",
     "plugin:prettier/recommended"
   ],
