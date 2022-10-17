@@ -36,8 +36,8 @@ const Home: NextPage = () => {
           <FillCard width={'w-4/5'}>
             <Link href="/rent">
               <div className="py-20 text-center">
-                <p className="text-center text-8xl ">借りる</p>
-                <p className="text-center text-6xl ">Rent</p>
+                <p className="text-center text-8xl text-fuchsia-500">借りる</p>
+                <p className="text-center text-6xl text-rose-500">Rent</p>
               </div>
             </Link>
           </FillCard>
