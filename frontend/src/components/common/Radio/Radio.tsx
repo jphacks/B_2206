@@ -13,17 +13,20 @@ interface Props {
 function Radio(props: Props): JSX.Element {
   const className = '' + (props.className ? ` ${props.className}` : '')
   return (
-    <input
-      type="radio"
-      name="radio"
-      checked={props.checked}
-      className={clsx(className)}
-      value={props.value}
-      onClick={props.onClick}
-      onChange={props.onChange}
-    >
-      {props.children}
-    </input>
+    <>
+      <div>
+        <input
+        type="radio"
+        name="radio"
+        checked={props.checked}
+        className={clsx(className)}
+        value={props.value}
+        onClick={props.onClick}
+        onChange={props.onChange}
+        />
+        {' ' + props.children}
+      </div>
+    </>
   )
 }
 

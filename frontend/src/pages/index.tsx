@@ -34,16 +34,15 @@ const Home: NextPage = () => {
       <main className={styles.main}>
         <div className="grid w-full grid-cols-2">
           <FillCard width={'w-4/5'}>
-            <Link href="/rent">
+            <Link href="/conditions">
               <div className="py-20 text-center">
                 <p className="text-center text-8xl ">借りる</p>
                 <p className="text-center text-6xl ">Rent</p>
               </div>
             </Link>
           </FillCard>
-
           <FillCard width={'w-4/5'}>
-            <Link href="/lend">
+            <Link href="/conditions">
               <div className="py-20 text-center">
                 <p className="text-center text-8xl ">貸す</p>
                 <p className="text-center text-6xl ">Lend</p>
@@ -51,7 +50,7 @@ const Home: NextPage = () => {
             </Link>
           </FillCard>
           <FillCard width={'w-4/5'}>
-            <Link href="/buy">
+            <Link href="/conditions">
               <div className="py-20 text-center">
                 <p className="text-center text-8xl ">買う</p>
                 <p className="text-center text-6xl ">Buy</p>
@@ -59,7 +58,7 @@ const Home: NextPage = () => {
             </Link>
           </FillCard>
           <FillCard width={'w-4/5'}>
-            <Link href="/sell">
+            <Link href="/conditions">
               <div className="py-20 text-center">
                 <p className="text-center text-8xl ">売る</p>{' '}
                 <p className="text-center text-6xl ">Sell</p>
