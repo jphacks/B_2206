@@ -4,7 +4,7 @@ export interface User {
   email: string
   password: string
   personalInfoId: number
-  companyInfoId: number
+  companyInfoId: number | null
   created_at: string
   updated_at: string
 }
@@ -67,29 +67,22 @@ export interface Matching {
   updated_at: string
 }
 
+export interface Wish {
+  id: number
+  requestId: number
+  userId: number
+  created_at: string
+  updated_at: string
+}
+
 export interface Detail {
   id: number
-  maxPrice: number
-  minPrice: number
-  maxBuildingAge: number
-  minBuildingAge: number
-  maxLandArea: number
-  minLandArea: number
-  maxBuildingArea: number
-  minBuildingArea: number
+  areaId: number
   created_at: string
   updated_at: string
 }
 
-export interface DetailsAddress {
-  id: number
-  detailId: number
-  addressId: number
-  created_at: string
-  updated_at: string
-}
-
-export interface Address {
+export interface Area {
   id: number
   postCode: number
   prefecture: string
@@ -100,188 +93,61 @@ export interface Address {
   updated_at: string
 }
 
-export interface DetailsCategory {
-  id: number
-  detailId: number
-  categoryId: number
-  created_at: string
-  updated_at: string
-}
-
-export interface Category {
+export interface Classification {
   id: number
   name: string
   created_at: string
   updated_at: string
 }
 
-export interface DetailsClosestStation {
+export interface DetailsValue {
   id: number
   detailId: number
-  closestStationId: number
+  valueId: number
+  classificationId: number
   created_at: string
   updated_at: string
 }
 
-export interface ClosestStation {
+export interface Value {
   id: number
   name: string
+  value: number
+  rangeId: number
   created_at: string
   updated_at: string
 }
 
-export interface DetailsLayout {
+export interface DetailsRange {
   id: number
   detailId: number
-  layoutId: number
+  rangeId: number
+  classificationId: number
   created_at: string
   updated_at: string
 }
 
-export interface Layout {
+export interface Range {
   id: number
   name: string
+  maxValueId: number
+  minValueId: number
   created_at: string
   updated_at: string
 }
 
-export interface DetailsPerformance {
+export interface DetailsTag {
   id: number
   detailId: number
-  performanceId: number
+  tagId: number
+  classificationId: number
   created_at: string
   updated_at: string
 }
 
-export interface Performance {
+export interface Tag {
   id: number
   name: string
-  created_at: string
-  updated_at: string
-}
-
-export interface DetailsReformRenovation {
-  id: number
-  detailId: number
-  reformRenovationId: number
-  created_at: string
-  updated_at: string
-}
-
-export interface ReformRenovation {
-  id: number
-  name: string
-  created_at: string
-  updated_at: string
-}
-
-export interface DetailsDialy {
-  id: number
-  detailId: number
-  dialyId: number
-  created_at: string
-  updated_at: string
-}
-
-export interface Dialy {
-  id: number
-  name: string
-  created_at: string
-  updated_at: string
-}
-
-export interface DetailsBathroom {
-  id: number
-  detailId: number
-  bathroomId: number
-  created_at: string
-  updated_at: string
-}
-
-export interface Bathroom {
-  id: number
-  name: string
-  created_at: string
-  updated_at: string
-}
-
-export interface DetailsBalcony {
-  id: number
-  detailId: number
-  balconyId: number
-  created_at: string
-  updated_at: string
-}
-
-export interface Balcony {
-  id: number
-  name: string
-  created_at: string
-  updated_at: string
-}
-
-export interface DetailsParking {
-  id: number
-  detailId: number
-  layoutId: number
-  created_at: string
-  updated_at: string
-}
-
-export interface Parking {
-  id: number
-  name: string
-  created_at: string
-  updated_at: string
-}
-
-export interface DetailsLayout {
-  id: number
-  detailId: number
-  layoutId: number
-  created_at: string
-  updated_at: string
-}
-
-export interface Layout {
-  id: number
-  name: string
-  created_at: string
-  updated_at: string
-}
-
-export interface DetailsLayout {
-  id: number
-  detailId: number
-  layoutId: number
-  created_at: string
-  updated_at: string
-}
-
-export interface Layout {
-  id: number
-  name: string
-  created_at: string
-  updated_at: string
-}
-
-export interface DetailsLayout {
-  id: number
-  detailId: number
-  layoutId: number
-  created_at: string
-  updated_at: string
-}
-
-export interface Layout {
-  id: number
-  name: string
-  created_at: string
-  updated_at: string
-}
-
-export interface request {
-  id: number
   created_at: string
   updated_at: string
 }
