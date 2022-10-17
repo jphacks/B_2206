@@ -1,0 +1,10 @@
+.btn {
+  padding: 10px;
+  box-shadow: 3px 3px 0px 0 #54bab9;
+  padding: 2px;
+  transition: all 0.3s ease-in-out;
+}
+.btn:hover {
+  background-color: #fed2aa;
+  box-shadow: 3px 3px #ffa453;
+}
