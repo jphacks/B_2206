@@ -5,5 +5,5 @@ type WatchList struct {
 	UserID int `json:"user_id" gorm:"foreign_key:ID"`
 	DetailID int `json:"detail_id" gorm:"foreign_key:ID"`
 	UpdatedAt string `json:"updated_at"`
-	CreatedAts tring `json:"created_at"`
+	CreatedAts string `json:"created_at"`
 }
