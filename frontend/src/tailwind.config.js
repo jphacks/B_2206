@@ -14,7 +14,7 @@ module.exports = {
       'accent-2': '#FFA453',
       'background-1': '#F7ECDE',
       'text-main-black': '#4F4F4F',
-      'text-main-purple': '#FFF8F3',
+      'text-main-white': '#FFF8F3',
       black: colors.black,
       white: colors.white,
       slate: colors.slate,
