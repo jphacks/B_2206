@@ -4,6 +4,7 @@ import Image from 'next/image'
 import styles from '@styles/Home.module.css'
 import {
   Card,
+  FillCard,
   Input,
   Select,
   Textarea,
@@ -33,7 +34,6 @@ const Home: NextPage = () => {
         <h1 className={styles.title}>
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
-
         <Card>
           <PrimaryButton>primary button</PrimaryButton>
           <Select>
@@ -47,6 +47,19 @@ const Home: NextPage = () => {
           <Input placeholder="input" className={'mt-2'} />
           <Textarea placeholder="textarea" className={'mt-2'} />
         </Card>
+        <FillCard>
+          <PrimaryButton>primary button</PrimaryButton>
+          <Select>
+            <option key={1} value={'name'}>
+              name
+            </option>
+            <option key={2} value={'user'}>
+              user
+            </option>
+          </Select>
+          <Input placeholder="input" className={'mt-2'} />
+          <Textarea placeholder="textarea" className={'mt-2'} />
+        </FillCard>
 
         <p className={styles.description}>
           Get started by editing{' '}
