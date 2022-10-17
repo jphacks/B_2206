@@ -5,7 +5,7 @@ interface Props {
 
 const Add = (props: Props) => {
   const width = props.width ? props.width : '280'
-  const height = props.height ? props.height : '55'
+  const height = props.height ? props.height : '45'
   return (
     <svg
       width={width}
