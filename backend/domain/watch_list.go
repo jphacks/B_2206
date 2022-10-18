@@ -1,9 +1,15 @@
 package domain
 
+import (
+	"time"
+)
+
 type WatchList struct {
-	ID int `json:"id" gorm:"primary_key"`
-	UserID int `json:"user_id" gorm:"foreign_key:ID"`
-	DetailID int `json:"detail_id" gorm:"foreign_key:ID"`
-	UpdatedAt string `json:"updated_at"`
-	CreatedAts string `json:"created_at"`
+	ID			int			`json:"id" gorm:"primary_key"`
+	User		User
+	Detail		Detail
+	UpdatedAt	time.Time	`json:"updated_at"`
+	CreatedAt	time.Time	`json:"created_at"`
 }
+
+type WatchLists []WatchList

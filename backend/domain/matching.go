@@ -1,11 +1,18 @@
 package domain
 
+import (
+	"time"
+)
+
 type Matching struct {
 	ID int `json:"id" gorm:"primary_key"`
-	BuyerID int `json:"user_id" gorm:"foreign_key:ID"`
-	SellerID int `json:"user_id" gorm:"foreign_key:ID"`
+	Request Request
+	BuyerID User
+	SellerID User
 	Status string `json:"status"`
 	SellerMessage string `json:"seller_message"`
-	UpdatedAt string `json:"updated_at"`
-	CreatedAt string `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
+	CreatedAt time.Time `json:"created_at"`
 }
+
+type Matchings []Matching

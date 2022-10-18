@@ -1,5 +1,9 @@
 package domain
 
+import (
+	"time"
+)
+
 type CompanyInfo struct {
 	ID int `json:"id" gorm:"primary_key"`
 	Name string `json:"name" gorm:"not null"`
@@ -8,6 +12,8 @@ type CompanyInfo struct {
 	AddressNumber int `json:"address_number" gorm:"not null"`
 	BuildingName string `json:"building_name"`
 	Website string `json:"website"`
-	UpdatedAt string `json:"updated_at"`
-	CreatedAt string `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
+	CreatedAt time.Time `json:"created_at"`
 }
+
+type CompanyInfos []CompanyInfo

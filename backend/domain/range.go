@@ -1,10 +1,17 @@
 package domain
 
+import (
+	"time"
+)
+
 type Range struct {
 	ID int `json:"id" gorm:"primary_key"`
 	Name string `json:"name"`
-	MaxValueID int `json:"max_value_id" gorm:"foreign_key:ID"`
-	MinValueID int `json:"min_value_id" gorm:"foreign_key:ID"`
-	UpdatedAt string `json:"updated_at"`
-	CreatedAt string `json:"created_at"`
+	MaxValue Value `json:"max_value_id"`
+	MinValue Value `json:"min_value_id"`
+	Classification Classification
+	UpdatedAt time.Time `json:"updated_at"`
+	CreatedAt time.Time `json:"created_at"`
 }
+
+type Ranges []Range

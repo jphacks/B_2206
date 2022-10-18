@@ -29,21 +29,21 @@ func healthCheck(c echo.Context) error {
 }
 
 func dbinit() {
-  db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
-  if err != nil {
-  }
-  db.Migrator().CreateTable(domain.Area{})
-  db.Migrator().CreateTable(domain.Classification{})
-  db.Migrator().CreateTable(domain.CompanyInfo{})
-  db.Migrator().CreateTable(domain.Detail{})
-  db.Migrator().CreateTable(domain.DetailsRange{})
-  db.Migrator().CreateTable(domain.DetailsValue{})
-  db.Migrator().CreateTable(domain.Matching{})
-  db.Migrator().CreateTable(domain.PersonalInfo{})
-  db.Migrator().CreateTable(domain.Range{})
-  db.Migrator().CreateTable(domain.Request{})
-  db.Migrator().CreateTable(domain.Tag{})
-  db.Migrator().CreateTable(domain.User{})
-  db.Migrator().CreateTable(domain.Value{})
-  db.Migrator().CreateTable(domain.WatchList{})
+	db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	if err != nil {
+	}
+	db.Migrator().CreateTable(domain.Area{})
+	db.Migrator().CreateTable(domain.Classification{})
+	db.Migrator().CreateTable(domain.CompanyInfo{})
+	db.Migrator().CreateTable(domain.Detail{})
+	db.Migrator().CreateTable(domain.DetailsRange{})
+	db.Migrator().CreateTable(domain.DetailsValue{})
+	db.Migrator().CreateTable(domain.Matching{})
+	db.Migrator().CreateTable(domain.PersonalInfo{})
+	db.Migrator().CreateTable(domain.Range{})
+	db.Migrator().CreateTable(domain.Request{})
+	db.Migrator().CreateTable(domain.Tag{})
+	db.Migrator().CreateTable(domain.User{})
+	db.Migrator().CreateTable(domain.Value{})
+	db.Migrator().CreateTable(domain.WatchList{})
 }
