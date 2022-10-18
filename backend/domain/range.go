@@ -5,11 +5,16 @@ import (
 )
 
 type Range struct {
+	//data
 	ID int `json:"id" gorm:"primary_key"`
 	Name string `json:"name"`
-	MaxValue Value `json:"max_value_id"`
-	MinValue Value `json:"min_value_id"`
-	Classification Classification
+	//belongs to
+	MaxValueId int `json:"value_id" gorm:"foreign_key:ID"`
+	MinValueId int `json:"value_id" gorm:"foreign_key:ID"`
+	//has many
+	Values []Value
+	DetailsRanges []DetailsRange
+	//time stamp
 	UpdatedAt time.Time `json:"updated_at"`
 	CreatedAt time.Time `json:"created_at"`
 }
