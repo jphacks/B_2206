@@ -12,7 +12,6 @@ type Detail struct {
 	//has one
 	Request    Request   `json:"request"`
 	WatchiList WatchList `json:"watch_list"`
-	WishList   WishList  `json:"wish_list"`
 	//has many
 	DetailsRanges []DetailsRange `json:"details_ranges"`
 	DetailsTags   []DetailsTag   `json:"details_tags"`

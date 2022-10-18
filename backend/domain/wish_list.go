@@ -9,7 +9,6 @@ type WishList struct {
 	ID   int    `json:"id" gorm:"primary_key"`
 	Name string `json:"name"`
 	//belongs to
-	DetailId   int `json:"detail_id" gorm:"foreign_key:ID"`
 	RequestId  int `json:"request_id" gorm:"foreign_key:ID"`
 	WishListId int `json:"wish_list_id" gorm:"foreign_key:ID"`
 	//time stamp

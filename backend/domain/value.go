@@ -10,7 +10,7 @@ type Value struct {
 	Name  string `json:"name"`
 	Value string `json:"value"`
 	//has many
-	Ranges []Range `json:"ranges"`
+	DetailsValues []DetailsValue `json:"details_value"`
 	//time stamp
 	UpdatedAt time.Time `json:"updated_at"`
 	CreatedAt time.Time `json:"created_at"`

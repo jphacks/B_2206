@@ -9,10 +9,9 @@ type Range struct {
 	ID   int    `json:"id" gorm:"primary_key"`
 	Name string `json:"name"`
 	//belongs to
-	ValueId int `json:"value_id" gorm:"foreign_key:ID"`
-	// MinValueId int `json:"value_id" gorm:"foreign_key:ID"`
+	MaxValueId int `json:"max_value_id" gorm:"foreign_key:ID"`
+	MinValueId int `json:"min_value_id" gorm:"foreign_key:ID"`
 	//has many
-	// Values        []Value        `json:"values"`
 	DetailsRanges []DetailsRange `json:"details_ranges"`
 	//time stamp
 	UpdatedAt time.Time `json:"updated_at"`
