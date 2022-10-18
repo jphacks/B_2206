@@ -16,4 +16,4 @@ type DetailsValue struct {
 	CreatedAt  time.Time `json:"created_at"`
 }
 
-type DetailsValues []DetailsValues
+type DetailsValues []DetailsValue
