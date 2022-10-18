@@ -1,4 +1,4 @@
-package init
+package main
 
 import (
 	"os"
@@ -14,9 +14,14 @@ var (
 	dsn = os.Getenv("DSN")
 )
 
+func main() {
+	dbinit()
+}
+
 func dbinit() {
 	db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
+		return
 	}
 	db.Migrator().CreateTable(domain.WatchList{})
 	db.Migrator().CreateTable(domain.WishList{})
