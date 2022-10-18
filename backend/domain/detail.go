@@ -10,13 +10,13 @@ type Detail struct {
 	//belongs to
 	AreaId int `json:"area_id" gorm:"foreign_key:ID"`
 	//has one
-	Request Request
-	WatchiList WatchList
-	WishList WishList
+	Request    Request   `json:"request"`
+	WatchiList WatchList `json:"watch_list"`
+	WishList   WishList  `json:"wish_list"`
 	//has many
-	DetailsRanges []DetailsRange
-	DetailsTags []DetailsTag
-	DetailsValues []DetailsValue
+	DetailsRanges []DetailsRange `json:"details_ranges"`
+	DetailsTags   []DetailsTag   `json:"details_tags"`
+	DetailsValues []DetailsValue `json:"details_values"`
 	//time stamp
 	UpdatedAt time.Time `json:"updated_at"`
 	CreatedAt time.Time `json:"created_at"`

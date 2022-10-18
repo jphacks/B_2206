@@ -6,11 +6,11 @@ import (
 
 type Value struct {
 	//data
-	ID int `json:"id" gorm:"primary_key"`
-	Name string `json:"name"`
+	ID    int    `json:"id" gorm:"primary_key"`
+	Name  string `json:"name"`
 	Value string `json:"value"`
 	//has many
-	Ranges []Range
+	Ranges []Range `json:"ranges"`
 	//time stamp
 	UpdatedAt time.Time `json:"updated_at"`
 	CreatedAt time.Time `json:"created_at"`
