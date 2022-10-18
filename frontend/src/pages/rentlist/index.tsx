@@ -1,21 +1,7 @@
 import type { NextPage } from 'next'
 import { Card, Label } from '@components/common'
 import clsx from 'clsx'
-import {
-  User,
-  Request,
-  Matching,
-  Wish,
-  Detail,
-  Area,
-  Classification,
-  DetailsValue,
-  DetailsRange,
-  DetailsTag,
-  Value,
-  Range,
-  Tag,
-} from '@type/common'
+import { User, Area, Value, Tag } from '@type/common'
 
 const Rentlist: NextPage = () => {
   const user: User = {
@@ -28,21 +14,6 @@ const Rentlist: NextPage = () => {
     created_at: '',
     updated_at: '',
   }
-  // const request: Request = {
-  //   id: 1,
-  //   description: 'test',
-  //   isPurchase: false,
-  //   userId: 1,
-  //   detailId: 1,
-  //   created_at: '',
-  //   updated_at: '',
-  // }
-  // const detail: Detail = {
-  //   id: 1,
-  //   areaId: 1,
-  //   created_at: '',
-  //   updated_at: '',
-  // }
   const area: Area = {
     id: 1,
     postCode: 1110000,
@@ -53,36 +24,6 @@ const Rentlist: NextPage = () => {
     created_at: '',
     updated_at: '',
   }
-  // const classification: Classification[] = [
-  //   {
-  //     id: 1,
-  //     name: 'test',
-  //     created_at: '',
-  //     updated_at: '',
-  //   },
-  // ]
-  // const value: Value = {
-  //   id: 1,
-  //   name: '1',
-  //   value: 1,
-  //   rangeId: 1,
-  //   created_at: '',
-  //   updated_at: '',
-  // }
-  // const range: Range = {
-  //   id: 1,
-  //   name: 'test',
-  //   maxValueId: 1,
-  //   minValueId: 1,
-  //   created_at: '',
-  //   updated_at: '',
-  // }
-  // const tag: Tag = {
-  //   id: 1,
-  //   name: 'test',
-  //   created_at: '',
-  //   updated_at: '',
-  // }
 
   const tagList: Tag[] = [
     { id: 1, name: 'IHコンロ', created_at: '', updated_at: '' },
