@@ -1,18 +1,10 @@
-interface Props {
-  width?: string
-  height?: string
-}
-
-const Add = (props: Props) => {
-  const width = props.width ? props.width : '280'
-  const height = props.height ? props.height : '45'
+const WhiteLogo = () => {
   return (
     <svg
-      width={width}
-      height={height}
       viewBox="0 0 591 106"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className="h-7 w-44 sm:h-8 sm:w-52 md:h-9 md:w-60 lg:h-11 lg:w-72"
     >
       <path
         d="M57 2L7 38H57V81.5C57 86.4706 61.0294 90.5 66 90.5H107L143 103V51L107 38H162V90.5H541.5"
@@ -27,4 +19,4 @@ const Add = (props: Props) => {
   )
 }
 
-export default Add
+export default WhiteLogo
