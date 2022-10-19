@@ -16,7 +16,7 @@ export interface PersonalInfo {
   familyNameKana: string
   firstNameKana: string
   birthDay: string
-  phoneNumber: number
+  phoneNumber: string
   userId: number
   created_at: string
   updated_at: string
@@ -25,8 +25,8 @@ export interface PersonalInfo {
 export interface CompanyInfo {
   id: number
   name: string
-  phoneNumber: number
-  postCode: number
+  phoneNumber: string
+  postCode: string
   prefecture: string
   city: string
   addressNumber: string
