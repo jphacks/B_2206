@@ -12,7 +12,7 @@ interface Props {
 
 function PrimaryButton(props: Props): JSX.Element {
   const className =
-    'text-white-0 font-bold text-md rounded-full bg-primary-2 shadow-lg p-1 ' +
+    'text-white font-bold text-md rounded-full bg-primary-2 shadow-lg p-1 ' +
     (props.className ? ` ${props.className}` : '') +
     (props.width ? ` ${props.width}` : '')
   return (
