@@ -14,6 +14,7 @@ func Init() {
 	userController := controllers.NewUserController(NewSqlHandler())
 	personalInfoController := controllers.NewPersonalInfoController(NewSqlHandler())
 	watchListController := controllers.NewWatchListController(NewSqlHandler())
+	companyInfoController := controllers.NewCompanyInfoController(NewSqlHandler())
 
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
@@ -80,6 +81,29 @@ func Init() {
 		return watchListController.UpdateWatchList(c, description, isPurchase, userId, detailId)
 	})
 	e.DELETE("/watch-list/:id", func(c echo.Context) error { return watchListController.DeleteWatchList(c) })
+	
+	//companyInfos
+	e.POST("/company-info", func(c echo.Context) error {
+		name := c.QueryParam("name")
+		phoneNumber, _ := strconv.Atoi(c.QueryParam("phone_number"))
+		postCode, _ := strconv.Atoi(c.QueryParam("post_code"))
+		addressNumber, _ := strconv.Atoi(c.QueryParam("address_number"))
+		buildingName := c.QueryParam("building_name")
+		website := c.QueryParam("website")
+		return companyInfoController.CreateCompanyInfo(c, name, phoneNumber, postCode, addressNumber, buildingName, website)
+	})
+	e.GET("/company-infos", func(c echo.Context) error { return companyInfoController.GetCompanyInfos(c) })
+	e.GET("/company-info/:id", func(c echo.Context) error { return companyInfoController.GetCompanyInfo(c) })
+	e.PUT("/company-info/:id", func(c echo.Context) error {
+		name := c.QueryParam("name")
+		phoneNumber, _ := strconv.Atoi(c.QueryParam("phone_number"))
+		postCode, _ := strconv.Atoi(c.QueryParam("post_code"))
+		addressNumber, _ := strconv.Atoi(c.QueryParam("address_number"))
+		buildingName := c.QueryParam("building_name")
+		website := c.QueryParam("website")
+		return companyInfoController.CreateCompanyInfo(c, name, phoneNumber, postCode, addressNumber, buildingName, website)
+	})
+	e.DELETE("/company-info/:id", func(c echo.Context) error { return companyInfoController.DeleteCompanyInfo(c) })
 
 	e.Logger.Fatal(e.Start(":1323"))
 
