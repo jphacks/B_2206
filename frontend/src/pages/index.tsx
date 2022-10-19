@@ -15,8 +15,17 @@ import { useRecoilState } from 'recoil'
 import { userState } from '@components/store/Auth/auth'
 import clsx from 'clsx'
 
+const recoilDefaultValue = {
+  id: 1,
+  name: 'gidai yuuki',
+  email: 'gidai@email',
+  prefecture: '',
+}
+
 const Home: NextPage = () => {
   const [user, setUser] = useRecoilState(userState)
+  // 初期化
+  // setUser(recoilDefaultValue)
   // console.log(user)
 
   // const handler = () => {
