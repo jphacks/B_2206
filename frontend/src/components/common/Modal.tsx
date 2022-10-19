@@ -4,16 +4,20 @@ import React from 'react'
 interface Props {
   className?: string
   children?: React.ReactNode
+  width?: string
+  height?: string
 }
 
 export default function Modal(props: Props) {
   const className =
-    'relative w-auto my-6 mx-auto max-w-3xl bg-white-0 rounded-lg p-5' +
-    (props.className ? ` ${props.className}` : '')
+    'relative my-6 p-10 mx-auto w-3xl bg-white rounded-lg ' +
+    (props.className ? ` ${props.className}` : ' ') +
+    (props.width ? ` ${props.width}` : ' w-4/5 ') +
+    (props.height ? ` ${props.height}` : ' h-auto ')
 
   return (
     <>
-      <div className="bg-black-300/50 fixed inset-0 z-50 flex items-center justify-center overflow-y-auto overflow-x-hidden outline-none focus:outline-none">
+      <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto overflow-x-hidden bg-black/50 outline-none focus:outline-none">
         <div className={clsx(className)}>{props.children}</div>
       </div>
     </>

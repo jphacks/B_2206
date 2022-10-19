@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { Account, Logo } from '@components/icons'
+import { Account, Logo, WhiteLogo } from '@components/icons'
 import Link from 'next/link'
 
 function Header(): JSX.Element {
@@ -11,7 +11,7 @@ function Header(): JSX.Element {
     >
       <div className={clsx('justify-left h-1/1 col-span-1 items-center pl-4')}>
         <Link href="/">
-          <Logo />
+          <WhiteLogo />
         </Link>
       </div>
       <div className={clsx('col-span-3 mx-auto')}>sumimatch</div>
