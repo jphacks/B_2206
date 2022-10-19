@@ -25,7 +25,7 @@ func NewPersonalInfoController(sqlHandler database.SqlHandler) *PersonalInfoCont
 }
 
 // endpoint POST /personalInfos
-func (controller *PersonalInfoController) CreatePersonalInfo(c echo.Context, familyName string, firstName string, familyNameKana string, firstNameKana string, birthday string, phoneNumber int) (err error) {
+func (controller *PersonalInfoController) CreatePersonalInfo(c echo.Context, familyName string, firstName string, familyNameKana string, firstNameKana string, birthday string, phoneNumber int, userID int) (err error) {
 	p := domain.PersonalInfo{
 		FamilyName:     familyName,
 		FirstName:      firstName,
@@ -33,6 +33,7 @@ func (controller *PersonalInfoController) CreatePersonalInfo(c echo.Context, fam
 		FirstNameKana:  firstNameKana,
 		Birthday:       birthday,
 		PhoneNumber:    phoneNumber,
+		UserID:         userID,
 	}
 	c.Bind(&p)
 	personalInfo, err := controller.Interactor.Add(p)
