@@ -4,6 +4,7 @@ import React from 'react'
 interface Props {
   className?: string
   value?: string | number
+  name?: string
   checked?: boolean
   onClick?: any
   onChange?: any
@@ -17,7 +18,7 @@ function Radio(props: Props): JSX.Element {
       <div>
         <input
         type="radio"
-        name="radio"
+        name={props.name}
         checked={props.checked}
         className={clsx(className)}
         value={props.value}
