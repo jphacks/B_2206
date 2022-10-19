@@ -127,10 +127,10 @@ const Rentlist: NextPage = () => {
           で物件を探している人たち
         </p>
       </div>
-      <div className="grid w-full grid-cols-1 md:grid-cols-2">
+      <div className="grid w-full sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
         {dataList.map((data) => (
-          <Card>
-            <div className="py-2">
+          <Card width="w-1/1">
+            {/* <div className="py-2">
               <p className="border-primary-1 border-b-2 text-left text-xl font-bold">
                 立地
               </p>
@@ -145,25 +145,30 @@ const Rentlist: NextPage = () => {
                   ? data.request.detail.area.addressNumber
                   : ''}
               </p>
-            </div>
+            </div> */}
             <div className="py-2">
               <p className="border-primary-1 border-b-2 text-left text-xl font-bold">
-                その他の情報
+                希望する条件
               </p>
             </div>
             <div className="grid grid-cols-2 text-left">
               {data.request.detail.classification.range.map((range) => (
-                <p className="py-2 text-lg">
-                  {range.name}
-                  <p className="text-sm">
-                    {range.values.map((value, index) => (
-                      <span>
-                        {value.name}
-                        {index < range.values.length - 1 ? '〜' : ''}
-                      </span>
+                <>
+                  {range.name === '築年数' ||
+                    (range.name === '賃料' && (
+                      <p className="py-2 text-lg">
+                        {range.name}
+                        <p className="text-sm">
+                          {range.values.map((value, index) => (
+                            <span>
+                              {value.name}
+                              {index < range.values.length - 1 && '〜'}
+                            </span>
+                          ))}
+                        </p>
+                      </p>
                     ))}
-                  </p>
-                </p>
+                </>
               ))}
               {data.request.detail.classification.value.map((valuelist) => (
                 <p className="text-lg">
@@ -176,25 +181,29 @@ const Rentlist: NextPage = () => {
                 </p>
               ))}
             </div>
-            <div className="py-2">
+            {/* <div className="py-2">
               <p className="border-primary-1 border-b-2 text-left text-xl font-bold">
                 より詳しい条件
               </p>
-            </div>
+            </div> */}
             <div className="text-left">
               {data.request.detail.classification.tag.map((taglist) => (
-                <div className="py-2 text-lg">
-                  {taglist.name}
-                  <div className="flex text-sm">
-                    {taglist.tags.map((tag) => (
-                      <Label
-                        name={tag.name}
-                        width={'w-auto'}
-                        className={'mx-1'}
-                      />
-                    ))}
-                  </div>
-                </div>
+                <>
+                  {taglist.name === '間取り' && (
+                    <div className="py-2 text-lg">
+                      {taglist.name}
+                      <div className="flex text-sm">
+                        {taglist.tags.map((tag) => (
+                          <Label
+                            name={tag.name}
+                            width={'w-auto'}
+                            className={'mx-1'}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </>
               ))}
             </div>
           </Card>
