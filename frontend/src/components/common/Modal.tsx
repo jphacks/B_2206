@@ -17,7 +17,7 @@ export default function Modal(props: Props) {
 
   return (
     <>
-      <div className="bg-black-300/50 fixed inset-0 z-50 flex items-center justify-center overflow-y-auto overflow-x-hidden outline-none focus:outline-none">
+      <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto overflow-x-hidden bg-black/50 outline-none focus:outline-none">
         <div className={clsx(className)}>{props.children}</div>
       </div>
     </>
