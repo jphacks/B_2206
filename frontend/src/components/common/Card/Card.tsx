@@ -6,7 +6,6 @@ import s from './Card.module.css'
 interface Props {
   children?: React.ReactNode
   width?: string
-  height?: string
 }
 
 function Card(props: Props): JSX.Element {
@@ -16,7 +15,6 @@ function Card(props: Props): JSX.Element {
         className={clsx(
           'border-primary-2 border-opacity-1 shadow-primary-2 m-10 rounded-lg border px-10 py-5 shadow-md',
           s.card,
-          props.height ? props.height : 'h-auto',
         )}
       >
         {props.children}
