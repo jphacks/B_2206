@@ -2,6 +2,13 @@ import type { NextPage } from 'next'
 import { Card, Label } from '@components/common'
 import clsx from 'clsx'
 import { User, Area, Value, Tag } from '@type/common'
+import { useEffect, memo, useRef } from 'react'
+
+interface Props {
+  tooltipText: string
+  children?: React.ReactNode
+  data: any
+}
 
 const Rentlist: NextPage = () => {
   const user: User = {
@@ -115,97 +122,235 @@ const Rentlist: NextPage = () => {
     user: user,
     request: requests,
   }
-  console.log(data)
   const dataList = [data, data, data, data]
   // const displayData = [{ user: user, request: request, detail: detail }]
+
+  // カードの中に表示するデータ
+  const CardContent: React.FC<Props> = memo((props) => {
+    // 表示する条件を切り替えるためのref
+    const defaultContentRef = useRef<HTMLDivElement>(null)
+    const subContentRef = useRef<HTMLDivElement>(null)
+
+    useEffect(() => {
+      // if文を使って、inputRefのcurrentプロパティが存在するか確認
+      if (defaultContentRef.current && subContentRef.current) {
+        subContentRef.current.focus()
+        defaultContentRef.current.focus()
+        // subContent を非表示にする
+        subContentRef.current.style.opacity = '0'
+        subContentRef.current.style.visibility = 'hidden'
+        subContentRef.current.style.height = '0px'
+        subContentRef.current.style.width = '0px'
+      }
+    }, [])
+
+    // マウスが乗ったら「その他の条件」を表示
+    const handleMouseEnter = () => {
+      if (!defaultContentRef.current || !subContentRef.current) return
+      defaultContentRef.current.style.opacity = '0'
+      defaultContentRef.current.style.visibility = 'hidden'
+      defaultContentRef.current.style.height = '0px'
+      defaultContentRef.current.style.width = '0px'
+      subContentRef.current.style.opacity = '1'
+      subContentRef.current.style.visibility = 'visible'
+      subContentRef.current.style.height = 'auto'
+      subContentRef.current.style.width = 'auto'
+    }
+    // マウスが離れたら「その他の条件」を非表示
+    const handleMouseLeave = () => {
+      if (!defaultContentRef.current || !subContentRef.current) return
+      defaultContentRef.current.style.opacity = '1'
+      defaultContentRef.current.style.visibility = 'visible'
+      defaultContentRef.current.style.height = 'auto'
+      defaultContentRef.current.style.width = 'auto'
+      subContentRef.current.style.opacity = '0'
+      subContentRef.current.style.visibility = 'hidden'
+      subContentRef.current.style.height = '0px'
+      subContentRef.current.style.width = '0px'
+    }
+
+    // 希望する条件を表示
+    const defaultContent = (
+      <>
+        <div>
+          <span className="border-primary-1 border-b-2 text-left text-xl font-bold">
+            希望する条件
+          </span>
+        </div>
+        <div className="grid grid-cols-2 text-left">
+          {props.data.request.detail.classification.range.map((range: any) => (
+            <>
+              {range.name === '賃料' && (
+                <span className="pt-2 pb-1 text-lg font-bold">
+                  {range.name}
+                  <br />
+                  <span className="text-sm">
+                    {range.values.map((value: Value, index: number) => (
+                      <span>
+                        {value.name}
+                        {index < range.values.length - 1 && '〜'}
+                      </span>
+                    ))}
+                  </span>
+                </span>
+              )}
+            </>
+          ))}
+          {props.data.request.detail.classification.value.map(
+            (valuelist: any) => (
+              <>
+                {valuelist.name === '築年数' && (
+                  <span className="pt-2 pb-1 text-lg font-bold">
+                    {valuelist.name}
+                    <br />
+                    <span className="text-sm">
+                      {valuelist.values.map((value: Value) => (
+                        <span>{value.name}</span>
+                      ))}
+                    </span>
+                  </span>
+                )}
+              </>
+            ),
+          )}
+        </div>
+        {/* <div className="py-2">
+                <span className="border-primary-1 border-b-2 text-left text-xl font-bold">
+                  より詳しい条件
+                </span>
+              </div> */}
+        <div className="text-left">
+          {props.data.request.detail.classification.tag.map((taglist: any) => (
+            <>
+              {taglist.name === '間取り' && (
+                <div className="py-1 text-lg font-bold">
+                  {taglist.name}
+                  <br />
+                  <div className="w-1/1 flex flex-wrap text-sm">
+                    {taglist.tags.map((tag: Tag) => (
+                      <Label
+                        name={tag.name}
+                        width={'w-auto'}
+                        className={'m-1'}
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
+            </>
+          ))}
+        </div>
+      </>
+    )
+
+    // その他の条件を表示
+    const subContent = (
+      <>
+        <div>
+          <span className="border-primary-1 border-b-2 text-left text-xl font-bold">
+            その他の条件
+          </span>
+        </div>
+        <div className="grid grid-cols-2 text-left">
+          {data.request.detail.classification.range.map((range) => (
+            <>
+              {range.name != '賃料' && (
+                <span className="pt-2 pb-1 text-lg font-bold">
+                  {range.name}
+                  <br />
+                  <span className="text-sm">
+                    {range.values.map((value, index) => (
+                      <span>
+                        {value.name}
+                        {index < range.values.length - 1 && '〜'}
+                      </span>
+                    ))}
+                  </span>
+                </span>
+              )}
+            </>
+          ))}
+          {data.request.detail.classification.value.map((valuelist) => (
+            <>
+              {valuelist.name != '築年数' && (
+                <span className="pt-2 pb-1 text-lg font-bold">
+                  {valuelist.name}
+                  <br />
+                  <span className="text-sm">
+                    {valuelist.values.map((value) => (
+                      <span>{value.name}</span>
+                    ))}
+                  </span>
+                </span>
+              )}
+            </>
+          ))}
+        </div>
+        <div className="py-2">
+          <span className="border-primary-1 border-b-2 text-left text-xl font-bold">
+            より詳しい条件
+          </span>
+        </div>
+        <div className="text-left">
+          {data.request.detail.classification.tag.map((taglist) => (
+            <>
+              {taglist.name != '間取り' && (
+                <div className="py-1 text-lg font-bold">
+                  {taglist.name}
+                  <br />
+
+                  <div className="w-1/1 flex flex-wrap text-sm">
+                    {taglist.tags.map((tag) => (
+                      <Label
+                        name={tag.name}
+                        width={'w-auto'}
+                        className={'m-1'}
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
+            </>
+          ))}
+        </div>
+      </>
+    )
+
+    return (
+      <div>
+        <div
+          ref={defaultContentRef}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
+          {defaultContent}
+        </div>
+
+        <div
+          ref={subContentRef}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
+          {subContent}
+        </div>
+      </div>
+    )
+  })
 
   return (
     <>
       <div className="px-10 pt-10 pb-3">
-        <p className="text-start border-primary-1 border-l-8 pl-2 text-4xl">
+        <span className="text-start border-primary-1 border-l-8 pl-2 text-4xl">
           {data.request.detail.area.prefecture} {data.request.detail.area.city}
           で物件を探している人たち
-        </p>
+        </span>
       </div>
       <div className="grid w-full sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
         {dataList.map((data) => (
           <Card width="w-1/1">
-            {/* <div className="py-2">
-              <p className="border-primary-1 border-b-2 text-left text-xl font-bold">
-                立地
-              </p>
-            </div>
-            <div className="text-left">
-              <p>
-                {data.request.detail.area.prefecture}
-                {data.request.detail.area.city
-                  ? data.request.detail.area.city
-                  : ''}
-                {data.request.detail.area.addressNumber
-                  ? data.request.detail.area.addressNumber
-                  : ''}
-              </p>
-            </div> */}
-            <div className="py-2">
-              <p className="border-primary-1 border-b-2 text-left text-xl font-bold">
-                希望する条件
-              </p>
-            </div>
-            <div className="grid grid-cols-2 text-left">
-              {data.request.detail.classification.range.map((range) => (
-                <>
-                  {range.name === '築年数' ||
-                    (range.name === '賃料' && (
-                      <p className="py-2 text-lg">
-                        {range.name}
-                        <p className="text-sm">
-                          {range.values.map((value, index) => (
-                            <span>
-                              {value.name}
-                              {index < range.values.length - 1 && '〜'}
-                            </span>
-                          ))}
-                        </p>
-                      </p>
-                    ))}
-                </>
-              ))}
-              {data.request.detail.classification.value.map((valuelist) => (
-                <p className="text-lg">
-                  {valuelist.name}
-                  <p className="text-sm">
-                    {valuelist.values.map((value) => (
-                      <span>{value.name}</span>
-                    ))}
-                  </p>
-                </p>
-              ))}
-            </div>
-            {/* <div className="py-2">
-              <p className="border-primary-1 border-b-2 text-left text-xl font-bold">
-                より詳しい条件
-              </p>
-            </div> */}
-            <div className="text-left">
-              {data.request.detail.classification.tag.map((taglist) => (
-                <>
-                  {taglist.name === '間取り' && (
-                    <div className="py-2 text-lg">
-                      {taglist.name}
-                      <div className="flex text-sm">
-                        {taglist.tags.map((tag) => (
-                          <Label
-                            name={tag.name}
-                            width={'w-auto'}
-                            className={'mx-1'}
-                          />
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </>
-              ))}
-            </div>
+            <CardContent tooltipText="ツールチップの文言だよ" data={data}>
+              アイコンとか
+            </CardContent>
           </Card>
         ))}
       </div>
