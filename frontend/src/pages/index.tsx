@@ -19,7 +19,9 @@ const recoilDefaultValue = {
   id: 1,
   name: 'gidai yuuki',
   email: 'gidai@email',
-  prefecture: '',
+  prefectureId: '',
+  prefectureName: '',
+  cityNames: [],
 }
 
 const Home: NextPage = () => {

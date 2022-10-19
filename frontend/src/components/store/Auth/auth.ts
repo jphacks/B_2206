@@ -11,6 +11,7 @@ export const userState = atom({
     email: 'gidai@email',
     prefectureName: '',
     prefectureId: '',
+    cityNames: [],
   },
   effects_UNSTABLE: [persistAtom],
 })

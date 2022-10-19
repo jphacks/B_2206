@@ -14,11 +14,13 @@ import clsx from 'clsx'
 import React,{ useEffect,useCallback,useState }  from 'react';
 import { EventEmitter } from 'stream'
 import Prefecture from './Prefecuture'
-import City from './city'
+import City from './City'
+import Other from './Other'
 
 const Modals = {
     prefecture: "prefecture",
     city: "city",
+    other: "other"
 }
 
 const Home: NextPage = () => {
@@ -38,17 +40,24 @@ const Home: NextPage = () => {
     },[handleClickClose])
   
     const PrefectureModal = (
-        <Prefecture nextSetModalName={setModalName} nextModalName={Modals.city} />
+        <Prefecture setModalName={setModalName} nextModalName={Modals.city} />
     )
 
     const CityModal = (
-        <City prevSetModalName={setModalName} prevModalName={Modals.prefecture} />
+        <City setModalName={setModalName} prevModalName={Modals.prefecture} nextModalName={Modals.other} />
     )
+
+    const OtherModal = (
+		<Other setModalName={setModalName} prevModalName={Modals.city} nextModalName={Modals.other} />
+    )
+
+
 
     return (
       <div>
         {modalName === Modals.prefecture && PrefectureModal}
         {modalName === Modals.city && CityModal}
+		{modalName === Modals.other && OtherModal}
       </div>
     )
   }
