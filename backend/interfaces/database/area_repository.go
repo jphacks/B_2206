@@ -17,7 +17,7 @@ func (db *AreaRepository) Store(ci domain.Area) (area domain.Area, err error) {
 }
 
 func (db *AreaRepository) FindById(id int) (area domain.Area, err error) {
-	if err = db.Find(&area).Error; err != nil {
+	if err = db.FindBy(&area,id).Error; err != nil {
 		return
 	}
 	return
