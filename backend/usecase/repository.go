@@ -75,3 +75,10 @@ type TagRepository interface {
 	Update(domain.Tag) (domain.Tag, error)
 	DeleteById(domain.Tag) error
 }
+type MatchingRepository interface {
+	Store(domain.Matching) (domain.Matching, error)
+	FindById(int) (domain.Matching, error)
+	FindAll() (domain.Matchings, error)
+	Update(domain.Matching) (domain.Matching, error)
+	DeleteById(domain.Matching) error
+}
