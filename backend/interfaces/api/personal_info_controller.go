@@ -69,7 +69,7 @@ func (controller *PersonalInfoController) GetPersonalInfo(c echo.Context) (err e
 }
 
 // endpoint UPDATE /personalInfos/:id/
-func (controller *PersonalInfoController) UpdatePersonalInfo(c echo.Context, familyName string, firstName string, familyNameKana string, firstNameKana string, birthday string, phoneNumber string) (err error) {
+func (controller *PersonalInfoController) UpdatePersonalInfo(c echo.Context, familyName string, firstName string, familyNameKana string, firstNameKana string, birthday string, phoneNumber string, userID int) (err error) {
 	// Atoiでc.Param("id")をint型のidに変換
 	id, _ := strconv.Atoi(c.Param("id"))
 	// idをPersonalInfo構造体のIDフィールドに格納
@@ -81,6 +81,7 @@ func (controller *PersonalInfoController) UpdatePersonalInfo(c echo.Context, fam
 		FirstNameKana:  firstNameKana,
 		Birthday:       birthday,
 		PhoneNumber:    phoneNumber,
+		UserID:         userID,
 	}
 	// personalInfoをUpdate()に代入
 	personalInfo, err = controller.Interactor.Update(personalInfo)
