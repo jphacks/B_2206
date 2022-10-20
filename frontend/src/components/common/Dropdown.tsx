@@ -47,8 +47,8 @@ const Dropdown = (props: Props) => {
 
         {isOpen && (
           <>
-            <div className="absolute right-0 z-50 mt-2 w-32 origin-top-left rounded-md pt-2 shadow-lg">
-              <div className="shadow-xs rounded-md bg-white">
+            <div className="absolute right-0 z-50 mt-2 w-56 origin-top-left rounded-md shadow-lg">
+              <div className="shadow-xs rounded-md bg-white/70 backdrop-blur">
                 <div
                   className="py-1"
                   role="menu"
