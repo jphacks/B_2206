@@ -19,3 +19,12 @@ type UserRepository interface {
 	Update(domain.User) (domain.User, error)
 	DeleteById(domain.User) error
 }
+
+type WatchListRepository interface {
+	Store(domain.WatchList) (domain.WatchList, error)
+	FindById(int) (domain.WatchList, error)
+	FindAll() (domain.WatchLists, error)
+	Update(domain.WatchList) (domain.WatchList, error)
+	DeleteById(domain.WatchList) error
+}
+
