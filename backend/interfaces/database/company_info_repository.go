@@ -17,7 +17,7 @@ func (db *CompanyInfoRepository) Store(ci domain.CompanyInfo) (companyInfo domai
 }
 
 func (db *CompanyInfoRepository) FindById(id int) (companyInfo domain.CompanyInfo, err error) {
-	if err = db.Find(&companyInfo).Error; err != nil {
+	if err = db.FindBy(&companyInfo,id).Error; err != nil {
 		return
 	}
 	return

@@ -51,3 +51,11 @@ type RequestRepository interface {
 	Update(domain.Request) (domain.Request, error)
 	DeleteById(domain.Request) error
 }
+
+type AreaRepository interface {
+	Store(domain.Area) (domain.Area, error)
+	FindById(int) (domain.Area, error)
+	FindAll() (domain.Areas, error)
+	Update(domain.Area) (domain.Area, error)
+	DeleteById(domain.Area) error
+}
