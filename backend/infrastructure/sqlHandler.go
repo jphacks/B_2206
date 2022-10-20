@@ -32,6 +32,10 @@ func (handler *SqlHandler) Find(value interface{}) *gorm.DB {
 	return handler.db.Find(value)
 }
 
+func (hander *SqlHandler) FindBy(value interface{}, id int) *gorm.DB {
+	return hander.db.First(value, id)
+}
+
 // データベースの値を更新し、値に主キーがない場合は挿入するメソッド
 func (handler *SqlHandler) Save(value interface{}) *gorm.DB {
 	return handler.db.Save(value)

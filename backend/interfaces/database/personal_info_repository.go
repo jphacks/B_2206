@@ -17,7 +17,7 @@ func (db *PersonalInfoRepository) Store(p domain.PersonalInfo) (personalInfo dom
 }
 
 func (db *PersonalInfoRepository) FindById(id int) (personalInfo domain.PersonalInfo, err error) {
-	if err = db.Find(&personalInfo).Error; err != nil {
+	if err = db.FindBy(&personalInfo,id).Error; err != nil {
 		return
 	}
 	return

@@ -25,7 +25,7 @@ func NewPersonalInfoController(sqlHandler database.SqlHandler) *PersonalInfoCont
 }
 
 // endpoint POST /personalInfos
-func (controller *PersonalInfoController) CreatePersonalInfo(c echo.Context, familyName string, firstName string, familyNameKana string, firstNameKana string, birthday string, phoneNumber int, userID int) (err error) {
+func (controller *PersonalInfoController) CreatePersonalInfo(c echo.Context, familyName string, firstName string, familyNameKana string, firstNameKana string, birthday string, phoneNumber string, userID int) (err error) {
 	p := domain.PersonalInfo{
 		FamilyName:     familyName,
 		FirstName:      firstName,
@@ -45,10 +45,9 @@ func (controller *PersonalInfoController) CreatePersonalInfo(c echo.Context, fam
 	return
 }
 
-// endpoint GET /personalInfos/:id/
-func (controller *PersonalInfoController) GetPersonalInfo(c echo.Context) (err error) {
-	id, _ := strconv.Atoi(c.Param("id"))
-	personalInfo, err := controller.Interactor.PersonalInfoById(id)
+// endpoint GET /personalInfos
+func (controller *PersonalInfoController) GetPersonalInfos(c echo.Context) (err error) {
+	personalInfo, err := controller.Interactor.PersonalInfos()
 	if err != nil {
 		c.JSON(500, NewError(err))
 		return
@@ -57,9 +56,10 @@ func (controller *PersonalInfoController) GetPersonalInfo(c echo.Context) (err e
 	return
 }
 
-// endpoint GET /personalInfos/
-func (controller *PersonalInfoController) GetPersonalInfos(c echo.Context) (err error) {
-	personalInfos, err := controller.Interactor.PersonalInfos()
+// endpoint GET /personalInfos/:id
+func (controller *PersonalInfoController) GetPersonalInfo(c echo.Context) (err error) {
+	id, _ := strconv.Atoi(c.Param("id"))
+	personalInfos, err := controller.Interactor.PersonalInfoById(id)
 	if err != nil {
 		c.JSON(500, NewError(err))
 		return
@@ -69,7 +69,7 @@ func (controller *PersonalInfoController) GetPersonalInfos(c echo.Context) (err 
 }
 
 // endpoint UPDATE /personalInfos/:id/
-func (controller *PersonalInfoController) UpdatePersonalInfo(c echo.Context, familyName string, firstName string, familyNameKana string, firstNameKana string, birthday string, phoneNumber int) (err error) {
+func (controller *PersonalInfoController) UpdatePersonalInfo(c echo.Context, familyName string, firstName string, familyNameKana string, firstNameKana string, birthday string, phoneNumber string) (err error) {
 	// Atoiでc.Param("id")をint型のidに変換
 	id, _ := strconv.Atoi(c.Param("id"))
 	// idをPersonalInfo構造体のIDフィールドに格納

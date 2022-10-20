@@ -12,7 +12,7 @@ type PersonalInfo struct {
 	FamilyNameKana string `json:"family_name_kana"`
 	FirstNameKana  string `json:"first_name_kana"`
 	Birthday       string `json:"birthday"`
-	PhoneNumber    int    `json:"phone_number"`
+	PhoneNumber    string `json:"phone_number"`
 	//belongs_to
 	UserID int `json:"user_id"`
 	//time stamp
