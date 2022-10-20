@@ -15,6 +15,10 @@ body {
   /* font-family: 'Noto Sans JP', sans-serif; */
   font-family: 'Kiwi Maru', serif;
 }
+.dark {
+  background-color: #f7ecde;
+  color: #4f4f4f;
+}
 
 a {
   color: inherit;
