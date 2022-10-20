@@ -62,7 +62,7 @@ func (controller *DetailController) GetDetails(c echo.Context) (err error) {
 	return
 }
 
-// endpoint UPDATE /details/:id/
+// endpoint UPDATE /detail/:id/
 func (controller *DetailController) UpdateDetail(c echo.Context, areaId int) (err error) {
 	// Atoiでc.Param("id")をint型のidに変換
 	id, _ := strconv.Atoi(c.Param("id"))

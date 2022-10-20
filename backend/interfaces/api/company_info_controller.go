@@ -24,8 +24,8 @@ func NewCompanyInfoController(sqlHandler database.SqlHandler) *CompanyInfoContro
 	}
 }
 
-// endpoint POST /companyInfos
-func (controller *CompanyInfoController) CreateCompanyInfo(c echo.Context, name string, phoneNumber int, postCode int, addressNumber int, buildingName string, website string) (err error) {
+// endpoint POST /companyInfo
+func (controller *CompanyInfoController) CreateCompanyInfo(c echo.Context, name string, phoneNumber string, postCode string, addressNumber string, buildingName string, website string) (err error) {
 	u := domain.CompanyInfo{
 		Name:          name,
 		PhoneNumber:   phoneNumber,
@@ -44,7 +44,7 @@ func (controller *CompanyInfoController) CreateCompanyInfo(c echo.Context, name 
 	return
 }
 
-// endpoint GET /companyInfos/:id/
+// endpoint GET /companyInfo/:id/
 func (controller *CompanyInfoController) GetCompanyInfo(c echo.Context) (err error) {
 	id, _ := strconv.Atoi(c.Param("id"))
 	companyInfo, err := controller.Interactor.CompanyInfoById(id)
@@ -56,7 +56,7 @@ func (controller *CompanyInfoController) GetCompanyInfo(c echo.Context) (err err
 	return
 }
 
-// endpoint GET /companyInfos/
+// endpoint GET /companyInfo/
 func (controller *CompanyInfoController) GetCompanyInfos(c echo.Context) (err error) {
 	companyInfos, err := controller.Interactor.CompanyInfos()
 	if err != nil {
@@ -67,8 +67,8 @@ func (controller *CompanyInfoController) GetCompanyInfos(c echo.Context) (err er
 	return
 }
 
-// endpoint UPDATE /companyInfos/:id/
-func (controller *CompanyInfoController) UpdateCompanyInfo(c echo.Context, name string, phoneNumber int, postCode int, addressNumber int, buildingName string, website string) (err error) {
+// endpoint UPDATE /companyInfo/:id/
+func (controller *CompanyInfoController) UpdateCompanyInfo(c echo.Context, name string, phoneNumber string, postCode string, addressNumber string, buildingName string, website string) (err error) {
 	// Atoiでc.Param("id")をint型のidに変換
 	id, _ := strconv.Atoi(c.Param("id"))
 	// idをCompanyInfo構造体のIDフィールドに格納
@@ -91,7 +91,7 @@ func (controller *CompanyInfoController) UpdateCompanyInfo(c echo.Context, name 
 	return
 }
 
-// endpoint DELETE /companyInfos/:id/
+// endpoint DELETE /companyInfo/:id/
 func (controller *CompanyInfoController) DeleteCompanyInfo(c echo.Context) (err error) {
 	// Atoiでc.Param("id")をint型のidに変換
 	id, _ := strconv.Atoi(c.Param("id"))

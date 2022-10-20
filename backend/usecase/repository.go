@@ -35,3 +35,11 @@ type DetailRepository interface {
 	Update(domain.Detail) (domain.Detail, error)
 	DeleteById(domain.Detail) error
 }
+
+type CompanyInfoRepository interface {
+	Store(domain.CompanyInfo) (domain.CompanyInfo, error)
+	FindById(int) (domain.CompanyInfo, error)
+	FindAll() (domain.CompanyInfos, error)
+	Update(domain.CompanyInfo) (domain.CompanyInfo, error)
+	DeleteById(domain.CompanyInfo) error
+}

@@ -86,32 +86,32 @@ func Init() {
 	//companyInfos
 	e.POST("/company-info", func(c echo.Context) error {
 		name := c.QueryParam("name")
-		phoneNumber, _ := strconv.Atoi(c.QueryParam("phone_number"))
-		postCode, _ := strconv.Atoi(c.QueryParam("post_code"))
-		addressNumber, _ := strconv.Atoi(c.QueryParam("address_number"))
+		phoneNumber := c.QueryParam("phone_number")
+		postCode := c.QueryParam("post_code")
+		addressNumber := c.QueryParam("address_number")
 		buildingName := c.QueryParam("building_name")
 		website := c.QueryParam("website")
 		return companyInfoController.CreateCompanyInfo(c, name, phoneNumber, postCode, addressNumber, buildingName, website)
 	})
-	e.GET("/company-infos", func(c echo.Context) error { return companyInfoController.GetCompanyInfos(c) })
+	e.GET("/company-info", func(c echo.Context) error { return companyInfoController.GetCompanyInfos(c) })
 	e.GET("/company-info/:id", func(c echo.Context) error { return companyInfoController.GetCompanyInfo(c) })
 	e.PUT("/company-info/:id", func(c echo.Context) error {
 		name := c.QueryParam("name")
-		phoneNumber, _ := strconv.Atoi(c.QueryParam("phone_number"))
-		postCode, _ := strconv.Atoi(c.QueryParam("post_code"))
-		addressNumber, _ := strconv.Atoi(c.QueryParam("address_number"))
+		phoneNumber := c.QueryParam("phone_number")
+		postCode := c.QueryParam("post_code")
+		addressNumber := c.QueryParam("address_number")
 		buildingName := c.QueryParam("building_name")
 		website := c.QueryParam("website")
-		return companyInfoController.CreateCompanyInfo(c, name, phoneNumber, postCode, addressNumber, buildingName, website)
+		return companyInfoController.UpdateCompanyInfo(c, name, phoneNumber, postCode, addressNumber, buildingName, website)
 	})
 	e.DELETE("/company-info/:id", func(c echo.Context) error { return companyInfoController.DeleteCompanyInfo(c) })
 
 	//details
-	e.POST("/details", func(c echo.Context) error {
+	e.POST("/detail", func(c echo.Context) error {
 		areaId, _ := strconv.Atoi(c.QueryParam("area_id"))
 		return detailController.CreateDetail(c, areaId)
 	})
-	e.GET("/details", func(c echo.Context) error { return detailController.GetDetails(c) })
+	e.GET("/detail", func(c echo.Context) error { return detailController.GetDetails(c) })
 	e.GET("/detail/:id", func(c echo.Context) error { return detailController.GetDetail(c) })
 	e.PUT("/detail/:id", func(c echo.Context) error {
 		areaId, _ := strconv.Atoi(c.QueryParam("area_id"))
