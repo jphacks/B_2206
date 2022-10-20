@@ -38,8 +38,8 @@ func Init() {
 
 	//personal_info
 	e.POST("/personal_info", func(c echo.Context) error {
-		familyName := c.QueryParam("familyname")
-		firstName := c.QueryParam("firstname")
+		familyName := c.QueryParam("family_name")
+		firstName := c.QueryParam("first_name")
 		familyNameKana := c.QueryParam("family_name_kana")
 		firstNameKana := c.QueryParam("first_name_kana")
 		birthday := c.QueryParam("birthday")
@@ -47,11 +47,11 @@ func Init() {
 		userId, _ := strconv.Atoi(c.QueryParam("user_id"))
 		return personalInfoController.CreatePersonalInfo(c, familyName, firstName, familyNameKana, firstNameKana, birthday, phoneNumber, userId)
 	})
-	e.GET("/personal_info", func(c echo.Context) error { return personalInfoController.GetPersonalInfos(c) })
-	e.GET("/personal_info/:id", func(c echo.Context) error { return personalInfoController.GetPersonalInfo(c) })
-	e.PUT("/personal_info/:id", func(c echo.Context) error {
+	e.GET("/personal-info", func(c echo.Context) error { return personalInfoController.GetPersonalInfos(c) })
+	e.GET("/personal-info/:id", func(c echo.Context) error { return personalInfoController.GetPersonalInfo(c) })
+	e.PUT("/personal-info/:id", func(c echo.Context) error {
 		familyName := c.QueryParam("family_name")
-		firstName := c.QueryParam("first_Name")
+		firstName := c.QueryParam("first_name")
 		familyNameKana := c.QueryParam("family_name_kana")
 		firstNameKana := c.QueryParam("first_name_kana")
 		birthday := c.QueryParam("birthday")
@@ -59,6 +59,6 @@ func Init() {
 		userId, _ := strconv.Atoi(c.QueryParam("user_id"))
 		return personalInfoController.UpdatePersonalInfo(c, familyName, firstName, familyNameKana, firstNameKana, birthday, phoneNumber, userId)
 	})
-	e.DELETE("/personal_info/:id", func(c echo.Context) error { return personalInfoController.DeletePersonalInfo(c) })
+	e.DELETE("/personal-info/:id", func(c echo.Context) error { return personalInfoController.DeletePersonalInfo(c) })
 	e.Logger.Fatal(e.Start(":1323"))
 }
