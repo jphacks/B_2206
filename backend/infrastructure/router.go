@@ -17,6 +17,7 @@ func Init() {
 	companyInfoController := controllers.NewCompanyInfoController(NewSqlHandler())
 	detailController := controllers.NewDetailController(NewSqlHandler())
 	requestController := controllers.NewRequestController(NewSqlHandler())
+	areaController := controllers.NewAreaController(NewSqlHandler())
 
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
@@ -138,6 +139,28 @@ func Init() {
 		return requestController.UpdateRequest(c, description, isPurchase, userId, detailId)
 	})
 	e.DELETE("/request/:id", func(c echo.Context) error { return requestController.DeleteRequest(c) })
+	
+	//areas
+	e.POST("/area", func(c echo.Context) error {
+		postCode := c.QueryParam("post_code")
+		prefecture := c.QueryParam("prefecture")
+		city := c.QueryParam("city")
+		addressNumber := c.QueryParam("address_number")
+		buildingName := c.QueryParam("building_name")
+		return areaController.CreateArea(c, postCode, prefecture, city, addressNumber, buildingName)
+	})
+	e.GET("/area", func(c echo.Context) error { return areaController.GetAreas(c) })
+	e.GET("/area/:id", func(c echo.Context) error { return areaController.GetArea(c) })
+	e.PUT("/area/:id", func(c echo.Context) error {
+		postCode := c.QueryParam("post_code")
+		prefecture := c.QueryParam("prefecture")
+		city := c.QueryParam("city")
+		addressNumber := c.QueryParam("address_number")
+		buildingName := c.QueryParam("building_name")
+		return areaController.UpdateArea(c, postCode, prefecture, city, addressNumber, buildingName)
+	})
+	e.DELETE("/area/:id", func(c echo.Context) error { return areaController.DeleteArea(c) })
+
 	e.Logger.Fatal(e.Start(":1323"))
 
 }
