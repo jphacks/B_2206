@@ -13,8 +13,8 @@ type Request struct {
 	UserId   int `json:"user_id" gorm:"foreign_key:ID"`
 	DetailId int `json:"detail_id" gorm:"foreign_key:ID"`
 	//has many
-	WishLists []WishList `json:"wish_lists"`
-	Matchings []Matching `json:"matchings"`
+	// WishLists []WishList `json:"wish_lists"`
+	// Matchings []Matching `json:"matchings"`
 	//time stamp
 	UpdatedAt time.Time `json:"updated_at"`
 	CreatedAt time.Time `json:"created_at"`

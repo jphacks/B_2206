@@ -43,3 +43,11 @@ type CompanyInfoRepository interface {
 	Update(domain.CompanyInfo) (domain.CompanyInfo, error)
 	DeleteById(domain.CompanyInfo) error
 }
+
+type RequestRepository interface {
+	Store(domain.Request) (domain.Request, error)
+	FindById(int) (domain.Request, error)
+	FindAll() (domain.Requests, error)
+	Update(domain.Request) (domain.Request, error)
+	DeleteById(domain.Request) error
+}
