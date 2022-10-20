@@ -37,7 +37,7 @@ func Init() {
 	e.DELETE("/users/:id", func(c echo.Context) error { return userController.DeleteUser(c) })
 
 	//personal_info
-	e.POST("/personal_info", func(c echo.Context) error {
+	e.POST("/personal-info", func(c echo.Context) error {
 		familyName := c.QueryParam("family_name")
 		firstName := c.QueryParam("first_name")
 		familyNameKana := c.QueryParam("family_name_kana")
