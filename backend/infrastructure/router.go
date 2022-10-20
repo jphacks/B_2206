@@ -16,6 +16,7 @@ func Init() {
 	watchListController := controllers.NewWatchListController(NewSqlHandler())
 	companyInfoController := controllers.NewCompanyInfoController(NewSqlHandler())
 	detailController := controllers.NewDetailController(NewSqlHandler())
+	requestController := controllers.NewRequestController(NewSqlHandler())
 
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
@@ -67,7 +68,7 @@ func Init() {
 	// watch_list
 	e.POST("/watch-list", func(c echo.Context) error {
 		description := c.QueryParam("description")
-		isPurchase,_ := strconv.ParseBool(c.QueryParam("is_purchase")	)
+		isPurchase, _ := strconv.ParseBool(c.QueryParam("is_purchase"))
 		userId, _ := strconv.Atoi(c.QueryParam("user_id"))
 		detailId, _ := strconv.Atoi(c.QueryParam("detail_id"))
 		return watchListController.CreateWatchList(c, description, isPurchase, userId, detailId)
@@ -76,13 +77,13 @@ func Init() {
 	e.GET("/watch-list/:id", func(c echo.Context) error { return watchListController.GetWatchList(c) })
 	e.PUT("/watch-list/:id", func(c echo.Context) error {
 		description := c.QueryParam("description")
-		isPurchase,_ := strconv.ParseBool(c.QueryParam("is_purchase")	)
+		isPurchase, _ := strconv.ParseBool(c.QueryParam("is_purchase"))
 		userId, _ := strconv.Atoi(c.QueryParam("user_id"))
 		detailId, _ := strconv.Atoi(c.QueryParam("detail_id"))
 		return watchListController.UpdateWatchList(c, description, isPurchase, userId, detailId)
 	})
 	e.DELETE("/watch-list/:id", func(c echo.Context) error { return watchListController.DeleteWatchList(c) })
-	
+
 	//companyInfos
 	e.POST("/company-info", func(c echo.Context) error {
 		name := c.QueryParam("name")
@@ -119,6 +120,24 @@ func Init() {
 	})
 	e.DELETE("/detail/:id", func(c echo.Context) error { return detailController.DeleteDetail(c) })
 
+	// request
+	e.POST("/request", func(c echo.Context) error {
+		description := c.QueryParam("description")
+		isPurchase, _ := strconv.ParseBool(c.QueryParam("is_purchase"))
+		userId, _ := strconv.Atoi(c.QueryParam("user_id"))
+		detailId, _ := strconv.Atoi(c.QueryParam("detail_id"))
+		return requestController.CreateRequest(c, description, isPurchase, userId, detailId)
+	})
+	e.GET("/request", func(c echo.Context) error { return requestController.GetRequests(c) })
+	e.GET("/request/:id", func(c echo.Context) error { return requestController.GetRequest(c) })
+	e.PUT("/request/:id", func(c echo.Context) error {
+		description := c.QueryParam("description")
+		isPurchase, _ := strconv.ParseBool(c.QueryParam("is_purchase"))
+		userId, _ := strconv.Atoi(c.QueryParam("user_id"))
+		detailId, _ := strconv.Atoi(c.QueryParam("detail_id"))
+		return requestController.UpdateRequest(c, description, isPurchase, userId, detailId)
+	})
+	e.DELETE("/request/:id", func(c echo.Context) error { return requestController.DeleteRequest(c) })
 	e.Logger.Fatal(e.Start(":1323"))
 
 }
