@@ -95,7 +95,7 @@ function City(props: Props): JSX.Element {
     if (filter_district?.length != 0) {
       return (
         <div>
-          <p className={'my-3 text-lg'}>{cities?.at(0)?.name}</p>
+          <p className={'my-3 text-lg'}>{(cities?.at(0)?.name == '千代田区')?"東京都":cities?.at(0)?.name}</p>
           <div className={'flex flex-row flex-wrap gap-3'}>
             {filter_district?.map((district) => {
               if (searchString == '' || district.name.includes(searchString)) {
@@ -315,7 +315,7 @@ function City(props: Props): JSX.Element {
               <p>{user.prefectureName}-市区町村を選択</p>
             </div>
             <div>
-              <p>市区町村にチェックを入れてくださ</p>
+              <p>市区町村にチェックを入れてください</p>
               <div
                 className={'border-primary-1 mb-5 border-2 border-dashed'}
               ></div>
