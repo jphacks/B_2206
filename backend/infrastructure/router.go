@@ -22,6 +22,7 @@ func Init() {
 	tagController := controllers.NewTagController(NewSqlHandler())
 	matchingController := controllers.NewMatchingController(NewSqlHandler())
 	limitController := controllers.NewLimitController(NewSqlHandler())
+	valueController := controllers.NewValueController(NewSqlHandler())
 
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
@@ -190,6 +191,7 @@ func Init() {
 		return tagController.UpdateTag(c, name)
 	})
 	e.DELETE("/tag/:id", func(c echo.Context) error { return tagController.DeleteTag(c) })
+	
 	// matching
 	e.POST("/matching", func(c echo.Context) error {
 		status := c.QueryParam("status")
@@ -229,6 +231,21 @@ func Init() {
 		return limitController.UpdateLimit(c, name, maxValueId, minValueId)
 	})
 	e.DELETE("/limit/:id", func(c echo.Context) error { return limitController.DeleteLimit(c) })
+
+	// value
+	e.POST("/value", func(c echo.Context) error {
+		name := c.QueryParam("name")
+		number, _ := strconv.Atoi(c.QueryParam("number"))
+		return valueController.CreateValue(c, name, number)
+	})
+	e.GET("/value", func(c echo.Context) error { return valueController.GetValues(c) })
+	e.GET("/value/:id", func(c echo.Context) error { return valueController.GetValue(c) })
+	e.PUT("/value/:id", func(c echo.Context) error {
+		name := c.QueryParam("name")
+		number, _ := strconv.Atoi(c.QueryParam("number"))
+		return valueController.UpdateValue(c, name, number)
+	})
+	e.DELETE("/value/:id", func(c echo.Context) error { return valueController.DeleteValue(c) })
 
 	e.Logger.Fatal(e.Start(":1323"))
 

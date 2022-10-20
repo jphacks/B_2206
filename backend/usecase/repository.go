@@ -75,6 +75,7 @@ type TagRepository interface {
 	Update(domain.Tag) (domain.Tag, error)
 	DeleteById(domain.Tag) error
 }
+
 type MatchingRepository interface {
 	Store(domain.Matching) (domain.Matching, error)
 	FindById(int) (domain.Matching, error)
@@ -89,4 +90,12 @@ type LimitRepository interface {
 	FindAll() (domain.Limits, error)
 	Update(domain.Limit) (domain.Limit, error)
 	DeleteById(domain.Limit) error
+}
+
+type ValueRepository interface {
+	Store(domain.Value) (domain.Value, error)
+	FindById(int) (domain.Value, error)
+	FindAll() (domain.Values, error)
+	Update(domain.Value) (domain.Value, error)
+	DeleteById(domain.Value) error
 }
