@@ -6,13 +6,15 @@ import (
 
 type PersonalInfo struct {
 	//data
-	ID          int    `json:"id" gorm:"primary_key"`
-	FamilyName  string `json:"family_name" gorm:"not null"`
-	FirstName   string `json:"first_name" gorm:"not null"`
-	Birthday    string `json:"birthday" gorm:"not null"`
-	PhoneNumber int    `json:"phone_number" gorm:"not null"`
-	//has one
-	User User `json:"user"`
+	ID             int    `json:"id" gorm:"primary_key"`
+	FamilyName     string `json:"family_name"`
+	FirstName      string `json:"first_name"`
+	FamilyNameKana string `json:"family_name_kana"`
+	FirstNameKana  string `json:"first_name_kana"`
+	Birthday       string `json:"birthday"`
+	PhoneNumber    string `json:"phone_number"`
+	//belongs_to
+	UserID int `json:"user_id"`
 	//time stamp
 	UpdatedAt time.Time `json:"updated_at"`
 	CreatedAt time.Time `json:"created_at"`

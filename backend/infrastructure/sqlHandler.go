@@ -1,10 +1,11 @@
 package infrastructure
 
 import (
+	"os"
+
 	"github.com/jphacks/B_2206/backend/interfaces/database"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
-	"os"
 )
 
 type SqlHandler struct {
@@ -32,9 +33,13 @@ func (handler *SqlHandler) Find(value interface{}) *gorm.DB {
 	return handler.db.Find(value)
 }
 
+func (hander *SqlHandler) FindBy(value interface{}, id int) *gorm.DB {
+	return hander.db.First(value, id)
+}
+
 // データベースの値を更新し、値に主キーがない場合は挿入するメソッド
 func (handler *SqlHandler) Save(value interface{}) *gorm.DB {
-	return handler.db.Save(value)
+	return handler.db.Updates(value)
 }
 
 // 指定された条件に合う値を削除する。値に主キーがある場合は、主キーを条件に含む。
