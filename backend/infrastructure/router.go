@@ -18,6 +18,8 @@ func Init() {
 	detailController := controllers.NewDetailController(NewSqlHandler())
 	requestController := controllers.NewRequestController(NewSqlHandler())
 	areaController := controllers.NewAreaController(NewSqlHandler())
+	classificationController := controllers.NewClassificationController(NewSqlHandler())
+	tagController := controllers.NewTagController(NewSqlHandler())
 
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
@@ -139,7 +141,7 @@ func Init() {
 		return requestController.UpdateRequest(c, description, isPurchase, userId, detailId)
 	})
 	e.DELETE("/request/:id", func(c echo.Context) error { return requestController.DeleteRequest(c) })
-	
+
 	//areas
 	e.POST("/area", func(c echo.Context) error {
 		postCode := c.QueryParam("post_code")
@@ -160,6 +162,32 @@ func Init() {
 		return areaController.UpdateArea(c, postCode, prefecture, city, addressNumber, buildingName)
 	})
 	e.DELETE("/area/:id", func(c echo.Context) error { return areaController.DeleteArea(c) })
+
+	//classification
+	e.POST("/classification", func(c echo.Context) error {
+		name := c.QueryParam("name")
+		return classificationController.CreateClassification(c, name)
+	})
+	e.GET("/classification", func(c echo.Context) error { return classificationController.GetClassifications(c) })
+	e.GET("/classification/:id", func(c echo.Context) error { return classificationController.GetClassification(c) })
+	e.PUT("/classification/:id", func(c echo.Context) error {
+		name := c.QueryParam("name")
+		return classificationController.UpdateClassification(c, name)
+	})
+	e.DELETE("/classification/:id", func(c echo.Context) error { return classificationController.DeleteClassification(c) })
+
+	//tag
+	e.POST("/tag", func(c echo.Context) error {
+		name := c.QueryParam("name")
+		return tagController.CreateTag(c, name)
+	})
+	e.GET("/tag", func(c echo.Context) error { return tagController.GetTags(c) })
+	e.GET("/tag/:id", func(c echo.Context) error { return tagController.GetTag(c) })
+	e.PUT("/tag/:id", func(c echo.Context) error {
+		name := c.QueryParam("name")
+		return tagController.UpdateTag(c, name)
+	})
+	e.DELETE("/tag/:id", func(c echo.Context) error { return tagController.DeleteTag(c) })
 
 	e.Logger.Fatal(e.Start(":1323"))
 

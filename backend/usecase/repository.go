@@ -59,3 +59,19 @@ type AreaRepository interface {
 	Update(domain.Area) (domain.Area, error)
 	DeleteById(domain.Area) error
 }
+
+type ClassificationRepository interface {
+	Store(domain.Classification) (domain.Classification, error)
+	FindById(int) (domain.Classification, error)
+	FindAll() (domain.Classifications, error)
+	Update(domain.Classification) (domain.Classification, error)
+	DeleteById(domain.Classification) error
+}
+
+type TagRepository interface {
+	Store(domain.Tag) (domain.Tag, error)
+	FindById(int) (domain.Tag, error)
+	FindAll() (domain.Tags, error)
+	Update(domain.Tag) (domain.Tag, error)
+	DeleteById(domain.Tag) error
+}
