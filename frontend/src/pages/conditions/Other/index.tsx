@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import styles from '@styles/Home.module.css'
-import { Card, PrimaryButton, Radio } from '@components/common'
+import { Card, PrimaryButton, Radio, Select } from '@components/common'
 import { useRecoilState } from 'recoil'
 import { userState } from '@components/store/Auth/auth'
 import { useCallback, useEffect, useState } from 'react'
@@ -16,6 +16,14 @@ interface Props {
 interface City {
   id: string
   name: string
+}
+
+export function SelectOptions(options: string[]): JSX.Element {
+    options.map((option) => {
+        return(
+            <option>{option}</option>
+        )
+    })
 }
 
 function Other(props: Props): JSX.Element {
@@ -39,6 +47,14 @@ function Other(props: Props): JSX.Element {
       getCities(getCitiesUrl)
     }
   }, [])
+
+
+
+    const priceOptions = [
+        "1万","1.5万","2万","2.5万","3万","3.5万","4万","4.5万","5万","5.5万","6万","6.5万","7万","7.5万","8万","8.5万","9万","9.5万","10万",
+        "11万", "12万", "13万", "14万", "15万", "16万", "17万", "18万", "19万", "20万", 
+        "25万", "30万", "35万", "40万", "45万", "50万", "100万" 
+    ]
 
   return (
     <div className={styles.container}>
@@ -81,6 +97,17 @@ function Other(props: Props): JSX.Element {
             </div>
             <div>
               <p className={'text-xl text-primary-2'}>絞り込み条件</p>
+              <div>
+                <p className={'text-lg my-3'}>賃料</p>
+                <div className={'flex flex-row items-center gap-5 w-3/5 my-3'}>
+                  <Select placeholder={'下限'}>
+                    <option>下限無し</option>
+                    {SelectOptions(priceOptions)}
+                  </Select>
+                  <p className={'text-xl'}>~</p>
+                  <Select placeholder={'下限'}></Select>
+                </div>
+              </div>
             </div>
           </Card>
         </div>
