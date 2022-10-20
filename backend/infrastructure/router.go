@@ -19,6 +19,7 @@ func Init() {
 	requestController := controllers.NewRequestController(NewSqlHandler())
 	areaController := controllers.NewAreaController(NewSqlHandler())
 	classificationController := controllers.NewClassificationController(NewSqlHandler())
+	tagController := controllers.NewTagController(NewSqlHandler())
 
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
@@ -174,6 +175,19 @@ func Init() {
 		return classificationController.UpdateClassification(c, name)
 	})
 	e.DELETE("/classification/:id", func(c echo.Context) error { return classificationController.DeleteClassification(c) })
+
+	//tag
+	e.POST("/tag", func(c echo.Context) error {
+		name := c.QueryParam("name")
+		return tagController.CreateTag(c, name)
+	})
+	e.GET("/tag", func(c echo.Context) error { return tagController.GetTags(c) })
+	e.GET("/tag/:id", func(c echo.Context) error { return tagController.GetTag(c) })
+	e.PUT("/tag/:id", func(c echo.Context) error {
+		name := c.QueryParam("name")
+		return tagController.UpdateTag(c, name)
+	})
+	e.DELETE("/tag/:id", func(c echo.Context) error { return tagController.DeleteTag(c) })
 
 	e.Logger.Fatal(e.Start(":1323"))
 

@@ -67,3 +67,11 @@ type ClassificationRepository interface {
 	Update(domain.Classification) (domain.Classification, error)
 	DeleteById(domain.Classification) error
 }
+
+type TagRepository interface {
+	Store(domain.Tag) (domain.Tag, error)
+	FindById(int) (domain.Tag, error)
+	FindAll() (domain.Tags, error)
+	Update(domain.Tag) (domain.Tag, error)
+	DeleteById(domain.Tag) error
+}
