@@ -4,10 +4,11 @@ import s from './LabelButton.module.css'
 
 interface Props {
   className?: string
-  onClick?: () => void
+  onClick?: any
   children?: React.ReactNode
   width?: string
   name: string
+  checked?: boolean
 }
 
 function LabelButton(props: Props): JSX.Element {
@@ -16,7 +17,7 @@ function LabelButton(props: Props): JSX.Element {
       (props.className ? ` ${props.className}` : '') +
       (props.width ? ` ${props.width}` : ''),
   )
-  const [isClick, setIsClick] = useState<Boolean>(false)
+  const [isClick, setIsClick] = useState<Boolean | undefined>(props.checked)
 
   function colorChangeHandler(className: string) {
     if (!isClick) {
@@ -32,7 +33,7 @@ function LabelButton(props: Props): JSX.Element {
           (props.width ? ` ${props.width}` : ''),
       )
     }
-    setIsClick(!isClick);
+    setIsClick(!isClick)
   }
 
   return (
@@ -40,10 +41,12 @@ function LabelButton(props: Props): JSX.Element {
       className={clsx(className, s.label)}
       onClick={() => {
         colorChangeHandler(className)
-        props.onClick
+        props.onClick()
       }}
     >
-      <div className={clsx('flex items-center justify-center w-1/1 px-5 py-1')}>{props.name}</div>
+      <div className={clsx('w-1/1 flex items-center justify-center px-5 py-1')}>
+        {props.name}
+      </div>
     </button>
   )
 }

@@ -12,6 +12,7 @@ export const userState = atom({
     prefectureName: '',
     prefectureId: '',
     cityNames: [],
+    conditions: {},
   },
   effects_UNSTABLE: [persistAtom],
 })

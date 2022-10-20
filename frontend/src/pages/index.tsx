@@ -22,12 +22,13 @@ const recoilDefaultValue = {
   prefectureId: '',
   prefectureName: '',
   cityNames: [],
+  conditions: {},
 }
 
 const Home: NextPage = () => {
   const [user, setUser] = useRecoilState(userState)
   // 初期化
-  // setUser(recoilDefaultValue)
+  setUser(recoilDefaultValue)
   // console.log(user)
 
   // const handler = () => {
