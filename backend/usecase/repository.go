@@ -82,3 +82,11 @@ type MatchingRepository interface {
 	Update(domain.Matching) (domain.Matching, error)
 	DeleteById(domain.Matching) error
 }
+
+type LimitRepository interface {
+	Store(domain.Limit) (domain.Limit, error)
+	FindById(int) (domain.Limit, error)
+	FindAll() (domain.Limits, error)
+	Update(domain.Limit) (domain.Limit, error)
+	DeleteById(domain.Limit) error
+}

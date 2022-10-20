@@ -30,7 +30,7 @@ func dbinit() {
 	db.Migrator().CreateTable(domain.DetailsValue{})
 	db.Migrator().CreateTable(domain.DetailsTag{})
 	db.Migrator().CreateTable(domain.Tag{})
-	db.Migrator().CreateTable(domain.Range{})
+	db.Migrator().CreateTable(domain.Limit{})
 	db.Migrator().CreateTable(domain.Value{})
 	db.Migrator().CreateTable(domain.Classification{})
 	db.Migrator().CreateTable(domain.Area{})

@@ -21,6 +21,7 @@ func Init() {
 	classificationController := controllers.NewClassificationController(NewSqlHandler())
 	tagController := controllers.NewTagController(NewSqlHandler())
 	matchingController := controllers.NewMatchingController(NewSqlHandler())
+	limitController := controllers.NewLimitController(NewSqlHandler())
 
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
@@ -211,6 +212,23 @@ func Init() {
 		return matchingController.UpdateMatching(c, status, sellerMessage, userId, requestId, buyerId, sellerId)
 	})
 	e.DELETE("/matching/:id", func(c echo.Context) error { return matchingController.DeleteMatching(c) })
+
+	//limit
+	e.POST("/limit", func(c echo.Context) error {
+		name := c.QueryParam("name")
+		maxValueId, _ := strconv.Atoi(c.QueryParam("max_value_id"))
+		minValueId, _ := strconv.Atoi(c.QueryParam("min_value_id"))
+		return limitController.CreateLimit(c, name, maxValueId, minValueId)
+	})
+	e.GET("/limit", func(c echo.Context) error { return limitController.GetLimits(c) })
+	e.GET("/limit/:id", func(c echo.Context) error { return limitController.GetLimit(c) })
+	e.PUT("/limit/:id", func(c echo.Context) error {
+		name := c.QueryParam("name")
+		maxValueId, _ := strconv.Atoi(c.QueryParam("max_value_id"))
+		minValueId, _ := strconv.Atoi(c.QueryParam("min_value_id"))
+		return limitController.UpdateLimit(c, name, maxValueId, minValueId)
+	})
+	e.DELETE("/limit/:id", func(c echo.Context) error { return limitController.DeleteLimit(c) })
 
 	e.Logger.Fatal(e.Start(":1323"))
 
