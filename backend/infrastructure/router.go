@@ -20,6 +20,7 @@ func Init() {
 	areaController := controllers.NewAreaController(NewSqlHandler())
 	classificationController := controllers.NewClassificationController(NewSqlHandler())
 	tagController := controllers.NewTagController(NewSqlHandler())
+	matchingController := controllers.NewMatchingController(NewSqlHandler())
 
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
@@ -188,6 +189,28 @@ func Init() {
 		return tagController.UpdateTag(c, name)
 	})
 	e.DELETE("/tag/:id", func(c echo.Context) error { return tagController.DeleteTag(c) })
+	// matching
+	e.POST("/matching", func(c echo.Context) error {
+		status := c.QueryParam("status")
+		sellerMessage := c.QueryParam("seller_message")
+		userId, _ := strconv.Atoi(c.QueryParam("user_id"))
+		requestId, _ := strconv.Atoi(c.QueryParam("request_id"))
+		buyerId, _ := strconv.Atoi(c.QueryParam("buyer_id"))
+		sellerId, _ := strconv.Atoi(c.QueryParam("seller_id"))
+		return matchingController.CreateMatching(c, status, sellerMessage, userId, requestId, buyerId, sellerId)
+	})
+	e.GET("/matching", func(c echo.Context) error { return matchingController.GetMatchings(c) })
+	e.GET("/matching/:id", func(c echo.Context) error { return matchingController.GetMatching(c) })
+	e.PUT("/matching/:id", func(c echo.Context) error {
+		status := c.QueryParam("status")
+		sellerMessage := c.QueryParam("seller_message")
+		userId, _ := strconv.Atoi(c.QueryParam("user_id"))
+		requestId, _ := strconv.Atoi(c.QueryParam("request_id"))
+		buyerId, _ := strconv.Atoi(c.QueryParam("buyer_id"))
+		sellerId, _ := strconv.Atoi(c.QueryParam("seller_id"))
+		return matchingController.UpdateMatching(c, status, sellerMessage, userId, requestId, buyerId, sellerId)
+	})
+	e.DELETE("/matching/:id", func(c echo.Context) error { return matchingController.DeleteMatching(c) })
 
 	e.Logger.Fatal(e.Start(":1323"))
 

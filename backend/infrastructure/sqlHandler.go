@@ -2,6 +2,7 @@ package infrastructure
 
 import (
 	"os"
+	"fmt"
 
 	"github.com/jphacks/B_2206/backend/interfaces/database"
 	"gorm.io/driver/mysql"
@@ -30,6 +31,8 @@ func (handler *SqlHandler) Create(value interface{}) *gorm.DB {
 
 // 指定された条件に一致するレコードを探すメソッド
 func (handler *SqlHandler) Find(value interface{}) *gorm.DB {
+	fmt.Println("aasasasas")
+	fmt.Println(handler.db.Find(value))
 	return handler.db.Find(value)
 }
 
