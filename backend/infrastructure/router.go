@@ -14,6 +14,8 @@ func Init() {
 	userController := controllers.NewUserController(NewSqlHandler())
 	personalInfoController := controllers.NewPersonalInfoController(NewSqlHandler())
 	watchListController := controllers.NewWatchListController(NewSqlHandler())
+	companyInfoController := controllers.NewCompanyInfoController(NewSqlHandler())
+	detailController := controllers.NewDetailController(NewSqlHandler())
 
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
@@ -80,6 +82,42 @@ func Init() {
 		return watchListController.UpdateWatchList(c, description, isPurchase, userId, detailId)
 	})
 	e.DELETE("/watch-list/:id", func(c echo.Context) error { return watchListController.DeleteWatchList(c) })
+	
+	//companyInfos
+	e.POST("/company-info", func(c echo.Context) error {
+		name := c.QueryParam("name")
+		phoneNumber := c.QueryParam("phone_number")
+		postCode := c.QueryParam("post_code")
+		addressNumber := c.QueryParam("address_number")
+		buildingName := c.QueryParam("building_name")
+		website := c.QueryParam("website")
+		return companyInfoController.CreateCompanyInfo(c, name, phoneNumber, postCode, addressNumber, buildingName, website)
+	})
+	e.GET("/company-info", func(c echo.Context) error { return companyInfoController.GetCompanyInfos(c) })
+	e.GET("/company-info/:id", func(c echo.Context) error { return companyInfoController.GetCompanyInfo(c) })
+	e.PUT("/company-info/:id", func(c echo.Context) error {
+		name := c.QueryParam("name")
+		phoneNumber := c.QueryParam("phone_number")
+		postCode := c.QueryParam("post_code")
+		addressNumber := c.QueryParam("address_number")
+		buildingName := c.QueryParam("building_name")
+		website := c.QueryParam("website")
+		return companyInfoController.UpdateCompanyInfo(c, name, phoneNumber, postCode, addressNumber, buildingName, website)
+	})
+	e.DELETE("/company-info/:id", func(c echo.Context) error { return companyInfoController.DeleteCompanyInfo(c) })
+
+	//details
+	e.POST("/detail", func(c echo.Context) error {
+		areaId, _ := strconv.Atoi(c.QueryParam("area_id"))
+		return detailController.CreateDetail(c, areaId)
+	})
+	e.GET("/detail", func(c echo.Context) error { return detailController.GetDetails(c) })
+	e.GET("/detail/:id", func(c echo.Context) error { return detailController.GetDetail(c) })
+	e.PUT("/detail/:id", func(c echo.Context) error {
+		areaId, _ := strconv.Atoi(c.QueryParam("area_id"))
+		return detailController.UpdateDetail(c, areaId)
+	})
+	e.DELETE("/detail/:id", func(c echo.Context) error { return detailController.DeleteDetail(c) })
 
 	e.Logger.Fatal(e.Start(":1323"))
 
