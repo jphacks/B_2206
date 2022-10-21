@@ -15,7 +15,6 @@ func Init() {
 	personalInfoController := controllers.NewPersonalInfoController(NewSqlHandler())
 	watchListController := controllers.NewWatchListController(NewSqlHandler())
 	companyInfoController := controllers.NewCompanyInfoController(NewSqlHandler())
-	detailController := controllers.NewDetailController(NewSqlHandler())
 	requestController := controllers.NewRequestController(NewSqlHandler())
 	areaController := controllers.NewAreaController(NewSqlHandler())
 	classificationController := controllers.NewClassificationController(NewSqlHandler())
@@ -113,19 +112,6 @@ func Init() {
 	})
 	e.DELETE("/company-info/:id", func(c echo.Context) error { return companyInfoController.DeleteCompanyInfo(c) })
 
-	//details
-	e.POST("/detail", func(c echo.Context) error {
-		areaId, _ := strconv.Atoi(c.QueryParam("area_id"))
-		return detailController.CreateDetail(c, areaId)
-	})
-	e.GET("/detail", func(c echo.Context) error { return detailController.GetDetails(c) })
-	e.GET("/detail/:id", func(c echo.Context) error { return detailController.GetDetail(c) })
-	e.PUT("/detail/:id", func(c echo.Context) error {
-		areaId, _ := strconv.Atoi(c.QueryParam("area_id"))
-		return detailController.UpdateDetail(c, areaId)
-	})
-	e.DELETE("/detail/:id", func(c echo.Context) error { return detailController.DeleteDetail(c) })
-
 	// request
 	e.POST("/request", func(c echo.Context) error {
 		description := c.QueryParam("description")
@@ -152,7 +138,8 @@ func Init() {
 		city := c.QueryParam("city")
 		addressNumber := c.QueryParam("address_number")
 		buildingName := c.QueryParam("building_name")
-		return areaController.CreateArea(c, postCode, prefecture, city, addressNumber, buildingName)
+		detailId, _ := strconv.Atoi(c.QueryParam("detail_id"))
+		return areaController.CreateArea(c, postCode, prefecture, city, addressNumber, buildingName, detailId)
 	})
 	e.GET("/area", func(c echo.Context) error { return areaController.GetAreas(c) })
 	e.GET("/area/:id", func(c echo.Context) error { return areaController.GetArea(c) })
@@ -162,7 +149,8 @@ func Init() {
 		city := c.QueryParam("city")
 		addressNumber := c.QueryParam("address_number")
 		buildingName := c.QueryParam("building_name")
-		return areaController.UpdateArea(c, postCode, prefecture, city, addressNumber, buildingName)
+		detailId, _ := strconv.Atoi(c.QueryParam("detail_id"))
+		return areaController.UpdateArea(c, postCode, prefecture, city, addressNumber, buildingName, detailId)
 	})
 	e.DELETE("/area/:id", func(c echo.Context) error { return areaController.DeleteArea(c) })
 
@@ -191,7 +179,7 @@ func Init() {
 		return tagController.UpdateTag(c, name)
 	})
 	e.DELETE("/tag/:id", func(c echo.Context) error { return tagController.DeleteTag(c) })
-	
+
 	// matching
 	e.POST("/matching", func(c echo.Context) error {
 		status := c.QueryParam("status")
