@@ -14,26 +14,39 @@ import {
 } from '@components/common'
 import { userState } from '@components/store/Auth/auth'
 import styles from '@styles/Home.module.css'
+import { conditionState } from '@components/store/Condition/condition'
+import { MODERN_BROWSERSLIST_TARGET } from 'next/dist/shared/lib/constants'
+import { useEffect } from 'react'
 
 const recoilDefaultValue = {
   id: 1,
   name: 'gidai yuuki',
   email: 'gidai@email',
+}
+
+const recoilConditionDefaultValue = {
+  id: 1,
+  mode: '',
   prefectureId: '',
   prefectureName: '',
   cityNames: [],
   conditions: {},
+  isPostCode: false,
 }
 
 const Home: NextPage = () => {
   const [user, setUser] = useRecoilState(userState)
-  // 初期化
-  setUser(recoilDefaultValue)
-  // console.log(user)
+  const [condition, setCondition] = useRecoilState(conditionState)
 
-  // const handler = () => {
-  // setUser({ name: 'test user', email: 'test email' })
-  // }
+  // 初期化用として使いたいのでコメントアウトして残します
+  useEffect(() => {
+    // setUser(recoilDefaultValue)
+    setCondition(recoilConditionDefaultValue)
+  }, [])
+
+  const setModeHandler = (modeString: string) => {
+    setCondition({ ...condition, ...{ mode: modeString } })
+  }
 
   return (
     <div className={styles.container}>
@@ -47,7 +60,10 @@ const Home: NextPage = () => {
         <div className="grid w-full grid-cols-2">
           <FillCard width={'w-4/5'}>
             <Link href="/conditions">
-              <div className="py-20 text-center">
+              <div
+                className="py-20 text-center"
+                onClick={() => setModeHandler('rent')}
+              >
                 <p className="text-center text-8xl ">借りる</p>
                 <p className="text-center text-6xl ">Rent</p>
               </div>
@@ -55,7 +71,10 @@ const Home: NextPage = () => {
           </FillCard>
           <FillCard width={'w-4/5'}>
             <Link href="/conditions">
-              <div className="py-20 text-center">
+              <div
+                className="py-20 text-center"
+                onClick={() => setModeHandler('lend')}
+              >
                 <p className="text-center text-8xl ">貸す</p>
                 <p className="text-center text-6xl ">Lend</p>
               </div>
@@ -63,7 +82,10 @@ const Home: NextPage = () => {
           </FillCard>
           <FillCard width={'w-4/5'}>
             <Link href="/conditions">
-              <div className="py-20 text-center">
+              <div
+                className="py-20 text-center"
+                onClick={() => setModeHandler('buy')}
+              >
                 <p className="text-center text-8xl ">買う</p>
                 <p className="text-center text-6xl ">Buy</p>
               </div>
@@ -71,7 +93,10 @@ const Home: NextPage = () => {
           </FillCard>
           <FillCard width={'w-4/5'}>
             <Link href="/conditions">
-              <div className="py-20 text-center">
+              <div
+                className="py-20 text-center"
+                onClick={() => setModeHandler('sell')}
+              >
                 <p className="text-center text-8xl ">売る</p>{' '}
                 <p className="text-center text-6xl ">Sell</p>
               </div>

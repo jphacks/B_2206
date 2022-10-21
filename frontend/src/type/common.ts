@@ -3,8 +3,6 @@ export interface User {
   name: string
   email: string
   password: string
-  personalInfoId: number
-  companyInfoId: number | null
   created_at: string
   updated_at: string
 }
@@ -32,6 +30,7 @@ export interface CompanyInfo {
   addressNumber: string
   buildingName: string
   website: string
+  userId: number
   created_at: string
   updated_at: string
 }
@@ -113,21 +112,21 @@ export interface Value {
   id: number
   name: string
   value: number
-  rangeId: number
+  limitId: number
   created_at: string
   updated_at: string
 }
 
-export interface DetailsRange {
+export interface DetailsLimit {
   id: number
   detailId: number
-  rangeId: number
+  limitId: number
   classificationId: number
   created_at: string
   updated_at: string
 }
 
-export interface Range {
+export interface Limit {
   id: number
   name: string
   maxValueId: number
