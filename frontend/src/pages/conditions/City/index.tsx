@@ -1,13 +1,10 @@
-import Head from 'next/head'
 import styles from '@styles/Home.module.css'
-import { Card, PrimaryButton, Radio } from '@components/common'
+import { Card, PrimaryButton, ProgressBar } from '@components/common'
 import { useRecoilState } from 'recoil'
-import { userState } from '@components/store/Auth/auth'
-import { prefectures } from '../Prefecuture/prefectures'
-import { setGet } from '@api/api_methods'
+import { conditionState } from '@components/store/Condition/condition'
+import { getWithSet } from '@api/api_methods'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import { AnyTxtRecord } from 'dns'
 
 interface Props {
   nextModalName: string
@@ -18,25 +15,35 @@ interface Props {
 interface City {
   id: string
   name: string
+  checked: boolean
+}
+
+interface CheckCity {
+  city: City
+  checked: boolean
 }
 
 function City(props: Props): JSX.Element {
-  const [user, setUser] = useRecoilState(userState)
+  const [condition, setCondition] = useRecoilState(conditionState)
   const [cities, setCities] = useState<City[]>()
   const [search, setSearch] = useState('')
   const [searchString, setSearchString] = useState('')
   const [isSearch, setisSearch] = useState(false)
   const [select, setSelect] = useState(true)
-  const [selectCities, setSelectCities] = useState<string[]>([])
   const router = useRouter()
-  console.log(user)
-
-  // const handler = () => {
-  // setUser({ name: 'test user', email: 'test email' })
-  // }
 
   useEffect(() => {
-    setUser({ ...user, ...{ cityNames: [] } })
+    scrollTo(0, 0)
+
+    if (router.isReady) {
+      const getCitiesUrl =
+        'https://www.land.mlit.go.jp/webland/api/CitySearch?area=' +
+        condition.prefectureId
+      const getCities = async (url: string) => {
+        await getWithSet(url, setCities)
+      }
+      getCities(getCitiesUrl)
+    }
   }, [])
 
   const SearchString = <p className={'text-xl'}>{searchString} の検索結果</p>
@@ -62,57 +69,123 @@ function City(props: Props): JSX.Element {
     }
   }, [changeSearchHandler])
 
+  const [filterDistrict, setFilterDistrict] = useState<City[]>([])
+  const [filterCity, setFilterCity] = useState<City[]>([])
+  const [filterTown, setFilterTown] = useState<City[]>([])
+  const [filterVillage, setFilterVillage] = useState<City[]>([])
+
   useEffect(() => {
-    if (router.isReady) {
-      const getCitiesUrl =
-        'https://www.land.mlit.go.jp/webland/api/CitySearch?area=' +
-        user.prefectureId
-      console.log(getCitiesUrl)
-      const getCities = async (url: string) => {
-        await setGet(url, setCities)
+    let districtTmp = [] as City[]
+    let cityTmp = [] as City[]
+    let townTmp = [] as City[]
+    let villageTmp = [] as City[]
+
+    cities?.map((city) => {
+      if (city.name.includes('区')) {
+        districtTmp.push(city)
+      } else if (city.name.includes('市')) {
+        cityTmp.push(city)
+      } else if (city.name.includes('町')) {
+        townTmp.push(city)
+      } else if (city.name.includes('村')) {
+        villageTmp.push(city)
       }
-      getCities(getCitiesUrl)
-    }
-  }, [])
+    })
+    setFilterDistrict(districtTmp)
+    setFilterCity(cityTmp)
+    setFilterTown(townTmp)
+    setFilterVillage(villageTmp)
+  }, [cities])
 
-  const filter_district = cities?.filter((city) => {
-    return city.name.includes('区')
-  })
+  const allCityCheckHandler = (bool: boolean) => {
+    setFilterCity((cities) =>
+      cities.map((city) => {
+        return { id: city.id, name: city.name, checked: bool }
+      }),
+    )
+  }
 
-  const filter_town = cities?.filter((city) => {
-    return city.name.includes('町')
-  })
+  const allDistrictCheckHandler = (bool: boolean) => {
+    setFilterDistrict((cities) =>
+      cities.map((city) => {
+        return { id: city.id, name: city.name, checked: bool }
+      }),
+    )
+  }
 
-  const filter_city = cities?.filter((city) => {
-    return city.name.includes('市')
-  })
+  const allTownCheckHandler = (bool: boolean) => {
+    setFilterTown((cities) =>
+      cities.map((city) => {
+        return { id: city.id, name: city.name, checked: bool }
+      }),
+    )
+  }
 
-  const filter_village = cities?.filter((city) => {
-    return city.name.includes('村')
-  })
+  const allVillageCheckHandler = (bool: boolean) => {
+    setFilterVillage((cities) =>
+      cities.map((city) => {
+        return { id: city.id, name: city.name, checked: bool }
+      }),
+    )
+  }
+
+  useEffect(() => {
+  }, [filterCity, filterDistrict, filterTown, filterVillage])
 
   function ShowDistrict() {
-    if (filter_district?.length != 0) {
+    if (filterDistrict?.length != 0) {
       return (
         <div>
-          <p className={'my-3 text-lg'}>{(cities?.at(0)?.name == '千代田区')?"東京都":cities?.at(0)?.name}</p>
+          <div className="my-5 flex flex-row items-center gap-5">
+            <p className={'my-3 text-lg'}>
+              {cities?.at(0)?.name == '千代田区'
+                ? '東京都'
+                : cities?.at(0)?.name}
+            </p>
+            <div className="flex h-3/5 flex-row gap-5 text-xs">
+              <PrimaryButton onClick={() => allDistrictCheckHandler(true)}>
+                全てチェック
+              </PrimaryButton>
+              <PrimaryButton onClick={() => allDistrictCheckHandler(false)}>
+                全てはずす
+              </PrimaryButton>
+            </div>
+          </div>
+
           <div className={'flex flex-row flex-wrap gap-3'}>
-            {filter_district?.map((district) => {
+            {filterDistrict?.map((district) => {
               if (searchString == '' || district.name.includes(searchString)) {
                 return (
                   <div className={'mb-4 flex items-center gap-1'}>
                     <input
-                      onChange={(e) => {
-                        citySelectHandler(e, district.name)
+                      onChange={() => {
+                        setFilterDistrict((filterDistricts) =>
+                          filterDistricts.map((setCity) => {
+                            if (setCity.id == district.id) {
+                              return {
+                                id: setCity.id,
+                                name: setCity.name,
+                                checked: !setCity.checked,
+                              }
+                            } else {
+                              return {
+                                id: setCity.id,
+                                name: setCity.name,
+                                checked: setCity.checked,
+                              }
+                            }
+                          }),
+                        )
                       }}
-                      checked={selectCities.includes(district.name)}
+                      checked={district.checked}
                       type="checkbox"
                       name="city"
+                      id={`city_${district.id}`}
                       className={
                         'h-4 w-4 rounded border-gray-300 bg-gray-100 pr-3 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600'
                       }
                     />
-                    <label>{district.name}</label>
+                    <label htmlFor={`city_${district.id}`}>{district.name}</label>
                   </div>
                 )
               }
@@ -121,35 +194,64 @@ function City(props: Props): JSX.Element {
         </div>
       )
     } else {
-      return <div></div>
+      return <></>
     }
   }
 
   function ShowCity() {
     return (
       <div>
-        <p className={'my-3 text-lg'}>市</p>
+        <div className="my-5 flex flex-row items-center gap-5">
+          <p className={'my-3 text-lg'}>市一覧</p>
+          <div className="flex h-3/5 flex-row gap-5 text-xs">
+            <PrimaryButton onClick={() => allCityCheckHandler(true)}>
+              全てチェック
+            </PrimaryButton>
+            <PrimaryButton onClick={() => allCityCheckHandler(false)}>
+              全てはずす
+            </PrimaryButton>
+          </div>
+        </div>
         <div className={'flex flex-row flex-wrap gap-3'}>
-          {filter_city?.map((city, index) => {
+          {filterCity?.map((city, index) => {
             if (
               (!cities?.at(1)?.name.includes('区') && index == 0) ||
               index > 0
             ) {
               if (searchString == '' || city.name.includes(searchString)) {
+                let conditionCity = condition.cityNames?.includes(city.name)
                 return (
                   <div className={'mb-4 flex items-center gap-1'}>
                     <input
-                      onChange={(e) => {
-                        citySelectHandler(e, city.name)
+                      onChange={() => {
+                        setFilterCity((filterCities) =>
+                          filterCities.map((setCity) => {
+                            if (setCity.id == city.id) {
+                              return {
+                                id: setCity.id,
+                                name: setCity.name,
+                                checked: !setCity.checked,
+                              }
+                            } else {
+                              return {
+                                id: setCity.id,
+                                name: setCity.name,
+                                checked: setCity.checked,
+                              }
+                            }
+                          }),
+                        )
                       }}
-                      checked={selectCities.includes(city.name)}
+                      checked={city.checked}
+                      defaultChecked={conditionCity}
                       type="checkbox"
                       name="city"
+                      id={`city_${city.id}`}
                       className={
                         'h-4 w-4 rounded border-gray-300 bg-gray-100 pr-3 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600'
                       }
                     />
-                    <label>{city.name}</label>
+                    <label htmlFor={`city_${city.id}`}>{city.name}</label>
                   </div>
                 )
               }
@@ -163,24 +265,51 @@ function City(props: Props): JSX.Element {
   function ShowTown() {
     return (
       <div>
-        <p className={'my-3 text-lg'}>町</p>
+        <div className="my-5 flex flex-row items-center gap-5">
+          <p className={'my-3 text-lg'}>町一覧</p>
+          <div className="flex h-3/5 flex-row gap-5 text-xs">
+            <PrimaryButton onClick={() => allTownCheckHandler(true)}>
+              全てチェック
+            </PrimaryButton>
+            <PrimaryButton onClick={() => allTownCheckHandler(true)}>
+              全てはずす
+            </PrimaryButton>
+          </div>
+        </div>
         <div className={'flex flex-row flex-wrap gap-3'}>
-          {filter_town?.map((town) => {
+          {filterTown?.map((town) => {
             if (searchString == '' || town.name.includes(searchString)) {
               return (
                 <div className={'mb-4 flex items-center gap-1'}>
                   <input
-                    onChange={(e) => {
-                      citySelectHandler(e, town.name)
+                    onChange={() => {
+                      setFilterTown((filterTowns) =>
+                        filterTowns.map((setCity) => {
+                          if (setCity.id == town.id) {
+                            return {
+                              id: setCity.id,
+                              name: setCity.name,
+                              checked: !setCity.checked,
+                            }
+                          } else {
+                            return {
+                              id: setCity.id,
+                              name: setCity.name,
+                              checked: setCity.checked,
+                            }
+                          }
+                        }),
+                      )
                     }}
-                    checked={selectCities.includes(town.name)}
+                    checked={town.checked}
                     type="checkbox"
                     name="city"
+                    id={`city_${town.id}`}
                     className={
                       'h-4 w-4 rounded border-gray-300 bg-gray-100 pr-3 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600'
                     }
                   />
-                  <label>{town.name}</label>
+                  <label htmlFor={`city_${town.id}`}>{town.name}</label>
                 </div>
               )
             }
@@ -191,27 +320,54 @@ function City(props: Props): JSX.Element {
   }
 
   function ShowVillage() {
-    if (filter_village?.length != 0) {
+    if (filterVillage?.length != 0) {
       return (
         <div>
-          <p className={'my-3 text-lg'}>村</p>
+          <div className="my-5 flex flex-row items-center gap-5">
+            <p className={'my-3 text-lg'}>村一覧</p>
+            <div className="flex h-3/5 flex-row gap-5 text-xs">
+              <PrimaryButton onClick={() => allVillageCheckHandler(true)}>
+                全てチェック
+              </PrimaryButton>
+              <PrimaryButton onClick={() => allVillageCheckHandler(false)}>
+                全てはずす
+              </PrimaryButton>
+            </div>
+          </div>
           <div className={'flex flex-row flex-wrap gap-3'}>
-            {filter_village?.map((village) => {
+            {filterVillage?.map((village) => {
               if (searchString == '' || village.name.includes(searchString)) {
                 return (
                   <div className={'mb-4 flex items-center gap-1'}>
                     <input
-                      onChange={(e) => {
-                        citySelectHandler(e, village.name)
+                      onChange={() => {
+                        setFilterVillage((filterVillages) =>
+                          filterVillages.map((setCity) => {
+                            if (setCity.id == village.id) {
+                              return {
+                                id: setCity.id,
+                                name: setCity.name,
+                                checked: !setCity.checked,
+                              }
+                            } else {
+                              return {
+                                id: setCity.id,
+                                name: setCity.name,
+                                checked: setCity.checked,
+                              }
+                            }
+                          }),
+                        )
                       }}
-                      checked={selectCities.includes(village.name)}
+                      checked={village.checked}
                       type="checkbox"
                       name="city"
+                      id={`city_${village.id}`}
                       className={
                         'h-4 w-4 rounded border-gray-300 bg-gray-100 pr-3 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600'
                       }
                     />
-                    <label>{village.name}</label>
+                    <label htmlFor={`city_${village.id}`}>{village.name}</label>
                   </div>
                 )
               }
@@ -220,32 +376,40 @@ function City(props: Props): JSX.Element {
         </div>
       )
     } else {
-      return <div></div>
+      return <></>
     }
   }
 
   const Caution = <p className={'text-accent-2'}>市区町村を選択してください</p>
 
-  const citySelectHandler = (e: any, cityName: string) => {
-    if (e.target.checked) {
-      //   console.log('true')
-      setSelect(true)
-      setSelectCities([...selectCities, cityName])
-    } else {
-      //   console.log('else')
-      setSelectCities(selectCities.filter((city) => city !== cityName))
-
-      if (selectCities.length == 0) {
-        setSelect(false)
-      }
-    }
-    // console.log(selectCities)
-  }
-
   const submitCityHandler = () => {
-    console.log(user.cityNames)
+    let selectCities: string[] = []
+    filterCity?.map((city) => {
+      if (city.checked) {
+        selectCities.push(city.name)
+      }
+    })
+
+    filterDistrict?.map((city) => {
+      if (city.checked) {
+        selectCities.push(city.name)
+      }
+    })
+
+    filterTown.map((city) => {
+      if (city.checked) {
+        selectCities.push(city.name)
+      }
+    })
+
+    filterVillage?.map((city) => {
+      if (city.checked) {
+        selectCities.push(city.name)
+      }
+    })
+
     if (selectCities.length != 0) {
-      setUser({ ...user, ...{ cityNames: selectCities } })
+      setCondition({ ...condition, ...{ cityNames: selectCities } })
       props.setModalName(props.nextModalName)
     } else {
       setSelect(false)
@@ -258,49 +422,13 @@ function City(props: Props): JSX.Element {
     }
   }, [submitCityHandler])
 
+  const pointName = ['県の選択', '市区町村の選択', 'お部屋条件の選択']
+
   return (
     <div className={styles.container}>
-      <Head>
-        <title>SumiMatch</title>
-        <meta name="description" content="SumiMatch" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
       <main className={styles.main}>
         <div className="w-full">
-          <div className="flex justify-center">
-            <div className="w-2/3">
-              <h2 className="sr-only">Steps</h2>
-              <div className="after:bg-primary-1 relative after:absolute after:inset-x-0 after:top-1/2 after:block after:h-0.5 after:-translate-y-1/2 after:rounded-lg">
-                <ol className="text-main-black relative z-10 flex justify-between text-sm font-medium">
-                  <li className="bg-background-1 flex items-center p-2">
-                    <span className="bg-primary-1 h-6 w-6 rounded-full text-center text-[10px] font-bold leading-6">
-                      1
-                    </span>
-                    <span className="hidden sm:ml-2 sm:block"> 県の選択 </span>
-                  </li>
-                  <li className="bg-background-1 flex items-center p-2">
-                    <span className="bg-accent-2 h-6 w-6 rounded-full text-center text-[10px] font-bold leading-6 text-white">
-                      2
-                    </span>
-                    <span className="hidden sm:ml-2 sm:block">
-                      {' '}
-                      市区町村の選択{' '}
-                    </span>
-                  </li>
-                  <li className="bg-background-1 flex items-center p-2">
-                    <span className="bg-primary-1 h-6 w-6 rounded-full text-center text-[10px] font-bold leading-6">
-                      3
-                    </span>
-                    <span className="hidden sm:ml-2 sm:block">
-                      {' '}
-                      お部屋条件の選択{' '}
-                    </span>
-                  </li>
-                </ol>
-              </div>
-            </div>
-          </div>
+          <ProgressBar pointName={pointName} nowPoint={2} />
           <Card width={'w-4/5'}>
             <div className={'flex justify-start pb-8'}>
               <PrimaryButton
@@ -312,14 +440,12 @@ function City(props: Props): JSX.Element {
               </PrimaryButton>
             </div>
             <div className={'text-primary-2 my-3 text-xl font-bold'}>
-              <p>{user.prefectureName}-市区町村を選択</p>
+              <p>{condition.prefectureName}-市区町村を選択</p>
             </div>
             <div>
-              <p>市区町村にチェックを入れてください</p>
-              <div
-                className={'border-primary-1 mb-5 border-2 border-dashed'}
-              ></div>
-              {/* <button onClick={() => {console.log(cities?.at(0)?.name)}} >test</button> */}
+              <p className={'border-primary-1 mb-5 border-b-2 border-dashed'}>
+                市区町村にチェックを入れてください
+              </p>
               <div>
                 <form
                   onSubmit={(e) => {
@@ -367,7 +493,7 @@ function City(props: Props): JSX.Element {
                       type="search"
                       id="default-search"
                       className={
-                        'block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 pl-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500'
+                        'block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 pl-10 text-sm text-gray-900 focus:border-primary-2 focus:ring-prymary-2 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-1 dark:focus:ring-primary-1'
                       }
                       placeholder="市区町村を選択"
                     />
@@ -377,7 +503,7 @@ function City(props: Props): JSX.Element {
                       }}
                       type="submit"
                       className={
-                        'absolute right-2.5 bottom-2.5 rounded-lg bg-blue-700 px-4 py-2 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
+                        'absolute right-2.5 bottom-2.5 rounded-lg bg-primary-1 px-4 py-2 text-sm font-medium text-white hover:bg-primary-2 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
                       }
                     >
                       Search
@@ -398,7 +524,7 @@ function City(props: Props): JSX.Element {
                     submitCityHandler()
                   }}
                 >
-                  お部屋の条件へ
+                  お部屋の条件選択へ
                 </PrimaryButton>
               </div>
               <div className={'flex justify-center'}>{!select && Caution}</div>
