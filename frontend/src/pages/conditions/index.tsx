@@ -5,10 +5,9 @@ import Image from 'next/image'
 import styles from '@styles/Home.module.css'
 import { Card, PrimaryButton, Radio } from '@components/common'
 import { useRecoilState } from 'recoil'
-import { userState } from '@components/store/Auth/auth'
+import { conditionState } from '@components/store/Condition/condition'
 import clsx from 'clsx'
 import React, { useEffect, useCallback, useState } from 'react'
-import { EventEmitter } from 'stream'
 import Prefecture from './Prefecuture'
 import City from './City'
 import Other from './Other'
@@ -22,9 +21,8 @@ const Modals = {
 }
 
 const Home: NextPage = () => {
-  const [user, setUser] = useRecoilState(userState)
+  const [condition, setConditon] = useRecoilState(conditionState)
   const [modalName, setModalName] = useState(Modals.prefecture)
-  // console.log(user)
 
   const handleClickClose = useCallback(() => {
     setModalName(Modals.prefecture)
@@ -38,7 +36,11 @@ const Home: NextPage = () => {
   }, [handleClickClose])
 
   const PrefectureModal = (
-    <Prefecture setModalName={setModalName} nextModalName={Modals.city} />
+    <Prefecture
+      setModalName={setModalName}
+      nextModalName={Modals.city}
+      otherModalName={Modals.other}
+    />
   )
 
   const CityModal = (
@@ -53,13 +55,12 @@ const Home: NextPage = () => {
     <Other
       setModalName={setModalName}
       prevModalName={Modals.city}
+      morePrevModalName={Modals.prefecture}
       nextModalName={Modals.complete}
     />
   )
 
-  const CompleteModal = (
-    <Complete />
-  )
+  const CompleteModal = <Complete />
 
   return (
     <div>

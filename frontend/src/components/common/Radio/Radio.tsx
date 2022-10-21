@@ -9,23 +9,27 @@ interface Props {
   onClick?: any
   onChange?: any
   children?: React.ReactNode
+  id?: string
+  defaultChecked?: boolean
 }
 
 function Radio(props: Props): JSX.Element {
   const className = '' + (props.className ? ` ${props.className}` : '')
   return (
     <>
-      <div>
+      <div className="flex flex-row gap-1">
         <input
-        type="radio"
-        name={props.name}
-        checked={props.checked}
-        className={clsx(className)}
-        value={props.value}
-        onClick={props.onClick}
-        onChange={props.onChange}
+          type="radio"
+          name={props.name}
+          defaultChecked={props.defaultChecked}
+          checked={props.checked}
+          className={clsx(className)}
+          value={props.value}
+          onClick={props.onClick}
+          onChange={props.onChange}
+          id={props.id}
         />
-        {' ' + props.children}
+        <label htmlFor={props.id}>{props.children}</label>
       </div>
     </>
   )

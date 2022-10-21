@@ -1,27 +1,37 @@
 import axios from 'axios'
+import { setDefaultResultOrder } from 'dns'
 
 export const get = async (url: string) => {
-    axios
+  axios
     .get(url)
     .then((results) => {
-        // console.log(results.data.data);
-        const data:any = results.data.data;
-        return data;
+      const data: any = results.data.data
+      return data
     })
     .catch((error) => {
-        console.log(error)
     })
-};
+}
 
-export const setGet = async (url: string, set: Function) => {
-    axios
+export const getWithSet = async (url: string, set: Function) => {
+  axios
     .get(url)
     .then((results) => {
-        // console.log(results.data.data);
-        const data:any = results.data.data;
-        set(data);
+      const data: any = results.data.data
+      set(data)
     })
     .catch((error) => {
-        console.log(error)
+      set(error)
     })
-};
+}
+
+export const getPostWithSet = async (url: string, set: Function) => {
+  axios
+    .get(url)
+    .then((results) => {
+      const data: any = results.data
+      set(data)
+    })
+    .catch((error) => {
+      set(error)
+    })
+}
