@@ -1,12 +1,12 @@
 import clsx from 'clsx'
 import type { NextPage } from 'next'
 import { useState, useEffect, memo, useRef } from 'react'
+import { useRecoilState } from 'recoil'
 import { Card, Label, Modal, PrimaryButton, Textarea } from '@components/common'
 import { Close } from '@components/icons'
+import { allDataState } from '@components/store/data/allData'
 import { Area, Tag, Limit, PersonalInfo, CompanyInfo } from '@type/common'
 
-import { useRecoilState } from 'recoil'
-import { allDataState } from '@components/store/data/allData'
 
 interface Props {
   children?: React.ReactNode

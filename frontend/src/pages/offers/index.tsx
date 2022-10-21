@@ -1,7 +1,8 @@
-import { useState, useEffect, memo, useRef } from 'react'
-import type { NextPage } from 'next'
 import clsx from 'clsx'
+import type { NextPage } from 'next'
+import { useState, useEffect, memo, useRef } from 'react'
 import { Card, Label, Modal, PrimaryButton, Tooltip } from '@components/common'
+import { Close, Domain, Phone, WebSite } from '@components/icons'
 import {
   User,
   Area,
@@ -11,7 +12,6 @@ import {
   CompanyInfo,
   Matching,
 } from '@type/common'
-import { Close, Domain, Phone, WebSite } from '@components/icons'
 
 interface Props {
   children?: React.ReactNode
@@ -219,7 +219,7 @@ const Rentlist: NextPage = () => {
                   </Tooltip>
                 </div>
                 <Tooltip content={props.userData.companyInfo.website}>
-                  <a href={props.userData.companyInfo.website} target="_blank">
+                  <a href={props.userData.companyInfo.website} target="_blank" rel="noreferrer">
                     <WebSite width="24" height="24" />
                   </a>
                 </Tooltip>

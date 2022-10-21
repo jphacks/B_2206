@@ -4,10 +4,10 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useRecoilState } from 'recoil'
 import { prefectures } from '../Prefecuture/prefectures'
-import { userState } from '@components/store/Auth/auth'
-import { Card, PrimaryButton, ProgressBar } from '@components/common'
-import { conditionState } from '@components/store/Condition/condition'
 import { getWithSet } from '@api/api_methods'
+import { Card, PrimaryButton, ProgressBar } from '@components/common'
+import { userState } from '@components/store/Auth/auth'
+import { conditionState } from '@components/store/Condition/condition'
 
 interface Props {
   nextModalName: string

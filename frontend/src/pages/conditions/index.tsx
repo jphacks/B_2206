@@ -6,15 +6,15 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React, { useEffect, useCallback, useState } from 'react'
 import { useRecoilState } from 'recoil'
-import styles from '@styles/Home.module.css'
-import { Card, PrimaryButton, Radio } from '@components/common'
-import { conditionState } from '@components/store/Condition/condition'
 
 import City from './City'
 import Complete from './Complete'
 import Other from './Other'
 import Prefecture from './Prefecuture'
+import { Card, PrimaryButton, Radio } from '@components/common'
 import { userState } from '@components/store/Auth/auth'
+import { conditionState } from '@components/store/Condition/condition'
+import styles from '@styles/Home.module.css'
 
 const Modals = {
   prefecture: 'prefecture',

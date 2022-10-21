@@ -1,5 +1,8 @@
-import { useRecoilState } from 'recoil'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
+import { useRecoilState } from 'recoil'
+import { getWithSet } from '@api/api_methods'
 import {
   Card,
   PrimaryButton,
@@ -9,11 +12,8 @@ import {
   ProgressBar,
 } from '@components/common'
 import { Close } from '@components/icons'
-import styles from '@styles/Home.module.css'
 import { conditionState } from '@components/store/Condition/condition'
-import { useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
-import { getWithSet } from '@api/api_methods'
+import styles from '@styles/Home.module.css'
 
 interface Props {
   morePrevModalName: string

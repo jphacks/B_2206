@@ -1,10 +1,10 @@
-import { Card, PrimaryButton, Radio, ProgressBar } from '@components/common'
-import { useRecoilState } from 'recoil'
-import { conditionState } from '@components/store/Condition/condition'
-import { prefectures } from './prefectures'
-import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
+import { useRecoilState } from 'recoil'
+import { prefectures } from './prefectures'
 import { getPostWithSet } from '@api/api_methods'
+import { Card, PrimaryButton, Radio, ProgressBar } from '@components/common'
+import { conditionState } from '@components/store/Condition/condition'
 
 interface Props {
   nextModalName: string
@@ -336,3 +336,5 @@ function Prefecture(props: Props): JSX.Element {
     </div>
   )
 }
+
+export default Prefecture
