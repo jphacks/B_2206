@@ -1,10 +1,7 @@
 import Head from 'next/head'
 import styles from '@styles/Home.module.css'
 import Link from 'next/link'
-import {
-  Card,
-  PrimaryButton,
-} from '@components/common'
+import { Card, PrimaryButton } from '@components/common'
 import { useRecoilState } from 'recoil'
 import { conditionState } from '@components/store/Condition/condition'
 import { useEffect } from 'react'
@@ -18,7 +15,7 @@ function Complete(): JSX.Element {
   const [condition, setCondition] = useRecoilState(conditionState)
 
   useEffect(() => {
-    scrollTo(0, 0);
+    scrollTo(0, 0)
   }, [])
 
   return (

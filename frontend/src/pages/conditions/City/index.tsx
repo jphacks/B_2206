@@ -129,8 +129,7 @@ function City(props: Props): JSX.Element {
     )
   }
 
-  useEffect(() => {
-  }, [filterCity, filterDistrict, filterTown, filterVillage])
+  useEffect(() => {}, [filterCity, filterDistrict, filterTown, filterVillage])
 
   function ShowDistrict() {
     if (filterDistrict?.length != 0) {
@@ -185,7 +184,9 @@ function City(props: Props): JSX.Element {
                         'h-4 w-4 rounded border-gray-300 bg-gray-100 pr-3 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600'
                       }
                     />
-                    <label htmlFor={`city_${district.id}`}>{district.name}</label>
+                    <label htmlFor={`city_${district.id}`}>
+                      {district.name}
+                    </label>
                   </div>
                 )
               }
@@ -493,7 +494,7 @@ function City(props: Props): JSX.Element {
                       type="search"
                       id="default-search"
                       className={
-                        'block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 pl-10 text-sm text-gray-900 focus:border-primary-2 focus:ring-prymary-2 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-1 dark:focus:ring-primary-1'
+                        'focus:border-primary-2 focus:ring-prymary-2 dark:focus:border-primary-1 dark:focus:ring-primary-1 block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 pl-10 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400'
                       }
                       placeholder="市区町村を選択"
                     />
@@ -503,7 +504,7 @@ function City(props: Props): JSX.Element {
                       }}
                       type="submit"
                       className={
-                        'absolute right-2.5 bottom-2.5 rounded-lg bg-primary-1 px-4 py-2 text-sm font-medium text-white hover:bg-primary-2 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
+                        'bg-primary-1 hover:bg-primary-2 absolute right-2.5 bottom-2.5 rounded-lg px-4 py-2 text-sm font-medium text-white focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
                       }
                     >
                       Search

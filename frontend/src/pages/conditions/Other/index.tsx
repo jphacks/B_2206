@@ -36,7 +36,7 @@ function Other(props: Props): JSX.Element {
   }, [])
 
   useEffect(() => {
-    scrollTo(0, 0);
+    scrollTo(0, 0)
 
     if (router.isReady) {
       const getCitiesUrl =
@@ -544,7 +544,9 @@ function Other(props: Props): JSX.Element {
                   </div>
                 </div>
               </div>
-              <div className={'mt-10 mb-5 flex justify-center'}>{buttonByMode(condition.mode)}</div>
+              <div className={'mt-10 mb-5 flex justify-center'}>
+                {buttonByMode(condition.mode)}
+              </div>
             </Modal>
           )}
         </div>

@@ -41,7 +41,7 @@ const Home: NextPage = () => {
   useEffect(() => {
     // setUser(recoilDefaultValue)
     setCondition(recoilConditionDefaultValue)
-  },[])
+  }, [])
 
   const setModeHandler = (modeString: string) => {
     console.log('click!')
@@ -60,7 +60,10 @@ const Home: NextPage = () => {
         <div className="grid w-full grid-cols-2">
           <FillCard width={'w-4/5'}>
             <Link href="/conditions">
-              <div className="py-20 text-center" onClick={() => setModeHandler('rent')}>
+              <div
+                className="py-20 text-center"
+                onClick={() => setModeHandler('rent')}
+              >
                 <p className="text-center text-8xl ">借りる</p>
                 <p className="text-center text-6xl ">Rent</p>
               </div>
@@ -68,7 +71,10 @@ const Home: NextPage = () => {
           </FillCard>
           <FillCard width={'w-4/5'}>
             <Link href="/conditions">
-              <div className="py-20 text-center" onClick={() => setModeHandler('lend')}>
+              <div
+                className="py-20 text-center"
+                onClick={() => setModeHandler('lend')}
+              >
                 <p className="text-center text-8xl ">貸す</p>
                 <p className="text-center text-6xl ">Lend</p>
               </div>
@@ -76,7 +82,10 @@ const Home: NextPage = () => {
           </FillCard>
           <FillCard width={'w-4/5'}>
             <Link href="/conditions">
-              <div className="py-20 text-center" onClick={() => setModeHandler('buy')}>
+              <div
+                className="py-20 text-center"
+                onClick={() => setModeHandler('buy')}
+              >
                 <p className="text-center text-8xl ">買う</p>
                 <p className="text-center text-6xl ">Buy</p>
               </div>
@@ -84,7 +93,10 @@ const Home: NextPage = () => {
           </FillCard>
           <FillCard width={'w-4/5'}>
             <Link href="/conditions">
-              <div className="py-20 text-center" onClick={() => setModeHandler('sell')}>
+              <div
+                className="py-20 text-center"
+                onClick={() => setModeHandler('sell')}
+              >
                 <p className="text-center text-8xl ">売る</p>{' '}
                 <p className="text-center text-6xl ">Sell</p>
               </div>

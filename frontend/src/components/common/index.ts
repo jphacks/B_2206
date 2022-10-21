@@ -10,4 +10,3 @@ export { default as Dropdown } from './Dropdown'
 export { default as Modal } from './Modal'
 export { default as LabelButton } from './LabelButton'
 export { default as ProgressBar } from './ProgressBar'
-

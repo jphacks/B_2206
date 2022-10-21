@@ -27,14 +27,16 @@ function ProgressBar(props: Props): JSX.Element {
         <div className="after:bg-primary-1 relative after:absolute after:inset-x-0 after:top-1/2 after:block after:h-0.5 after:-translate-y-1/2 after:rounded-lg">
           <ol className="text-main-black relative z-10 flex justify-between text-sm font-medium">
             {props.pointName.map((pointName, index) => {
-              return(
+              return (
                 <li className="bg-background-1 flex items-center p-2">
-              {(props.nowPoint == index+1) ? OrangePoint(index+1) : NormalPoint(index+1)}
-              <span className="hidden sm:ml-2 sm:block">
-                {' '}
-                {props.pointName[index]}{' '}
-              </span>
-            </li>
+                  {props.nowPoint == index + 1
+                    ? OrangePoint(index + 1)
+                    : NormalPoint(index + 1)}
+                  <span className="hidden sm:ml-2 sm:block">
+                    {' '}
+                    {props.pointName[index]}{' '}
+                  </span>
+                </li>
               )
             })}
           </ol>
