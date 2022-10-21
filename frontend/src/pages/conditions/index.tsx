@@ -36,7 +36,11 @@ const Home: NextPage = () => {
   }, [handleClickClose])
 
   const PrefectureModal = (
-    <Prefecture setModalName={setModalName} nextModalName={Modals.city} otherModalName={Modals.other} />
+    <Prefecture
+      setModalName={setModalName}
+      nextModalName={Modals.city}
+      otherModalName={Modals.other}
+    />
   )
 
   const CityModal = (

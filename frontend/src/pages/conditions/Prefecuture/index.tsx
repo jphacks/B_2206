@@ -65,10 +65,15 @@ function Prefecture(props: Props): JSX.Element {
         ...{ prefectureId: prefId, prefectureName: prefName },
       })
 
-      if(nextModalName == props.otherModalName){
+      if (nextModalName == props.otherModalName) {
         setCondition({
           ...condition,
-          ...{ prefectureId: prefId, prefectureName: prefName, cityNames: [cityName], isPostCode: true },
+          ...{
+            prefectureId: prefId,
+            prefectureName: prefName,
+            cityNames: [cityName],
+            isPostCode: true,
+          },
         })
       }
       props.setModalName(nextModalName)

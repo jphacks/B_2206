@@ -206,12 +206,13 @@ function Other(props: Props): JSX.Element {
     const conditions = {
       priceRange: `${priceMin} ~ ${priceMax}`,
       priceOptions: priceOption,
-      roomTypes: (selectRoomType.length == 0)?['指定なし']:selectRoomType,
-      buildTypes: (selectBuildType.length == 0)?['指定なし']:selectBuildType,
+      roomTypes: selectRoomType.length == 0 ? ['指定なし'] : selectRoomType,
+      buildTypes: selectBuildType.length == 0 ? ['指定なし'] : selectBuildType,
       time: selectTime,
       areaRange: `${areaMin} ~ ${areaMax}`,
       buildAge: buildAge,
-      otherConditions: (otherCondition.length == 0)?['指定なし']:otherCondition,
+      otherConditions:
+        otherCondition.length == 0 ? ['指定なし'] : otherCondition,
     }
     setCondition({ ...condition, ...{ conditions: conditions } })
     props.setModalName(props.nextModalName)
