@@ -13,7 +13,7 @@ interface Props {
 
 function Select(props: Props): JSX.Element {
   const className =
-    'rounded-full border border-primary-1 py-2 px-4 w-full' +
+    'rounded-full border border-primary-1 py-2 px-4 w-full text-center' +
     (props.className ? ` ${props.className}` : '')
   return (
     <div className={clsx(s.customSelect)}>

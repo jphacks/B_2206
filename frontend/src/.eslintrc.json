@@ -1,36 +1,36 @@
-{
-  "env": {
-    "browser": true,
-    "es2021": true
-  },
-  "extends": [
-    "plugin:react/recommended",
-    "standard-with-typescript",
-    // "eslint-plugin-prettier", // eslintとprettierの衝突回避
-    "plugin:@next/next/recommended",
-    "plugin:tailwindcss/recommended",
-    "plugin:prettier/recommended"
-  ],
-  "parser": "@typescript-eslint/parser",
-  "parserOptions": {
-    "ecmaFeatures": {
-      "jsx": true
-    },
-    "ecmaVersion": "latest",
-    "sourceType": "module"
-  },
-  "plugins": ["react", "@typescript-eslint", "prettier"],
-  "rules": {
-    "react/react-in-jsx-scope": "off", // v17からReactをimport不要になった
-    "prettier/prettier": "error", // prettierのエラーをeslintで検知
-    // importをアルファベット順にする
-    "import/order": [
-      "error",
-      {
-        "alphabetize": {
-          "order": "asc"
-        }
-      }
-    ]
-  }
-}
+// {
+//   "env": {
+//     "browser": true,
+//     "es2021": true
+//   },
+//   "extends": [
+//     "plugin:react/recommended",
+//     "standard-with-typescript",
+//     // "eslint-plugin-prettier", // eslintとprettierの衝突回避
+//     "plugin:@next/next/recommended",
+//     "plugin:tailwindcss/recommended",
+//     "plugin:prettier/recommended"
+//   ],
+//   "parser": "@typescript-eslint/parser",
+//   "parserOptions": {
+//     "ecmaFeatures": {
+//       "jsx": true
+//     },
+//     "ecmaVersion": "latest",
+//     "sourceType": "module"
+//   },
+//   "plugins": ["react", "@typescript-eslint", "prettier"],
+//   "rules": {
+//     "react/react-in-jsx-scope": "off", // v17からReactをimport不要になった
+//     "prettier/prettier": "error", // prettierのエラーをeslintで検知
+//     // importをアルファベット順にする
+//     "import/order": [
+//       "error",
+//       {
+//         "alphabetize": {
+//           "order": "asc"
+//         }
+//       }
+//     ]
+//   }
+// }
