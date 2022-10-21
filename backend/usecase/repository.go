@@ -28,14 +28,6 @@ type WatchListRepository interface {
 	DeleteById(domain.WatchList) error
 }
 
-type DetailRepository interface {
-	Store(domain.Detail) (domain.Detail, error)
-	FindById(int) (domain.Detail, error)
-	FindAll() (domain.Details, error)
-	Update(domain.Detail) (domain.Detail, error)
-	DeleteById(domain.Detail) error
-}
-
 type CompanyInfoRepository interface {
 	Store(domain.CompanyInfo) (domain.CompanyInfo, error)
 	FindById(int) (domain.CompanyInfo, error)
