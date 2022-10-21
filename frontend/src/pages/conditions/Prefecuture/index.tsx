@@ -86,8 +86,8 @@ function Prefecture(props: Props): JSX.Element {
 
   const Caution = <p className={'text-accent-2'}>都道府県を選択してください</p>
 
-  const pointName = ['県の選択', '市区町村の選択', 'お部屋条件の選択']
-  const pointNamePostCode = ['県と市区町村の選択', 'お部屋条件の選択']
+  const pointName = ['都道府県の選択', '市区町村の選択', 'お部屋条件の選択']
+  const pointNamePostCode = ['都道府県と市区町村の選択', 'お部屋条件の選択']
 
   const changeModalHandler = (mode: string) => {
     if (mode == 'search') {

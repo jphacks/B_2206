@@ -216,8 +216,8 @@ function Other(props: Props): JSX.Element {
     props.setModalName(props.nextModalName)
   }
 
-  const pointName = ['県の選択', '市区町村の選択', 'お部屋条件の選択']
-  const pointNamePostCode = ['県と市区町村の選択', 'お部屋条件の選択']
+  const pointName = ['都道府県の選択', '市区町村の選択', 'お部屋条件の選択']
+  const pointNamePostCode = ['都道府県と市区町村の選択', 'お部屋条件の選択']
 
   const buttonByMode = (mode: string) => {
     if (mode == 'lend') {
