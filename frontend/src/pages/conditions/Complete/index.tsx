@@ -69,7 +69,7 @@ function Complete(): JSX.Element {
                   <p>{condition.conditions.buildAge}</p>
                 </div>
                 <div className="flex flex-row gap-3">
-                  <p>建物の種類</p>
+                  <p>こだわり条件</p>
                   {condition.conditions.otherConditions.map((other: string) => {
                     return <p>{other}</p>
                   })}

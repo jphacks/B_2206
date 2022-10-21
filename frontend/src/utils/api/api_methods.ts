@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { setDefaultResultOrder } from 'dns'
 
 export const get = async (url: string) => {
   axios
@@ -17,11 +18,26 @@ export const getWithSet = async (url: string, set: Function) => {
   axios
     .get(url)
     .then((results) => {
-      // console.log(results.data.data);
+      console.log(results.data.data);
       const data: any = results.data.data
       set(data)
     })
     .catch((error) => {
       console.log(error)
+      set(error)
+    })
+}
+
+export const getPostWithSet = async (url: string, set: Function) => {
+  axios
+    .get(url)
+    .then((results) => {
+      console.log(results.data);
+      const data: any = results.data
+      set(data)
+    })
+    .catch((error) => {
+      console.log(error)
+      set(error)
     })
 }

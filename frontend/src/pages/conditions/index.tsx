@@ -24,8 +24,6 @@ const Home: NextPage = () => {
   const [condition, setConditon] = useRecoilState(conditionState)
   const [modalName, setModalName] = useState(Modals.prefecture)
 
-  // console.log(condition)
-
   const handleClickClose = useCallback(() => {
     setModalName(Modals.prefecture)
     document.removeEventListener('click', handleClickClose)
@@ -38,7 +36,7 @@ const Home: NextPage = () => {
   }, [handleClickClose])
 
   const PrefectureModal = (
-    <Prefecture setModalName={setModalName} nextModalName={Modals.city} />
+    <Prefecture setModalName={setModalName} nextModalName={Modals.city} otherModalName={Modals.other} />
   )
 
   const CityModal = (
@@ -53,6 +51,7 @@ const Home: NextPage = () => {
     <Other
       setModalName={setModalName}
       prevModalName={Modals.city}
+      morePrevModalName={Modals.prefecture}
       nextModalName={Modals.complete}
     />
   )
