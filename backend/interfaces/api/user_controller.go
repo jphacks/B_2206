@@ -5,8 +5,9 @@ import (
 	"github.com/jphacks/B_2206/backend/interfaces/database"
 	"github.com/jphacks/B_2206/backend/usecase"
 
-	"github.com/labstack/echo/v4"
 	"strconv"
+
+	"github.com/labstack/echo/v4"
 )
 
 type UserController struct {
@@ -24,13 +25,12 @@ func NewUserController(sqlHandler database.SqlHandler) *UserController {
 }
 
 // endpoint POST /users
-func (controller *UserController) CreateUser(c echo.Context, name string, email string, password string, personalInfoId int, companyInfoId int) (err error) {
+func (controller *UserController) CreateUser(c echo.Context, name string, email string, password string, personalInfoId int) (err error) {
 	u := domain.User{
 		Name:           name,
 		Email:          email,
 		Password:       password,
 		PersonalInfoId: personalInfoId,
-		CompanyInfoId:  companyInfoId,
 	}
 	c.Bind(&u)
 	user, err := controller.Interactor.Add(u)
@@ -66,9 +66,10 @@ func (controller *UserController) GetUsers(c echo.Context) (err error) {
 }
 
 // endpoint UPDATE /users/:id/
-func (controller *UserController) UpdateUser(c echo.Context, name string, email string, password string, personalInfoId int, companyInfoId int) (err error) {
+func (controller *UserController) UpdateUser(c echo.Context, name string, email string, password string, personalInfoId int) (err error) {
 	// Atoiでc.Param("id")をint型のidに変換
 	id, _ := strconv.Atoi(c.Param("id"))
+
 	// idをUser構造体のIDフィールドに格納
 	user := domain.User{
 		ID:             id,
@@ -76,7 +77,6 @@ func (controller *UserController) UpdateUser(c echo.Context, name string, email 
 		Email:          email,
 		Password:       password,
 		PersonalInfoId: personalInfoId,
-		CompanyInfoId:  companyInfoId,
 	}
 	// userをUpdate()に代入
 	user, err = controller.Interactor.Update(user)

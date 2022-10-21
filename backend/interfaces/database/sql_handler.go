@@ -6,6 +6,7 @@ import "gorm.io/gorm"
 type SqlHandler interface {
 	Create(interface{}) *gorm.DB
 	Find(interface{}) *gorm.DB
+	FindBy(interface{}, int) *gorm.DB
 	Save(interface{}) *gorm.DB
 	Delete(interface{}) *gorm.DB
 }

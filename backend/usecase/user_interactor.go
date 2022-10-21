@@ -8,6 +8,7 @@ type UserInteractor struct {
 	UserRepository UserRepository
 }
 
+// ユーザーを作成するメソッド
 func (interactor *UserInteractor) Add(u domain.User) (user domain.User, err error) {
 	user, err = interactor.UserRepository.Store(u)
 	return
