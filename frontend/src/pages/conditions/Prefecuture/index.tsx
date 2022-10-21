@@ -122,7 +122,7 @@ function Prefecture(props: Props): JSX.Element {
                             prefecture.id,
                           )
                         }}
-                        checked={conditionPrefecture}
+                        defaultChecked={conditionPrefecture}
                         id={`prefecture_${prefecture.id}`}
                       >
                         {prefecture.name}
@@ -315,12 +315,15 @@ function Prefecture(props: Props): JSX.Element {
               <Radio
                 name={'slectSetting'}
                 onClick={() => changeModalHandler('search')}
+                defaultChecked={true}
+                id={'search'}
               >
                 エリアから探す
               </Radio>
               <Radio
                 name={'slectSetting'}
                 onClick={() => changeModalHandler('postCode')}
+                id={'postCode'}
               >
                 郵便番号から探す
               </Radio>

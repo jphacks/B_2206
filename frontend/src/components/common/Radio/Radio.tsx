@@ -10,6 +10,7 @@ interface Props {
   onChange?: any
   children?: React.ReactNode
   id?: string
+  defaultChecked?: boolean
 }
 
 function Radio(props: Props): JSX.Element {
@@ -20,6 +21,7 @@ function Radio(props: Props): JSX.Element {
         <input
           type="radio"
           name={props.name}
+          defaultChecked={props.defaultChecked}
           checked={props.checked}
           className={clsx(className)}
           value={props.value}
@@ -27,7 +29,7 @@ function Radio(props: Props): JSX.Element {
           onChange={props.onChange}
           id={props.id}
         />
-        <label htmlFor={props.id}>{' ' + props.children}</label>
+        <label htmlFor={props.id}>{props.children}</label>
       </div>
     </>
   )
