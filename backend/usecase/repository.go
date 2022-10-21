@@ -28,14 +28,6 @@ type WatchListRepository interface {
 	DeleteById(domain.WatchList) error
 }
 
-type DetailRepository interface {
-	Store(domain.Detail) (domain.Detail, error)
-	FindById(int) (domain.Detail, error)
-	FindAll() (domain.Details, error)
-	Update(domain.Detail) (domain.Detail, error)
-	DeleteById(domain.Detail) error
-}
-
 type CompanyInfoRepository interface {
 	Store(domain.CompanyInfo) (domain.CompanyInfo, error)
 	FindById(int) (domain.CompanyInfo, error)
@@ -75,10 +67,27 @@ type TagRepository interface {
 	Update(domain.Tag) (domain.Tag, error)
 	DeleteById(domain.Tag) error
 }
+
 type MatchingRepository interface {
 	Store(domain.Matching) (domain.Matching, error)
 	FindById(int) (domain.Matching, error)
 	FindAll() (domain.Matchings, error)
 	Update(domain.Matching) (domain.Matching, error)
 	DeleteById(domain.Matching) error
+}
+
+type LimitRepository interface {
+	Store(domain.Limit) (domain.Limit, error)
+	FindById(int) (domain.Limit, error)
+	FindAll() (domain.Limits, error)
+	Update(domain.Limit) (domain.Limit, error)
+	DeleteById(domain.Limit) error
+}
+
+type ValueRepository interface {
+	Store(domain.Value) (domain.Value, error)
+	FindById(int) (domain.Value, error)
+	FindAll() (domain.Values, error)
+	Update(domain.Value) (domain.Value, error)
+	DeleteById(domain.Value) error
 }

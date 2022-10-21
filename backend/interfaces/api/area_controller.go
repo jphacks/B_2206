@@ -25,13 +25,14 @@ func NewAreaController(sqlHandler database.SqlHandler) *AreaController {
 }
 
 // endpoint POST /area
-func (controller *AreaController) CreateArea(c echo.Context, postCode string, prefecture string, city string, addressNumber string, buildingName string) (err error) {
+func (controller *AreaController) CreateArea(c echo.Context, postCode string, prefecture string, city string, addressNumber string, buildingName string, detailId int) (err error) {
 	u := domain.Area{
 		PostCode:      postCode,
 		Prefecture:    prefecture,
 		City:          city,
 		AddressNumber: addressNumber,
 		BuildingName:  buildingName,
+		DetailId:      detailId,
 	}
 	c.Bind(&u)
 	area, err := controller.Interactor.Add(u)
@@ -67,7 +68,7 @@ func (controller *AreaController) GetAreas(c echo.Context) (err error) {
 }
 
 // endpoint UPDATE /area/:id/
-func (controller *AreaController) UpdateArea(c echo.Context, postCode string, prefecture string, city string, addressNumber string, buildingName string) (err error) {
+func (controller *AreaController) UpdateArea(c echo.Context, postCode string, prefecture string, city string, addressNumber string, buildingName string, detailId int) (err error) {
 	// Atoiでc.Param("id")をint型のidに変換
 	id, _ := strconv.Atoi(c.Param("id"))
 	// idをArea構造体のIDフィールドに格納
@@ -78,6 +79,7 @@ func (controller *AreaController) UpdateArea(c echo.Context, postCode string, pr
 		City:          city,
 		AddressNumber: addressNumber,
 		BuildingName:  buildingName,
+		DetailId:      detailId,
 	}
 	// areaをUpdate()に代入
 	area, err = controller.Interactor.Update(area)

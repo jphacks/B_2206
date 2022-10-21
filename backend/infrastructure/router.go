@@ -15,12 +15,13 @@ func Init() {
 	personalInfoController := controllers.NewPersonalInfoController(NewSqlHandler())
 	watchListController := controllers.NewWatchListController(NewSqlHandler())
 	companyInfoController := controllers.NewCompanyInfoController(NewSqlHandler())
-	detailController := controllers.NewDetailController(NewSqlHandler())
 	requestController := controllers.NewRequestController(NewSqlHandler())
 	areaController := controllers.NewAreaController(NewSqlHandler())
 	classificationController := controllers.NewClassificationController(NewSqlHandler())
 	tagController := controllers.NewTagController(NewSqlHandler())
 	matchingController := controllers.NewMatchingController(NewSqlHandler())
+	limitController := controllers.NewLimitController(NewSqlHandler())
+	valueController := controllers.NewValueController(NewSqlHandler())
 
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
@@ -111,19 +112,6 @@ func Init() {
 	})
 	e.DELETE("/company-info/:id", func(c echo.Context) error { return companyInfoController.DeleteCompanyInfo(c) })
 
-	//details
-	e.POST("/detail", func(c echo.Context) error {
-		areaId, _ := strconv.Atoi(c.QueryParam("area_id"))
-		return detailController.CreateDetail(c, areaId)
-	})
-	e.GET("/detail", func(c echo.Context) error { return detailController.GetDetails(c) })
-	e.GET("/detail/:id", func(c echo.Context) error { return detailController.GetDetail(c) })
-	e.PUT("/detail/:id", func(c echo.Context) error {
-		areaId, _ := strconv.Atoi(c.QueryParam("area_id"))
-		return detailController.UpdateDetail(c, areaId)
-	})
-	e.DELETE("/detail/:id", func(c echo.Context) error { return detailController.DeleteDetail(c) })
-
 	// request
 	e.POST("/request", func(c echo.Context) error {
 		description := c.QueryParam("description")
@@ -150,7 +138,8 @@ func Init() {
 		city := c.QueryParam("city")
 		addressNumber := c.QueryParam("address_number")
 		buildingName := c.QueryParam("building_name")
-		return areaController.CreateArea(c, postCode, prefecture, city, addressNumber, buildingName)
+		detailId, _ := strconv.Atoi(c.QueryParam("detail_id"))
+		return areaController.CreateArea(c, postCode, prefecture, city, addressNumber, buildingName, detailId)
 	})
 	e.GET("/area", func(c echo.Context) error { return areaController.GetAreas(c) })
 	e.GET("/area/:id", func(c echo.Context) error { return areaController.GetArea(c) })
@@ -160,7 +149,8 @@ func Init() {
 		city := c.QueryParam("city")
 		addressNumber := c.QueryParam("address_number")
 		buildingName := c.QueryParam("building_name")
-		return areaController.UpdateArea(c, postCode, prefecture, city, addressNumber, buildingName)
+		detailId, _ := strconv.Atoi(c.QueryParam("detail_id"))
+		return areaController.UpdateArea(c, postCode, prefecture, city, addressNumber, buildingName, detailId)
 	})
 	e.DELETE("/area/:id", func(c echo.Context) error { return areaController.DeleteArea(c) })
 
@@ -189,6 +179,7 @@ func Init() {
 		return tagController.UpdateTag(c, name)
 	})
 	e.DELETE("/tag/:id", func(c echo.Context) error { return tagController.DeleteTag(c) })
+
 	// matching
 	e.POST("/matching", func(c echo.Context) error {
 		status := c.QueryParam("status")
@@ -211,6 +202,38 @@ func Init() {
 		return matchingController.UpdateMatching(c, status, sellerMessage, userId, requestId, buyerId, sellerId)
 	})
 	e.DELETE("/matching/:id", func(c echo.Context) error { return matchingController.DeleteMatching(c) })
+
+	//limit
+	e.POST("/limit", func(c echo.Context) error {
+		name := c.QueryParam("name")
+		maxValueId, _ := strconv.Atoi(c.QueryParam("max_value_id"))
+		minValueId, _ := strconv.Atoi(c.QueryParam("min_value_id"))
+		return limitController.CreateLimit(c, name, maxValueId, minValueId)
+	})
+	e.GET("/limit", func(c echo.Context) error { return limitController.GetLimits(c) })
+	e.GET("/limit/:id", func(c echo.Context) error { return limitController.GetLimit(c) })
+	e.PUT("/limit/:id", func(c echo.Context) error {
+		name := c.QueryParam("name")
+		maxValueId, _ := strconv.Atoi(c.QueryParam("max_value_id"))
+		minValueId, _ := strconv.Atoi(c.QueryParam("min_value_id"))
+		return limitController.UpdateLimit(c, name, maxValueId, minValueId)
+	})
+	e.DELETE("/limit/:id", func(c echo.Context) error { return limitController.DeleteLimit(c) })
+
+	// value
+	e.POST("/value", func(c echo.Context) error {
+		name := c.QueryParam("name")
+		number, _ := strconv.Atoi(c.QueryParam("number"))
+		return valueController.CreateValue(c, name, number)
+	})
+	e.GET("/value", func(c echo.Context) error { return valueController.GetValues(c) })
+	e.GET("/value/:id", func(c echo.Context) error { return valueController.GetValue(c) })
+	e.PUT("/value/:id", func(c echo.Context) error {
+		name := c.QueryParam("name")
+		number, _ := strconv.Atoi(c.QueryParam("number"))
+		return valueController.UpdateValue(c, name, number)
+	})
+	e.DELETE("/value/:id", func(c echo.Context) error { return valueController.DeleteValue(c) })
 
 	e.Logger.Fatal(e.Start(":1323"))
 
