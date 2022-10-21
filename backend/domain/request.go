@@ -20,4 +20,9 @@ type Request struct {
 	CreatedAt time.Time `json:"created_at"`
 }
 
+type RequestAll struct {
+	Matching Matching
+	DetailAll DetailAll
+}
+
 type Requests []Request

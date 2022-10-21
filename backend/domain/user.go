@@ -23,4 +23,9 @@ type User struct {
 	CreatedAt time.Time `json:"created_at"`
 }
 
+type RentUser struct {
+	PersonalInfo PersonalInfo
+	RequestAll   RequestAll
+}
+
 type Users []User

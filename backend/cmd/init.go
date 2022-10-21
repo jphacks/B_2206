@@ -26,7 +26,7 @@ func dbinit() {
 	db.Migrator().CreateTable(domain.WatchList{})
 	db.Migrator().CreateTable(domain.WishList{})
 	db.Migrator().CreateTable(domain.Matching{})
-	db.Migrator().CreateTable(domain.DetailsRange{})
+	db.Migrator().CreateTable(domain.DetailsLimit{})
 	db.Migrator().CreateTable(domain.DetailsValue{})
 	db.Migrator().CreateTable(domain.DetailsTag{})
 	db.Migrator().CreateTable(domain.Tag{})
