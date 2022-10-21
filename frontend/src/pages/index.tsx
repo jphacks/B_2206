@@ -31,6 +31,7 @@ const recoilConditionDefaultValue = {
   prefectureName: '',
   cityNames: [],
   conditions: {},
+  isPostCode: false
 }
 
 const Home: NextPage = () => {
