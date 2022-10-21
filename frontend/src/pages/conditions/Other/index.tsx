@@ -9,13 +9,14 @@ import {
   ProgressBar,
 } from '@components/common'
 import { Close } from '@components/icons'
-import { useRecoilState } from 'recoil'
+import { selector, useRecoilState } from 'recoil'
 import { conditionState } from '@components/store/Condition/condition'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { getWithSet } from '@api/api_methods'
 
 interface Props {
+  morePrevModalName: string
   prevModalName: string
   nextModalName: string
   setModalName: Function
@@ -30,6 +31,8 @@ function Other(props: Props): JSX.Element {
   const [condition, setCondition] = useRecoilState(conditionState)
   const [cities, setCities] = useState<City[]>()
   const router = useRouter()
+
+  console.log(condition)
 
   useEffect(() => {
     setCondition({ ...condition, ...{ conditions: {} } })
@@ -180,7 +183,6 @@ function Other(props: Props): JSX.Element {
   const [areaMin, setAreaMin] = useState<string>('下限なし')
   const [buildAge, setBuildAge] = useState<string>('指定なし')
   const [otherCondition, setOtherCondition] = useState<string[]>([])
-  const [isFinish, setIsFinish] = useState<boolean>(false)
 
   function optionShow(options: string[]) {
     if (options.length == 0) {
@@ -200,35 +202,23 @@ function Other(props: Props): JSX.Element {
     }
   }
 
-  useEffect(() => {
-    if (isFinish) {
-      if (priceOption.length == 0) setPriceOption([...priceOption, '指定なし'])
-      if (selectRoomType.length == 0)
-        setSelectRoomType([...selectRoomType, '指定なし'])
-      if (selectBuildType.length == 0)
-        setSelectBuildType([...selectBuildType, '指定なし'])
-      if (otherCondition.length == 0)
-        setOtherCondition([...otherCondition, '指定なし'])
-    }
-  }, [clickHandler])
-
   function clickHandler() {
-    setIsFinish(true)
     const conditions = {
       priceRange: `${priceMin} ~ ${priceMax}`,
       priceOptions: priceOption,
-      roomTypes: selectRoomType,
-      buildTypes: selectBuildType,
+      roomTypes: (selectRoomType.length == 0)?['指定なし']:selectRoomType,
+      buildTypes: (selectBuildType.length == 0)?['指定なし']:selectBuildType,
       time: selectTime,
       areaRange: `${areaMin} ~ ${areaMax}`,
       buildAge: buildAge,
-      otherConditions: otherCondition,
+      otherConditions: (otherCondition.length == 0)?['指定なし']:otherCondition,
     }
     setCondition({ ...condition, ...{ conditions: conditions } })
     props.setModalName(props.nextModalName)
   }
 
   const pointName = ['県の選択', '市区町村の選択', 'お部屋条件の選択']
+  const pointNamePostCode = ['県と市区町村の選択', 'お部屋条件の選択']
 
   const buttonByMode = (mode: string) => {
     if (mode == 'lend') {
@@ -256,20 +246,40 @@ function Other(props: Props): JSX.Element {
     }
   }
 
+  const normalProgressBar = <ProgressBar pointName={pointName} nowPoint={3} />
+
+  const postProgressBar = (
+    <ProgressBar pointName={pointNamePostCode} nowPoint={2} />
+  )
+
+  const normalPrevButton = (
+    <PrimaryButton
+      onClick={() => {
+        props.setModalName(props.prevModalName)
+      }}
+    >
+      市区町村の選択に戻る
+    </PrimaryButton>
+  )
+
+  const postPrevButton = (
+    <PrimaryButton
+      onClick={() => {
+        props.setModalName(props.morePrevModalName)
+      }}
+    >
+      都道府県の選択に戻る
+    </PrimaryButton>
+  )
+
   return (
     <div className={styles.container}>
       <main className={styles.main}>
         <div className="w-full">
-          <ProgressBar pointName={pointName} nowPoint={3} />
+          {condition.isPostCode ? postProgressBar : normalProgressBar}
           <Card width={'w-4/5'}>
             <div className={'flex justify-start pb-8'}>
-              <PrimaryButton
-                onClick={() => {
-                  props.setModalName(props.prevModalName)
-                }}
-              >
-                市区町村の選択に戻る
-              </PrimaryButton>
+              {condition.isPostCode ? postPrevButton : normalPrevButton}
             </div>
             <p className={'text-primary-2 text-xl'}>エリア</p>
             <div className={'mb-10 flex flex-row flex-wrap gap-3 text-lg'}>
