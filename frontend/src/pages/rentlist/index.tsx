@@ -33,6 +33,7 @@ const Rentlist: NextPage = () => {
     addressNumber: '2674-31',
     buildingName: '長岡金型ビル',
     website: 'https://nagaoka-kanagata.co.jp',
+    userId: 1,
     created_at: '',
     updated_at: '',
   }

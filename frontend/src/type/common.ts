@@ -3,8 +3,6 @@ export interface User {
   name: string
   email: string
   password: string
-  personalInfoId: number
-  companyInfoId: number | null
   created_at: string
   updated_at: string
 }
@@ -32,6 +30,7 @@ export interface CompanyInfo {
   addressNumber: string
   buildingName: string
   website: string
+  userId: number
   created_at: string
   updated_at: string
 }
