@@ -32,8 +32,6 @@ function Other(props: Props): JSX.Element {
   const [cities, setCities] = useState<City[]>()
   const router = useRouter()
 
-  console.log(condition)
-
   useEffect(() => {
     setCondition({ ...condition, ...{ conditions: {} } })
   }, [])

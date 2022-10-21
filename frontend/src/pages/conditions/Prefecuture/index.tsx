@@ -181,7 +181,6 @@ function Prefecture(props: Props): JSX.Element {
   }, [searchString])
 
   useEffect(() => {
-    console.log(postRes)
     if (postRes?.status == 200) {
       setprefName(postRes.results[0].address1)
       setprefId(postRes.results[0].prefcode)

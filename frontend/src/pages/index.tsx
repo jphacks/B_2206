@@ -45,7 +45,6 @@ const Home: NextPage = () => {
   }, [])
 
   const setModeHandler = (modeString: string) => {
-    console.log('click!')
     setCondition({ ...condition, ...{ mode: modeString } })
   }
 
