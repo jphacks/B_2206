@@ -59,11 +59,14 @@ function Prefecture(props: Props): JSX.Element {
   }
 
   const submitPrefectureHandler = (nextModalName: string) => {
-    if (prefName != '') {
-      setCondition({
-        ...condition,
-        ...{ prefectureId: prefId, prefectureName: prefName },
-      })
+    console.log(prefName)
+    if (prefName != '' || condition.prefecutreId != '') {
+      prefName != ''
+        ? setCondition({
+            ...condition,
+            ...{ prefectureId: prefId, prefectureName: prefName },
+          })
+        : {}
 
       if (nextModalName == props.otherModalName) {
         setCondition({

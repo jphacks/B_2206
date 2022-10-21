@@ -154,6 +154,9 @@ function City(props: Props): JSX.Element {
           <div className={'flex flex-row flex-wrap gap-3'}>
             {filterDistrict?.map((district) => {
               if (searchString == '' || district.name.includes(searchString)) {
+                let conditionDistrict = condition.cityNames?.includes(
+                  district.name,
+                )
                 return (
                   <div className={'mb-4 flex items-center gap-1'}>
                     <input
@@ -177,6 +180,7 @@ function City(props: Props): JSX.Element {
                         )
                       }}
                       checked={district.checked}
+                      defaultChecked={conditionDistrict}
                       type="checkbox"
                       name="city"
                       id={`city_${district.id}`}
@@ -280,6 +284,7 @@ function City(props: Props): JSX.Element {
         <div className={'flex flex-row flex-wrap gap-3'}>
           {filterTown?.map((town) => {
             if (searchString == '' || town.name.includes(searchString)) {
+              let conditionTown = condition.cityNames?.includes(town.name)
               return (
                 <div className={'mb-4 flex items-center gap-1'}>
                   <input
@@ -303,6 +308,7 @@ function City(props: Props): JSX.Element {
                       )
                     }}
                     checked={town.checked}
+                    defaultChecked={conditionTown}
                     type="checkbox"
                     name="city"
                     id={`city_${town.id}`}
@@ -338,6 +344,9 @@ function City(props: Props): JSX.Element {
           <div className={'flex flex-row flex-wrap gap-3'}>
             {filterVillage?.map((village) => {
               if (searchString == '' || village.name.includes(searchString)) {
+                let conditionVillage = condition.cityNames?.includes(
+                  village.name,
+                )
                 return (
                   <div className={'mb-4 flex items-center gap-1'}>
                     <input
@@ -361,6 +370,7 @@ function City(props: Props): JSX.Element {
                         )
                       }}
                       checked={village.checked}
+                      defaultChecked={conditionVillage}
                       type="checkbox"
                       name="city"
                       id={`city_${village.id}`}
@@ -409,8 +419,10 @@ function City(props: Props): JSX.Element {
       }
     })
 
-    if (selectCities.length != 0) {
-      setCondition({ ...condition, ...{ cityNames: selectCities } })
+    if (selectCities.length != 0 || condition.cityNames.length != 0) {
+      if (selectCities.length != 0) {
+        setCondition({ ...condition, ...{ cityNames: selectCities } })
+      }
       props.setModalName(props.nextModalName)
     } else {
       setSelect(false)
