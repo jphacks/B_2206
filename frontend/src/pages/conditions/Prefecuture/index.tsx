@@ -181,7 +181,7 @@ function Prefecture(props: Props): JSX.Element {
   }, [searchString])
 
   useEffect(() => {
-    if (postRes?.status == 200) {
+    if (postRes?.status == 200 && postRes.results) {
       setprefName(postRes.results[0].address1)
       setprefId(postRes.results[0].prefcode)
       setCityName(postRes.results[0].address2)
