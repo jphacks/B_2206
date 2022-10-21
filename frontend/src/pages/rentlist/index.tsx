@@ -14,6 +14,44 @@ interface Props {
 }
 
 const Rentlist: NextPage = () => {
+
+  const personalInfo: PersonalInfo = {
+    id: 1,
+    familyName: '藤崎',
+    firstName: '竜成',
+    familyNameKana: 'フジサキ',
+    firstNameKana: 'リュウセイ',
+    birthDay: '19990202',
+    phoneNumber: '09012345678',
+    userId: 1,
+    created_at: '',
+    updated_at: '',
+  }
+  const companyInfo: CompanyInfo = {
+    id: 1,
+    name: '長岡金型',
+    phoneNumber: '09012345678',
+    postCode: '9456666',
+    prefecture: '新潟県',
+    city: '長岡市西陵町',
+    addressNumber: '2674-31',
+    buildingName: '長岡金型ビル',
+    website: 'https://nagaoka-kanagata.co.jp',
+    userId: 1,
+    created_at: '',
+    updated_at: '',
+  }
+  const user = {
+    id: 1,
+    name: 'test',
+    email: 'test',
+    password: 'test',
+    personalInfo: personalInfo,
+    companyInfo: null,
+    created_at: '',
+    updated_at: '',
+  }
+
   const area: Area = {
     id: 1,
     postCode: 1110000,
