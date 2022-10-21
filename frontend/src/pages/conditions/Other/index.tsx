@@ -1,23 +1,22 @@
-import Head from 'next/head'
 import styles from '@styles/Home.module.css'
+import Link from 'next/link'
 import {
   Card,
   PrimaryButton,
-  Radio,
   Select,
-  Label,
   LabelButton,
   Modal,
-  Textarea,
+  ProgressBar,
 } from '@components/common'
 import { Close } from '@components/icons'
-import { useRecoilState } from 'recoil'
-import { userState } from '@components/store/Auth/auth'
-import { useCallback, useEffect, useState } from 'react'
+import { selector, useRecoilState } from 'recoil'
+import { conditionState } from '@components/store/Condition/condition'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import { get, setGet } from '@api/api_methods'
+import { getWithSet } from '@api/api_methods'
 
 interface Props {
+  morePrevModalName: string
   prevModalName: string
   nextModalName: string
   setModalName: Function
@@ -29,26 +28,23 @@ interface City {
 }
 
 function Other(props: Props): JSX.Element {
-  const [user, setUser] = useRecoilState(userState)
+  const [condition, setCondition] = useRecoilState(conditionState)
   const [cities, setCities] = useState<City[]>()
   const router = useRouter()
 
-  // console.log(select);
-  console.log(user)
-  // console.log(prefectures);
-
   useEffect(() => {
-    setUser({ ...user, ...{ conditions: {} } })
+    setCondition({ ...condition, ...{ conditions: {} } })
   }, [])
 
   useEffect(() => {
+    scrollTo(0, 0)
+
     if (router.isReady) {
       const getCitiesUrl =
         'https://www.land.mlit.go.jp/webland/api/CitySearch?area=' +
-        user.prefectureId
-      console.log(getCitiesUrl)
+        condition.prefectureId
       const getCities = async (url: string) => {
-        await setGet(url, setCities)
+        await getWithSet(url, setCities)
       }
       getCities(getCitiesUrl)
     }
@@ -199,99 +195,96 @@ function Other(props: Props): JSX.Element {
   function selectArrayHandler(str: string, arr: string[], setArr: Function) {
     if (arr.includes(str)) {
       setArr(arr.filter((arrNode) => arrNode !== str))
-      // if(arr.length == 0){
-      //  setArr(['指定しない']);
-      // }
     } else {
       setArr([...arr, str])
-      // setArr(arr.filter((arrNode) => arrNode !== '指定しない'));
     }
-    // console.log(arr.length)
-    // console.log(arr)
   }
-
-  useEffect(() => {
-    if (priceOption.length == 0)setPriceOption([...priceOption, '指定なし']);
-    if (selectRoomType.length == 0) setSelectRoomType([...selectRoomType, '指定なし']);
-    if (selectBuildType.length == 0) setSelectBuildType([...selectBuildType, '指定なし']);
-    if (otherCondition.length == 0) setOtherCondition([...otherCondition, '指定なし']);
-  }, [clickHandler])
 
   function clickHandler() {
     const conditions = {
       priceRange: `${priceMin} ~ ${priceMax}`,
       priceOptions: priceOption,
-      roomTypes: selectRoomType,
-      buildTypes: selectBuildType,
+      roomTypes: selectRoomType.length == 0 ? ['指定なし'] : selectRoomType,
+      buildTypes: selectBuildType.length == 0 ? ['指定なし'] : selectBuildType,
       time: selectTime,
       areaRange: `${areaMin} ~ ${areaMax}`,
       buildAge: buildAge,
-      otherConditions: otherCondition,
+      otherConditions:
+        otherCondition.length == 0 ? ['指定なし'] : otherCondition,
     }
-    setUser({ ...user, ...{ conditions: conditions } })
-    console.log(conditions)
-    console.log(user)
+    setCondition({ ...condition, ...{ conditions: conditions } })
     props.setModalName(props.nextModalName)
   }
 
+  const pointName = ['都道府県の選択', '市区町村の選択', 'お部屋条件の選択']
+  const pointNamePostCode = ['都道府県と市区町村の選択', 'お部屋条件の選択']
+
+  const buttonByMode = (mode: string) => {
+    if (mode == 'lend') {
+      return (
+        <Link href="/rentlist">
+          <PrimaryButton>この条件で借り手を探す</PrimaryButton>
+        </Link>
+      )
+    } else if (mode == 'sell') {
+      return (
+        <Link href="/buylist">
+          <PrimaryButton>この条件で買い手を探す</PrimaryButton>
+        </Link>
+      )
+    } else {
+      return (
+        <PrimaryButton
+          onClick={() => {
+            clickHandler()
+          }}
+        >
+          条件を確定して登録する
+        </PrimaryButton>
+      )
+    }
+  }
+
+  const normalProgressBar = <ProgressBar pointName={pointName} nowPoint={3} />
+
+  const postProgressBar = (
+    <ProgressBar pointName={pointNamePostCode} nowPoint={2} />
+  )
+
+  const normalPrevButton = (
+    <PrimaryButton
+      onClick={() => {
+        props.setModalName(props.prevModalName)
+      }}
+    >
+      市区町村の選択に戻る
+    </PrimaryButton>
+  )
+
+  const postPrevButton = (
+    <PrimaryButton
+      onClick={() => {
+        props.setModalName(props.morePrevModalName)
+      }}
+    >
+      都道府県の選択に戻る
+    </PrimaryButton>
+  )
+
   return (
     <div className={styles.container}>
-      <Head>
-        <title>SumiMatch</title>
-        <meta name="description" content="SumiMatch" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
       <main className={styles.main}>
         <div className="w-full">
-        <div className="flex justify-center">
-            <div className="w-2/3">
-              <h2 className="sr-only">Steps</h2>
-              <div className="after:bg-primary-1 relative after:absolute after:inset-x-0 after:top-1/2 after:block after:h-0.5 after:-translate-y-1/2 after:rounded-lg">
-                <ol className="text-main-black relative z-10 flex justify-between text-sm font-medium">
-                  <li className="bg-background-1 flex items-center p-2">
-                    <span className="bg-primary-1 h-6 w-6 rounded-full text-center text-[10px] font-bold leading-6">
-                      1
-                    </span>
-                    <span className="hidden sm:ml-2 sm:block"> 県の選択 </span>
-                  </li>
-                  <li className="bg-background-1 flex items-center p-2">
-                    <span className="bg-primary-1 h-6 w-6 rounded-full text-center text-[10px] font-bold leading-6">
-                      2
-                    </span>
-                    <span className="hidden sm:ml-2 sm:block">
-                      {' '}
-                      市区町村の選択{' '}
-                    </span>
-                  </li>
-                  <li className="bg-background-1 flex items-center p-2">
-                    <span className="bg-accent-2 h-6 w-6 rounded-full text-center text-[10px] font-bold leading-6 text-white">
-                      3
-                    </span>
-                    <span className="hidden sm:ml-2 sm:block">
-                      {' '}
-                      お部屋条件の選択{' '}
-                    </span>
-                  </li>
-                </ol>
-              </div>
-            </div>
-          </div>
+          {condition.isPostCode ? postProgressBar : normalProgressBar}
           <Card width={'w-4/5'}>
             <div className={'flex justify-start pb-8'}>
-              <PrimaryButton
-                onClick={() => {
-                  props.setModalName(props.prevModalName)
-                }}
-              >
-                市区町村の選択に戻る
-              </PrimaryButton>
+              {condition.isPostCode ? postPrevButton : normalPrevButton}
             </div>
             <p className={'text-primary-2 text-xl'}>エリア</p>
-            <div className={'mb-10 flex flex-row gap-3 text-lg'}>
-              <p className={'text-lg'}>{user.prefectureName}</p>
+            <div className={'mb-10 flex flex-row flex-wrap gap-3 text-lg'}>
+              <p className={'text-lg'}>{condition.prefectureName}</p>
               <p>＞</p>
-              {user.cityNames.map((city: any, index: any) => {
+              {condition.cityNames.map((city: any, index: any) => {
                 if (index == 0 && city.includes('区')) {
                   return (
                     <div className={'flex flex-row gap-3'}>
@@ -299,6 +292,10 @@ function Other(props: Props): JSX.Element {
                       <p>{city}</p>
                     </div>
                   )
+                } else if (index == 5) {
+                  return <p>ほか {condition.cityNames.length - 5} 市区町村</p>
+                } else if (index >= 6) {
+                  return
                 } else {
                   return <p>{city}</p>
                 }
@@ -333,7 +330,7 @@ function Other(props: Props): JSX.Element {
                     </Select>
                   </div>
                   <div
-                    className={'w-1/1 flex flex-row justify-center gap-5 pt-5'}
+                    className={'w-1/1 flex flex-row justify-start gap-5 pt-5'}
                   >
                     {morePriceOption.map((option) => {
                       return (
@@ -480,19 +477,40 @@ function Other(props: Props): JSX.Element {
                 <Close width="32" height="32" onClick={onClose} />
               </div>
               <div className={'mx-5 flex flex-col gap-5'}>
-                <div className={'text-accent-2 flex flex-row gap-3 text-xl'}>
-                  <p>{user.prefectureName}</p>
+                <div
+                  className={
+                    'text-accent-2 mb-10 flex flex-row flex-wrap gap-3 text-lg'
+                  }
+                >
+                  <p className={'text-lg'}>{condition.prefectureName}</p>
                   <p>＞</p>
-                  {user.cityNames.map((cityName: any) => {
-                    return <p>{cityName}</p>
+                  {condition.cityNames.map((city: any, index: any) => {
+                    if (index == 0 && city.includes('区')) {
+                      return (
+                        <div className={'flex flex-row gap-3'}>
+                          <p>{cities?.at(0)?.name}</p>
+                          <p>{city}</p>
+                        </div>
+                      )
+                    } else if (index == 5) {
+                      return (
+                        <p>ほか {condition.cityNames.length - 5} 市区町村</p>
+                      )
+                    } else if (index >= 6) {
+                      return
+                    } else {
+                      return <p>{city}</p>
+                    }
                   })}
                 </div>
+              </div>
+              <div>
                 <div>
                   <p className={'text-primary-2 text-xl'}>賃料</p>
                   <div className={'mx-3 flex flex-row gap-5'}>
-                    <p>{priceMin}</p>
-                    <p>~</p>
-                    <p>{priceMax}</p>
+                    <p>
+                      {priceMin} ~ {priceMax}
+                    </p>
                   </div>
                   <div className={'mx-3 flex flex-row gap-4'}>
                     {priceOption.map((option) => {
@@ -519,9 +537,9 @@ function Other(props: Props): JSX.Element {
                 <div>
                   <p className={'text-primary-2 text-xl'}>占有面積</p>
                   <div className={'mx-3 flex flex-row gap-4'}>
-                    <p>{areaMin}</p>
-                    <p>~</p>
-                    <p>{areaMax}</p>
+                    <p>
+                      {areaMin} ~ {areaMax}
+                    </p>
                   </div>
                 </div>
                 <div>
@@ -536,13 +554,7 @@ function Other(props: Props): JSX.Element {
                 </div>
               </div>
               <div className={'mt-10 mb-5 flex justify-center'}>
-                <PrimaryButton
-                  onClick={() => {
-                    clickHandler()
-                  }}
-                >
-                  条件を確定して登録する
-                </PrimaryButton>
+                {buttonByMode(condition.mode)}
               </div>
             </Modal>
           )}
