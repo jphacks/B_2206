@@ -231,7 +231,7 @@ const Rentlist: NextPage = () => {
               {props.userData.matching.sellerMessage}
             </span>
           </div>
-          <div className="flex items-center justify-center">
+          <div className="mt-4 flex items-center justify-center">
             <PrimaryButton
               className="sm:text-lg lg:text-xl"
               onClick={onMessageOpen}
@@ -427,7 +427,7 @@ const Rentlist: NextPage = () => {
         </PrimaryButton>
       </div>
       {isConditionOpen && <ConditionModalContent data={data} />}
-      <div className="grid w-full sm:grid-cols-1 lg:grid-cols-2">
+      <div className="w-9/10 mx-auto grid sm:grid-cols-1 lg:grid-cols-2">
         {userDataList.map((userData) => (
           <Card width="w-1/1" m="m-4">
             <CardContent userData={userData}></CardContent>
