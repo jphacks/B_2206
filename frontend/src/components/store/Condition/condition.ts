@@ -12,6 +12,7 @@ export const conditionState = atom({
     prefectureId: '',
     cityNames: [],
     conditions: {},
+    isPostCode: false,
   },
   effects_UNSTABLE: [persistAtom],
 })
