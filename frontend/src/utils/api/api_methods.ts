@@ -13,7 +13,7 @@ export const get = async (url: string) => {
     })
 };
 
-export const setGet = async (url: string, set: Function) => {
+export const getWithSet = async (url: string, set: Function) => {
     axios
     .get(url)
     .then((results) => {
