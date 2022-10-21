@@ -4,10 +4,13 @@ import { useRecoilState } from 'recoil'
 import { conditionState } from '@components/store/Condition/condition'
 import { prefectures } from './prefectures'
 import { useEffect, useState } from 'react'
-import { userAgent } from 'next/server'
+import { useRouter } from 'next/router'
+import { getWithSet, getPostWithSet } from '@api/api_methods'
+import next from 'next'
 
 interface Props {
   nextModalName: string
+  otherModalName: string
   setModalName: Function
 }
 
@@ -16,10 +19,31 @@ const Modals = {
   postCode: 'postcode',
 }
 
+interface PostResult {
+  zipcode: string
+  prefcode: string
+  address1: string
+  address2: string
+  address3: string
+  kana1: string
+  kana2: string
+  kana3: string
+}
+
+interface PostCodeRes {
+  message: string
+  results: PostResult[]
+  status: number
+}
+
 function Prefecture(props: Props): JSX.Element {
   const [condition, setCondition] = useRecoilState(conditionState)
   const [modalName, setModalName] = useState(Modals.search)
+  const [prefId, setprefId] = useState('')
+  const [prefName, setprefName] = useState('')
+  const [cityName, setCityName] = useState('')
   const [select, setSelect] = useState(true)
+  const router = useRouter()
 
   useEffect(() => {
     setCondition({ ...condition, ...{ cityNames: [] } })
@@ -30,25 +54,30 @@ function Prefecture(props: Props): JSX.Element {
     prefectureId: string,
   ) => {
     setSelect(true)
-    setCondition({
-      ...condition,
-      ...{ prefectureName: prefectureName, prefectureId: prefectureId },
-    })
+    setprefId(prefectureId)
+    setprefName(prefectureName)
   }
 
-  const submitPrefectureHandler = () => {
-    if (condition.prefectureId != '') {
-      props.setModalName(props.nextModalName)
+  const submitPrefectureHandler = (nextModalName: string) => {
+    if (prefName != '') {
+      setCondition({
+        ...condition,
+        ...{ prefectureId: prefId, prefectureName: prefName },
+      })
+
+      if(nextModalName == props.otherModalName){
+        setCondition({
+          ...condition,
+          ...{ prefectureId: prefId, prefectureName: prefName, cityNames: [cityName], isPostCode: true },
+        })
+      }
+      props.setModalName(nextModalName)
     } else {
       setSelect(false)
     }
   }
 
-  useEffect(() => {
-    return () => {
-      document.removeEventListener('click', submitPrefectureHandler)
-    }
-  }, [submitPrefectureHandler])
+  useEffect(() => {}, [submitPrefectureHandler])
 
   const Caution = <p className={'text-accent-2'}>都道府県を選択してください</p>
 
@@ -105,7 +134,7 @@ function Prefecture(props: Props): JSX.Element {
       <div className={'mt-8 mb-5 flex justify-center'}>
         <PrimaryButton
           onClick={() => {
-            submitPrefectureHandler()
+            submitPrefectureHandler(props.nextModalName)
           }}
         >
           市区町村を選択
@@ -118,6 +147,7 @@ function Prefecture(props: Props): JSX.Element {
   const [search, setSearch] = useState('')
   const [searchString, setSearchString] = useState('')
   const [isSearch, setisSearch] = useState(false)
+  const [postRes, setPostRes] = useState<PostCodeRes>()
 
   function changeSearchHandler(e: any) {
     e.preventDefault()
@@ -134,7 +164,50 @@ function Prefecture(props: Props): JSX.Element {
     setSearch(e.target.value)
   }
 
-  useEffect(() => {}, [searchString])
+  useEffect(() => {
+    if (router.isReady) {
+      const getPostCodeUrl =
+        'https://zipcloud.ibsnet.co.jp/api/search?zipcode=' + searchString
+      const getPostRes = async (url: string) => {
+        await getPostWithSet(url, setPostRes)
+      }
+      getPostRes(getPostCodeUrl)
+    }
+  }, [searchString])
+
+  useEffect(() => {
+    console.log(postRes)
+    if (postRes?.status == 200) {
+      setprefName(postRes.results[0].address1)
+      setprefId(postRes.results[0].prefcode)
+      setCityName(postRes.results[0].address2)
+    } else {
+      setprefName('')
+      setprefId('')
+      setCityName('')
+    }
+  }, [postRes])
+
+  const showPostRes = (
+    <div>
+      {postRes?.results?.map((result: PostResult, index: number) => {
+        if (index == 0) {
+          return (
+            <div className="flex flex-col gap-3">
+              <div className="flex flex-row items-center gap-3">
+                <p className="text-primary-2 text-lg">都道府県</p>
+                <p>{result.address1}</p>
+              </div>
+              <div className="flex flex-row gap-3">
+                <p className="text-primary-2 text-lg">市区町村</p>
+                <p>{result.address2}</p>
+              </div>
+            </div>
+          )
+        }
+      })}
+    </div>
+  )
 
   const PostCodeModal = (
     <>
@@ -204,12 +277,15 @@ function Prefecture(props: Props): JSX.Element {
           </div>
         </form>
       </div>
-      <div></div>
-
+      <div>
+        <p className="text-primary-2 mt-5 mb-3 text-xl">検索結果</p>
+        <div className="text-accent-2">{postRes?.message}</div>
+        {postRes?.status == 200 && showPostRes}
+      </div>
       <div className={'mt-8 mb-5 flex justify-center'}>
         <PrimaryButton
           onClick={() => {
-            submitPrefectureHandler()
+            submitPrefectureHandler(props.otherModalName)
           }}
         >
           お部屋の条件選択へ
