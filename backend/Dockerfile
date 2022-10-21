@@ -1,6 +1,7 @@
 FROM golang:latest
 
-WORKDIR /usr/local/go/src/api
+WORKDIR /app
+COPY . /app
 
 RUN apt-get update
 RUN apt-get upgrade -y
@@ -10,12 +11,9 @@ RUN apt-get install -y locales \
 
 RUN export LANG=C.UTF-8
 RUN export LANGUAGE=en_US:
-
+  
 ENV CGO_ENABLED=0
 ENV GOOS=linux
-
-# Mac Userはコメントアウトが必要
 ENV GOARCH=amd64
 
-RUN go install github.com/cosmtrek/air@latest
-CMD ["air", "-c", ".air.toml"]
+RUN go get -u github.com/cosmtrek/air
