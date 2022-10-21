@@ -9,13 +9,14 @@ interface Props {
   onClick?: any
   onChange?: any
   children?: React.ReactNode
+  id?: string
 }
 
 function Radio(props: Props): JSX.Element {
   const className = '' + (props.className ? ` ${props.className}` : '')
   return (
     <>
-      <div>
+      <div className='flex flex-row gap-1'>
         <input
         type="radio"
         name={props.name}
@@ -24,8 +25,11 @@ function Radio(props: Props): JSX.Element {
         value={props.value}
         onClick={props.onClick}
         onChange={props.onChange}
+        id={props.id}
         />
-        {' ' + props.children}
+        <label htmlFor={props.id}>
+          {' ' + props.children}
+        </label>
       </div>
     </>
   )
