@@ -2,6 +2,7 @@ package usecase
 
 import (
 	"context"
+
 	rep "github.com/jphacks/B_2206/api/externals/repository"
 	"github.com/jphacks/B_2206/api/internals/domain"
 	"github.com/pkg/errors"
@@ -14,10 +15,10 @@ type areaUseCase struct {
 type AreaUseCase interface {
 	GetActivities(context.Context) ([]domain.Area, error)
 	GetAreaByID(context.Context, string) (domain.Area, error)
-	CreateArea(context.Context, string, string, string, string) error
+	CreateArea(context.Context, string, string, string, string, string) error
 	UpdateArea(context.Context, string, string, string, string, string) error
 	DestroyArea(context.Context, string) error
-	GetActivitiesWithSponsorAndStyle(context.Context) ([]domain.AreaForAdminView, error) 
+	//GetActivitiesWithSponsorAndStyle(context.Context) ([]domain.AreaForAdminView, error)
 }
 
 func NewAreaUseCase(rep rep.AreaRepository) AreaUseCase {
@@ -39,10 +40,6 @@ func (a *areaUseCase) GetActivities(c context.Context) ([]domain.Area, error) {
 	for rows.Next() {
 		err := rows.Scan(
 			&area.ID,
-			&area.SponsorStyleID,
-			&area.UserID,
-			&area.IsDone,
-			&area.SponsorID,
 			&area.CreatedAt,
 			&area.UpdatedAt,
 		)
@@ -62,10 +59,11 @@ func (a *areaUseCase) GetAreaByID(c context.Context, id string) (domain.Area, er
 	row, err := a.rep.Find(c, id)
 	err = row.Scan(
 		&area.ID,
-		&area.SponsorStyleID,
-		&area.UserID,
-		&area.IsDone,
-		&area.SponsorID,
+		&area.PostCode,
+		&area.Prefecture,
+		&area.City,
+		&area.AddressNumber,
+		&area.BuildingName,
 		&area.CreatedAt,
 		&area.UpdatedAt,
 	)
@@ -77,13 +75,13 @@ func (a *areaUseCase) GetAreaByID(c context.Context, id string) (domain.Area, er
 	return area, nil
 }
 
-func (a *areaUseCase) CreateArea(c context.Context, sponsorStyleID string, userID string, isDone string, sponsorID string) error {
-	err := a.rep.Create(c, sponsorStyleID, userID, isDone, sponsorID)
+func (a *areaUseCase) CreateArea(c context.Context, PostCode string, Prefecture string, City string, AddressNumber string, BuildingName string) error {
+	err := a.rep.Create(c, PostCode, Prefecture, City, AddressNumber, BuildingName)
 	return err
 }
 
-func (a *areaUseCase) UpdateArea(c context.Context, id string, sponsorStyleID string, userID string, isDone string, sponsorID string) error {
-	err := a.rep.Update(c, id, sponsorStyleID, userID, isDone, sponsorID)
+func (a *areaUseCase) UpdateArea(c context.Context, id string, PostCode string, Prefecture string, City string, AddressNumber string, BuildingName string) error {
+	err := a.rep.Update(c, id, PostCode, Prefecture, City, AddressNumber, BuildingName)
 	return err
 }
 
@@ -92,54 +90,54 @@ func (a *areaUseCase) DestroyArea(c context.Context, id string) error {
 	return err
 }
 
-func (a *areaUseCase) GetActivitiesWithSponsorAndStyle(c context.Context) ([]domain.AreaForAdminView, error) {
+// func (a *areaUseCase) GetActivitiesWithSponsorAndStyle(c context.Context) ([]domain.AreaForAdminView, error) {
 
-	area := domain.AreaForAdminView{}
-	var activities []domain.AreaForAdminView
+// 	area := domain.AreaForAdminView{}
+// 	var activities []domain.AreaForAdminView
 
-	// クエリー実行
-	rows, err := a.rep.AllWithSponsor(c)
-	if err != nil {
-		return nil, err
-	}
-	defer rows.Close()
+// 	// クエリー実行
+// 	rows, err := a.rep.AllWithSponsor(c)
+// 	if err != nil {
+// 		return nil, err
+// 	}
+// 	defer rows.Close()
 
-	for rows.Next() {
-		err := rows.Scan(
-			&area.Area.ID,
-			&area.Area.SponsorStyleID,
-			&area.Area.UserID,
-			&area.Area.IsDone,
-			&area.Area.SponsorID,
-			&area.Area.CreatedAt,
-			&area.Area.UpdatedAt,
-			&area.Sponsor.ID,
-			&area.Sponsor.Name,
-			&area.Sponsor.Tel,
-			&area.Sponsor.Email,
-			&area.Sponsor.Address,
-			&area.Sponsor.Representative,
-			&area.Sponsor.CreatedAt,
-			&area.Sponsor.UpdatedAt,
-			&area.SponsorStyle.ID,
-			&area.SponsorStyle.Scale,
-			&area.SponsorStyle.IsColor,
-			&area.SponsorStyle.Price,
-			&area.SponsorStyle.CreatedAt,
-			&area.SponsorStyle.UpdatedAt,
-			&area.User.ID,
-			&area.User.Name,
-			&area.User.BureauID,
-			&area.User.RoleID,
-			&area.User.CreatedAt,
-			&area.User.UpdatedAt,
-		)
+// 	for rows.Next() {
+// 		err := rows.Scan(
+// 			&area.Area.ID,
+// 			&area.Area.SponsorStyleID,
+// 			&area.Area.UserID,
+// 			&area.Area.IsDone,
+// 			&area.Area.SponsorID,
+// 			&area.Area.CreatedAt,
+// 			&area.Area.UpdatedAt,
+// 			&area.Sponsor.ID,
+// 			&area.Sponsor.Name,
+// 			&area.Sponsor.Tel,
+// 			&area.Sponsor.Email,
+// 			&area.Sponsor.Address,
+// 			&area.Sponsor.Representative,
+// 			&area.Sponsor.CreatedAt,
+// 			&area.Sponsor.UpdatedAt,
+// 			&area.SponsorStyle.ID,
+// 			&area.SponsorStyle.Scale,
+// 			&area.SponsorStyle.IsColor,
+// 			&area.SponsorStyle.Price,
+// 			&area.SponsorStyle.CreatedAt,
+// 			&area.SponsorStyle.UpdatedAt,
+// 			&area.User.ID,
+// 			&area.User.Name,
+// 			&area.User.BureauID,
+// 			&area.User.RoleID,
+// 			&area.User.CreatedAt,
+// 			&area.User.UpdatedAt,
+// 		)
 
-		if err != nil {
-			return nil, errors.Wrapf(err, "cannot connect SQL")
-		}
+// 		if err != nil {
+// 			return nil, errors.Wrapf(err, "cannot connect SQL")
+// 		}
 
-		activities = append(activities, area)
-	}
-	return activities, nil
-}
+// 		activities = append(activities, area)
+// 	}
+// 	return activities, nil
+// }
