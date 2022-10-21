@@ -1,10 +1,10 @@
 import Head from 'next/head'
-import styles from '@styles/Home.module.css'
-import { Card, PrimaryButton, Radio } from '@components/common'
-import { useRecoilState } from 'recoil'
-import { userState } from '@components/store/Auth/auth'
-import { prefectures } from './prefectures'
 import { useCallback, useEffect, useState } from 'react'
+import { useRecoilState } from 'recoil'
+import { prefectures } from './prefectures'
+import { Card, PrimaryButton, Radio } from '@components/common'
+import { userState } from '@components/store/Auth/auth'
+import styles from '@styles/Home.module.css'
 
 interface Props {
   nextModalName: string

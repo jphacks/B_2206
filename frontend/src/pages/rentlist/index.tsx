@@ -1,9 +1,9 @@
-import { useState, useEffect, memo, useRef } from 'react'
-import type { NextPage } from 'next'
 import clsx from 'clsx'
+import type { NextPage } from 'next'
+import { useState, useEffect, memo, useRef } from 'react'
 import { Card, Label, Modal, PrimaryButton, Textarea } from '@components/common'
-import { User, Area, Value, Tag, PersonalInfo, CompanyInfo } from '@type/common'
 import { Close } from '@components/icons'
+import { User, Area, Value, Tag, PersonalInfo, CompanyInfo } from '@type/common'
 
 interface Props {
   children?: React.ReactNode

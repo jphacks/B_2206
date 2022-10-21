@@ -1,13 +1,13 @@
+import { AnyTxtRecord } from 'dns'
 import Head from 'next/head'
-import styles from '@styles/Home.module.css'
-import { Card, PrimaryButton, Radio } from '@components/common'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
 import { useRecoilState } from 'recoil'
-import { userState } from '@components/store/Auth/auth'
 import { prefectures } from '../Prefecuture/prefectures'
 import { setGet } from '@api/api_methods'
-import { useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
-import { AnyTxtRecord } from 'dns'
+import { Card, PrimaryButton, Radio } from '@components/common'
+import { userState } from '@components/store/Auth/auth'
+import styles from '@styles/Home.module.css'
 
 interface Props {
   nextModalName: string

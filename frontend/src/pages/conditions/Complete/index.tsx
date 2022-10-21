@@ -1,6 +1,9 @@
 import Head from 'next/head'
-import styles from '@styles/Home.module.css'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { useCallback, useEffect, useState } from 'react'
+import { useRecoilState } from 'recoil'
+import { get, setGet } from '@api/api_methods'
 import {
   Card,
   PrimaryButton,
@@ -12,11 +15,8 @@ import {
   Textarea,
 } from '@components/common'
 import { Close } from '@components/icons'
-import { useRecoilState } from 'recoil'
 import { userState } from '@components/store/Auth/auth'
-import { useCallback, useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
-import { get, setGet } from '@api/api_methods'
+import styles from '@styles/Home.module.css'
 
 interface City {
   id: string

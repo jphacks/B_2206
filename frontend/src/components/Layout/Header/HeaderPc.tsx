@@ -1,6 +1,6 @@
 import clsx from 'clsx'
-import { Account, WhiteLogo } from '@components/icons'
 import { Dropdown } from '@components/common'
+import { Account, WhiteLogo } from '@components/icons'
 
 const HeaderPc = () => {
   return (
