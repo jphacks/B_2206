@@ -58,7 +58,7 @@ const Home: NextPage = () => {
 
       <main className={styles.main}>
         <div className="grid w-full sm:grid-cols-1 lg:grid-cols-2">
-          <FillCard width={'w-1/1'} m="m-5">
+          <FillCard width={'w-1/1'} m="m-5 lg:m-10">
             <Link href="/conditions">
               <div
                 className="py-5 text-center lg:py-20"
@@ -69,7 +69,7 @@ const Home: NextPage = () => {
               </div>
             </Link>
           </FillCard>
-          <FillCard width={'w-1/1'} m="m-5">
+          <FillCard width={'w-1/1'} m="m-5 lg:m-10">
             <Link href="/conditions">
               <div
                 className="py-5 text-center lg:py-20"
@@ -80,7 +80,7 @@ const Home: NextPage = () => {
               </div>
             </Link>
           </FillCard>
-          <FillCard width={'w-1/1'} m="m-5">
+          <FillCard width={'w-1/1'} m="m-5 lg:m-10">
             <Link href="/conditions">
               <div
                 className="py-5 text-center lg:py-20"
@@ -91,7 +91,7 @@ const Home: NextPage = () => {
               </div>
             </Link>
           </FillCard>
-          <FillCard width={'w-1/1'} m="m-5">
+          <FillCard width={'w-1/1'} m="m-5 lg:m-10">
             <Link href="/conditions">
               <div
                 className="py-5 text-center lg:py-20"
