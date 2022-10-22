@@ -105,7 +105,7 @@ function Prefecture(props: Props): JSX.Element {
       <div>
         {prefectures.areas.map((area) => {
           return (
-            <div>
+            <div key={area.name}>
               <div className={'py-5'}>
                 <p className={'pb-2 text-lg'}>{area.name}</p>
                 <div className={'flex flex-row flex-wrap gap-5'}>
@@ -116,6 +116,7 @@ function Prefecture(props: Props): JSX.Element {
                     }
                     return (
                       <Radio
+                        key={prefecture.id}
                         name={'prefecture'}
                         onChange={() => {
                           prefectureChangeHandler(
@@ -198,7 +199,7 @@ function Prefecture(props: Props): JSX.Element {
       {postRes?.results?.map((result: PostResult, index: number) => {
         if (index == 0) {
           return (
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-3" key={index}>
               <div className="flex flex-row items-center gap-3">
                 <p className="text-primary-2 text-lg">都道府県</p>
                 <p>{result.address1}</p>

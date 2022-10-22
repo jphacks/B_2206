@@ -28,7 +28,10 @@ function ProgressBar(props: Props): JSX.Element {
           <ol className="text-main-black relative z-10 flex justify-between text-sm font-medium">
             {props.pointName.map((pointName, index) => {
               return (
-                <li className="bg-background-1 flex items-center p-2">
+                <li
+                  className="bg-background-1 flex items-center p-2"
+                  key={index}
+                >
                   {props.nowPoint == index + 1
                     ? OrangePoint(index + 1)
                     : NormalPoint(index + 1)}

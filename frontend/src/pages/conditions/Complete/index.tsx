@@ -32,19 +32,19 @@ function Complete(): JSX.Element {
             <div className="mx-3 flex flex-row gap-3">
               <p>賃料の条件</p>
               {condition.conditions.priceOptions.map((option: string) => {
-                return <p>{option}</p>
+                return <p key={option}>{option}</p>
               })}
             </div>
             <div className="flex flex-row gap-3">
               <p>間取りタイプ</p>
               {condition.conditions.roomTypes.map((roomType: string) => {
-                return <p>{roomType}</p>
+                return <p key={roomType}>{roomType}</p>
               })}
             </div>
             <div className="flex flex-row gap-3">
               <p>建物の種類</p>
               {condition.conditions.buildTypes.map((buildType: string) => {
-                return <p>{buildType}</p>
+                return <p key={buildType}>{buildType}</p>
               })}
             </div>
             <div className="flex flex-row gap-3">
@@ -62,7 +62,7 @@ function Complete(): JSX.Element {
             <div className="flex flex-row gap-3">
               <p>こだわり条件</p>
               {condition.conditions.otherConditions.map((other: string) => {
-                return <p>{other}</p>
+                return <p key={other}>{other}</p>
               })}
             </div>
           </div>

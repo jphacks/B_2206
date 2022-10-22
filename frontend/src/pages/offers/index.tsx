@@ -106,7 +106,7 @@ const Rentlist: NextPage = () => {
       id: 1,
       name: '20㎡',
       value: 20,
-      rangeId: 1,
+      limitId: 1,
       created_at: '',
       updated_at: '',
     },
@@ -114,7 +114,7 @@ const Rentlist: NextPage = () => {
       id: 2,
       name: '30㎡',
       value: 30,
-      rangeId: 1,
+      limitId: 1,
       created_at: '',
       updated_at: '',
     },
@@ -122,7 +122,7 @@ const Rentlist: NextPage = () => {
       id: 3,
       name: '3万円',
       value: 3,
-      rangeId: 1,
+      limitId: 1,
       created_at: '',
       updated_at: '',
     },
@@ -130,7 +130,7 @@ const Rentlist: NextPage = () => {
       id: 4,
       name: '4万円',
       value: 4,
-      rangeId: 1,
+      limitId: 1,
       created_at: '',
       updated_at: '',
     },
@@ -138,7 +138,7 @@ const Rentlist: NextPage = () => {
       id: 5,
       name: '新築',
       value: 0,
-      rangeId: 1,
+      limitId: 1,
       created_at: '',
       updated_at: '',
     },
@@ -219,7 +219,11 @@ const Rentlist: NextPage = () => {
                   </Tooltip>
                 </div>
                 <Tooltip content={props.userData.companyInfo.website}>
-                  <a href={props.userData.companyInfo.website} target="_blank" rel="noreferrer">
+                  <a
+                    href={props.userData.companyInfo.website}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
                     <WebSite width="24" height="24" />
                   </a>
                 </Tooltip>
@@ -243,6 +247,7 @@ const Rentlist: NextPage = () => {
       </>
     )
   })
+  CardContent.displayName = 'CardContent'
 
   // 条件確認のモーダルに表示するデータ
   const ConditionModalContent: React.FC<Props> = memo((props) => {
@@ -264,12 +269,12 @@ const Rentlist: NextPage = () => {
           <div className="mt-1 grid grid-cols-3 gap-8 text-left">
             {props.data.request.detail.classification.range.map(
               (range: any) => (
-                <span className="pt-2 pb-1 text-lg font-bold">
+                <span className="pt-2 pb-1 text-lg font-bold" key={range}>
                   {range.name}
                   <br />
                   <span className="text-sm">
                     {range.values.map((value: Value, index: number) => (
-                      <span>
+                      <span key={index}>
                         {value.name}
                         {index < range.values.length - 1 && '〜'}
                       </span>
@@ -287,7 +292,7 @@ const Rentlist: NextPage = () => {
                       <br />
                       <span className="text-sm">
                         {valuelist.values.map((value: Value) => (
-                          <span>{value.name}</span>
+                          <span key={value.id}>{value.name}</span>
                         ))}
                       </span>
                     </span>
@@ -299,12 +304,13 @@ const Rentlist: NextPage = () => {
           <div className="text-left">
             {props.data.request.detail.classification.tag.map(
               (taglist: any) => (
-                <div className="py-1 text-lg font-bold">
+                <div className="py-1 text-lg font-bold" key={taglist}>
                   {taglist.name}
                   <br />
                   <div className="w-1/1 flex flex-wrap text-sm">
                     {taglist.tags.map((tag: Tag) => (
                       <Label
+                        key={tag.id}
                         name={tag.name}
                         width={'w-auto'}
                         className={'m-1'}
@@ -319,6 +325,7 @@ const Rentlist: NextPage = () => {
       </div>
     )
   })
+  ConditionModalContent.displayName = 'ConditionModalContent'
 
   // オファー確認のモーダルに表示するデータ
   const MessageModalContent: React.FC<Props> = memo((props) => {
@@ -338,12 +345,12 @@ const Rentlist: NextPage = () => {
           <div className="border-primary-1 grid grid-cols-3 gap-8 border-t-2 border-dotted text-left ">
             {props.data.request.detail.classification.range.map(
               (range: any) => (
-                <span className="pt-2 pb-1 text-lg font-bold">
+                <span className="pt-2 pb-1 text-lg font-bold" key={range}>
                   {range.name}
                   <br />
                   <span className="text-sm">
                     {range.values.map((value: Value, index: number) => (
-                      <span>
+                      <span key={value.id}>
                         {value.name}
                         {index < range.values.length - 1 && '〜'}
                       </span>
@@ -354,31 +361,35 @@ const Rentlist: NextPage = () => {
             )}
             {props.data.request.detail.classification.value.map(
               (valuelist: any) => (
-                <>
+                <div key={valuelist}>
                   {valuelist.name === '築年数' && (
                     <span className="pt-2 pb-1 text-lg font-bold">
                       {valuelist.name}
                       <br />
                       <span className="text-sm">
                         {valuelist.values.map((value: Value) => (
-                          <span>{value.name}</span>
+                          <span key={value.id}>{value.name}</span>
                         ))}
                       </span>
                     </span>
                   )}
-                </>
+                </div>
               ),
             )}
           </div>
           <div className="mb-3 grid grid-cols-2 gap-3 text-left">
             {props.data.request.detail.classification.tag.map(
               (taglist: any) => (
-                <div className="col-span-1 py-1 text-lg font-bold">
+                <div
+                  className="col-span-1 py-1 text-lg font-bold"
+                  key={taglist}
+                >
                   {taglist.name}
                   <br />
                   <div className="w-1/1 flex flex-wrap text-sm">
                     {taglist.tags.map((tag: Tag) => (
                       <Label
+                        key={tag.id}
                         name={tag.name}
                         width={'w-auto'}
                         className={'m-1'}
@@ -411,6 +422,7 @@ const Rentlist: NextPage = () => {
       </div>
     )
   })
+  MessageModalContent.displayName = 'MessageModalContent'
 
   return (
     <>
@@ -429,7 +441,7 @@ const Rentlist: NextPage = () => {
       {isConditionOpen && <ConditionModalContent data={data} />}
       <div className="w-9/10 mx-auto grid sm:grid-cols-1 lg:grid-cols-2">
         {userDataList.map((userData) => (
-          <Card width="w-1/1" m="m-4">
+          <Card width="w-1/1" m="m-4" key={userData.user.id}>
             <CardContent userData={userData}></CardContent>
           </Card>
         ))}

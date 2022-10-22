@@ -7,7 +7,6 @@ import { Close } from '@components/icons'
 import { allDataState } from '@components/store/data/allData'
 import { Area, Tag, Limit, PersonalInfo, CompanyInfo } from '@type/common'
 
-
 interface Props {
   children?: React.ReactNode
   data: any
@@ -128,7 +127,7 @@ const Rentlist: NextPage = () => {
               classificationName: string
               limits: Limit[]
             }) => (
-              <div className="col-span-1">
+              <div className="col-span-1" key={detailLimits.id}>
                 <span className="text-md">
                   {detailLimits.limits.map((limit: any) => (
                     <>
@@ -151,7 +150,7 @@ const Rentlist: NextPage = () => {
           )}
           {props.data.user.request.detail.detailValues.map(
             (detailValues: any) => (
-              <div className="col-span-1">
+              <div className="col-span-1" key={detailValues}>
                 <span className="text-md">
                   {detailValues.values.map((value: any) => (
                     <>
@@ -202,6 +201,7 @@ const Rentlist: NextPage = () => {
                   <div className="w-1/1 flex flex-wrap text-sm">
                     {detailTags.tags.map((tag: Tag) => (
                       <Label
+                        key={tag.id}
                         name={tag.name}
                         width={'w-auto'}
                         className={'mx-1 mt-2 '}
@@ -231,10 +231,10 @@ const Rentlist: NextPage = () => {
               classificationName: string
               limits: Limit[]
             }) => (
-              <div className="col-span-1">
+              <div className="col-span-1" key={detailLimits.id}>
                 <span className="text-md">
                   {detailLimits.limits.map((limit: any) => (
-                    <>
+                    <div key={limit}>
                       {limit.name != '賃料' && (
                         <div>
                           <span className="border-primary-2 border-b-2  pt-1 text-lg font-bold">
@@ -246,7 +246,7 @@ const Rentlist: NextPage = () => {
                           </span>
                         </div>
                       )}
-                    </>
+                    </div>
                   ))}
                 </span>
               </div>
@@ -263,7 +263,7 @@ const Rentlist: NextPage = () => {
                   <span className="text-md">
                     {detailTags.tags.map((tag: Tag, index: number) => (
                       <>
-                        <span>{tag.name}</span>
+                        <span key={tag.id}>{tag.name}</span>
                         {index !== detailTags.tags.length - 1 && (
                           <span>, </span>
                         )}
@@ -324,7 +324,7 @@ const Rentlist: NextPage = () => {
                     classificationName: string
                     limits: Limit[]
                   }) => (
-                    <div className="col-span-1">
+                    <div className="col-span-1" key={detailLimits.id}>
                       <span className="text-md">
                         {detailLimits.limits.map((limit: any) => (
                           <>
@@ -347,7 +347,7 @@ const Rentlist: NextPage = () => {
                 )}
                 {props.data.user.request.detail.detailValues.map(
                   (detailValues: any) => (
-                    <div className="col-span-1">
+                    <div className="col-span-1" key={detailValues}>
                       <span className="text-md">
                         {detailValues.values.map((value: any) => (
                           <>
@@ -366,7 +366,7 @@ const Rentlist: NextPage = () => {
                   (detailTags: any) => (
                     <>
                       {detailTags.classificationName === '間取り' && (
-                        <div className="col-span-1">
+                        <div className="col-span-1" key={detailTags}>
                           <span className=" pt-1 text-lg font-bold">
                             {detailTags.classificationName}
                           </span>
@@ -374,7 +374,7 @@ const Rentlist: NextPage = () => {
                           <span className="text-md">
                             {detailTags.tags.map((tag: Tag, index: number) => (
                               <>
-                                <span>{tag.name}</span>
+                                <span key={tag.id}>{tag.name}</span>
                                 {index !== detailTags.tags.length - 1 && (
                                   <span>, </span>
                                 )}
@@ -384,7 +384,7 @@ const Rentlist: NextPage = () => {
                         </div>
                       )}
                       {detailTags.tags.map((tag: any) => (
-                        <>
+                        <div key={tag}>
                           {tag.name === '間取り' && (
                             <div>
                               <div className="pt-1 text-lg font-bold">
@@ -392,7 +392,7 @@ const Rentlist: NextPage = () => {
                               </div>
                             </div>
                           )}
-                        </>
+                        </div>
                       ))}
                       {detailTags.name === '間取り' && (
                         <div className="py-2 text-lg font-bold">
@@ -401,6 +401,7 @@ const Rentlist: NextPage = () => {
                           <div className="w-1/1 flex flex-wrap text-sm">
                             {detailTags.tags.map((tag: Tag) => (
                               <Label
+                                key={tag.id}
                                 name={tag.name}
                                 width={'w-auto'}
                                 className={'mx-1 mt-2 '}
@@ -429,19 +430,19 @@ const Rentlist: NextPage = () => {
       </div>
     )
   })
+  CardContent.displayName = 'CardContent'
 
   return (
     <>
       <div className="px-10 pt-10 pb-3">
         <span className="text-start border-primary-1 border-l-8 pl-2 text-4xl">
-          {/* {console.log(allData)} */}
           {area.prefecture} {area.city}
           で物件を探している人たち
         </span>
       </div>
       <div className="grid w-full sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
         {allData.map((data: any) => (
-          <Card width="w-1/1">
+          <Card width="w-1/1" key={data}>
             <CardContent data={data}></CardContent>
           </Card>
         ))}

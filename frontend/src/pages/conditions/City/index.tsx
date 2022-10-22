@@ -1,12 +1,8 @@
-import { AnyTxtRecord } from 'dns'
-import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useRecoilState } from 'recoil'
-import { prefectures } from '../Prefecuture/prefectures'
 import { getWithSet } from '@api/api_methods'
 import { Card, PrimaryButton, ProgressBar } from '@components/common'
-import { userState } from '@components/store/Auth/auth'
 import { conditionState } from '@components/store/Condition/condition'
 
 interface Props {
@@ -18,11 +14,6 @@ interface Props {
 interface City {
   id: string
   name: string
-  checked: boolean
-}
-
-interface CheckCity {
-  city: City
   checked: boolean
 }
 
@@ -161,7 +152,10 @@ function City(props: Props): JSX.Element {
                   district.name,
                 )
                 return (
-                  <div className={'mb-4 flex items-center gap-1'}>
+                  <div
+                    className={'mb-4 flex items-center gap-1'}
+                    key={district.id}
+                  >
                     <input
                       onChange={() => {
                         setFilterDistrict((filterDistricts) =>
@@ -229,11 +223,11 @@ function City(props: Props): JSX.Element {
               if (searchString == '' || city.name.includes(searchString)) {
                 let conditionCity = condition.cityNames?.includes(city.name)
                 return (
-                  <div className={'mb-4 flex items-center gap-1'}>
+                  <div className={'mb-4 flex items-center gap-1'} key={index}>
                     <input
                       onChange={() => {
                         setFilterCity((filterCities) =>
-                          filterCities.map((setCity) => {
+                          filterCities.map((setCity, key) => {
                             if (setCity.id == city.id) {
                               return {
                                 id: setCity.id,
@@ -289,7 +283,7 @@ function City(props: Props): JSX.Element {
             if (searchString == '' || town.name.includes(searchString)) {
               let conditionTown = condition.cityNames?.includes(town.name)
               return (
-                <div className={'mb-4 flex items-center gap-1'}>
+                <div className={'mb-4 flex items-center gap-1'} key={town.id}>
                   <input
                     onChange={() => {
                       setFilterTown((filterTowns) =>
@@ -351,7 +345,10 @@ function City(props: Props): JSX.Element {
                   village.name,
                 )
                 return (
-                  <div className={'mb-4 flex items-center gap-1'}>
+                  <div
+                    className={'mb-4 flex items-center gap-1'}
+                    key={village.id}
+                  >
                     <input
                       onChange={() => {
                         setFilterVillage((filterVillages) =>
