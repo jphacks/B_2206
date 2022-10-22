@@ -50,7 +50,7 @@
 * バックエンド
   * Go Air Gorm
 * インフラ
-  * Docker DockerCompose
+  * Docker DockerCompose Cloudflared
 
 #### デバイス・ツール
 * Figma FigJam
