@@ -1,9 +1,10 @@
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useRecoilState } from 'recoil'
-import { prefectures } from '@components/prefecture/prefectures'
+
 import { getPostWithSet } from '@api/api_methods'
 import { Card, PrimaryButton, Radio, ProgressBar } from '@components/common'
+import { prefectures } from '@components/prefecture/prefectures'
 import { conditionState } from '@components/store/Condition/condition'
 
 interface Props {
