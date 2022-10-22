@@ -1,18 +1,29 @@
 import clsx from 'clsx'
+import { useRouter } from 'next/router'
 import type { NextPage } from 'next'
+import { getWithSet } from '@api/api_methods'
 import { useState, useEffect, memo, useRef } from 'react'
 import { useRecoilState } from 'recoil'
 import { Card, Label, Modal, PrimaryButton, Textarea } from '@components/common'
 import { Close } from '@components/icons'
 import { allDataState } from '@components/store/data/allData'
-import { Area, Tag, Limit, PersonalInfo, CompanyInfo } from '@type/common'
+import { conditionState } from '@components/store/Condition/condition'
+import { Area, Tag, Limit, PersonalInfo } from '@type/common'
 
 interface Props {
   children?: React.ReactNode
   data: any
 }
 
+interface City {
+  id: string
+  name: string
+}
+
 const Rentlist: NextPage = () => {
+  const [cities, setCities] = useState<City[]>()
+  const router = useRouter()
+
   const personalInfo: PersonalInfo = {
     id: 1,
     familyName: '藤崎',
@@ -60,7 +71,22 @@ const Rentlist: NextPage = () => {
     created_at: '',
     updated_at: '',
   }
+  useEffect(() => {
+    scrollTo(0, 0)
+
+    if (router.isReady) {
+      const getCitiesUrl =
+        'https://www.land.mlit.go.jp/webland/api/CitySearch?area=' +
+        condition.prefectureId
+      const getCities = async (url: string) => {
+        await getWithSet(url, setCities)
+      }
+      getCities(getCitiesUrl)
+    }
+  }, [])
+
   const [allData, setAllData] = useRecoilState(allDataState)
+  const [condition, setCondition] = useRecoilState(conditionState)
 
   // カードの中に表示するデータ
   const CardContent: React.FC<Props> = memo((props) => {
@@ -225,6 +251,28 @@ const Rentlist: NextPage = () => {
           </span>
         </div>
         <div className="grid grid-cols-2 gap-2 pt-2 text-left">
+          {props.data.user.request.detail.detailTags.map((detailTags: any) => (
+            <>
+              {detailTags.classificationName != '間取り' && (
+                <div className="col-span-1">
+                  <span className="border-primary-2 border-b-2  pt-1 text-lg font-bold">
+                    {detailTags.classificationName}
+                  </span>
+                  <br />
+                  <span className="text-md">
+                    {detailTags.tags.map((tag: Tag, index: number) => (
+                      <>
+                        <span key={tag.id}>{tag.name}</span>
+                        {index !== detailTags.tags.length - 1 && (
+                          <span>, </span>
+                        )}
+                      </>
+                    ))}
+                  </span>
+                </div>
+              )}
+            </>
+          ))}
           {props.data.user.request.detail.detailLimits.map(
             (detailLimits: {
               id: number
@@ -252,28 +300,6 @@ const Rentlist: NextPage = () => {
               </div>
             ),
           )}
-          {props.data.user.request.detail.detailTags.map((detailTags: any) => (
-            <>
-              {detailTags.classificationName != '間取り' && (
-                <div className="col-span-1">
-                  <span className="border-primary-2 border-b-2  pt-1 text-lg font-bold">
-                    {detailTags.classificationName}
-                  </span>
-                  <br />
-                  <span className="text-md">
-                    {detailTags.tags.map((tag: Tag, index: number) => (
-                      <>
-                        <span key={tag.id}>{tag.name}</span>
-                        {index !== detailTags.tags.length - 1 && (
-                          <span>, </span>
-                        )}
-                      </>
-                    ))}
-                  </span>
-                </div>
-              )}
-            </>
-          ))}
         </div>
         <div className="flex justify-center pt-4 pb-2 text-xl font-bold">
           <PrimaryButton onClick={onOpen}>オファーを送る</PrimaryButton>
@@ -434,10 +460,33 @@ const Rentlist: NextPage = () => {
 
   return (
     <>
-      <div className="px-10 pt-10 pb-3">
+      <div className="px-10 pt-10">
         <span className="text-start border-primary-1 border-l-8 pl-2 text-4xl">
-          {area.prefecture} {area.city}
-          で物件を探している人たち
+          物件を探している人たち
+          <div className={'mt-3 flex flex-row flex-wrap gap-3 text-lg'}>
+            <p className={'text-lg'}>{condition.prefectureName}</p>
+            <p>＞</p>
+            {condition.cityNames.map((city: any, index: any) => {
+              if (index == 0 && city.includes('区')) {
+                return (
+                  <div className={'flex flex-row gap-3'} key={index}>
+                    <p>{cities?.at(0)?.name}</p>
+                    <p>{city}</p>
+                  </div>
+                )
+              } else if (index == 5) {
+                return (
+                  <p key={index}>
+                    ほか {condition.cityNames.length - 5} 市区町村
+                  </p>
+                )
+              } else if (index >= 6) {
+                return
+              } else {
+                return <p key={index}>{city}</p>
+              }
+            })}
+          </div>
         </span>
       </div>
       <div className="grid w-full sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
