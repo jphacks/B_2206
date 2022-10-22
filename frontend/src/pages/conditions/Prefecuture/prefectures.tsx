@@ -1,4 +1,4 @@
-export const prefectures = {
+const prefectures = {
   areas: [
     {
       name: '北海道',
@@ -230,3 +230,5 @@ export const prefectures = {
     },
   ],
 }
+
+export default prefectures
