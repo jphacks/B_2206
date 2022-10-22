@@ -30,9 +30,13 @@ services:
     build: ./backend
     container_name: "jphacks-api"
     volumes:
-      - ./backend:/gojphacks
-    command: "./start.sh"
+      - ./backend:/usr/local/go/src/api
+    environment:
+      DSN: jphacks:password@tcp(db:3306)/jphacks_db?charset=utf8mb4&parseTime=True&loc=Local
+    command: "./start.sh" 
     ports:
       - "1323:1323"
     stdin_open: true
     tty: true
+    depends_on:
+      - db

@@ -1,0 +1,9 @@
+.card {
+  box-shadow: 2px 3px 5px #54bab9, -2px 0 5px #54bab9;
+  background-color: #9ed2c6;
+  transition: all 0.2s ease-in-out;
+}
+.card:hover {
+  box-shadow: 2px 3px 5px #ffa453, -2px 0 5px #ffa453;
+  background-color: #fed2aa;
+}

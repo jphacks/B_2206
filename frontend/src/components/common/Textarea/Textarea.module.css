@@ -1,0 +1,12 @@
+.textarea {
+  border-color: #54bab9;
+  border-width: 2px;
+  box-shadow: 3px 3px #54bab9;
+  resize: none;
+}
+.textarea:focus {
+  border-color: #54bab9;
+  border-width: 2px;
+  box-shadow: 3px 3px #54bab9;
+  outline: none;
+}

@@ -1,0 +1,9 @@
+.label {
+  box-shadow: 3px 3px 0px 0 #9ed2c6;
+}
+
+.label:hover {
+  background-color: #9ed2c6;
+  opacity: 0.5;
+  color: black;
+}

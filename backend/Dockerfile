@@ -1,6 +1,6 @@
 FROM golang:latest
 
-WORKDIR /gojphacks
+WORKDIR /usr/local/go/src/api
 
 RUN apt-get update
 RUN apt-get upgrade -y
@@ -13,6 +13,8 @@ RUN export LANGUAGE=en_US:
 
 ENV CGO_ENABLED=0
 ENV GOOS=linux
+
+# Mac Userはコメントアウトが必要
 ENV GOARCH=amd64
 
 RUN go install github.com/cosmtrek/air@latest
