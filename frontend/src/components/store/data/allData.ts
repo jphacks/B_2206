@@ -833,10 +833,7 @@ export const allDataState = atom({
               {
                 id: 2,
                 classificationName: '間取り',
-                tags: [
-                  seedData.roomLayout[1],
-                  seedData.roomLayout[2],
-                ],
+                tags: [seedData.roomLayout[1], seedData.roomLayout[2]],
               },
             ],
           },
