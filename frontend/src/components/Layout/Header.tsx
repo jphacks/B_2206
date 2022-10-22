@@ -1,4 +1,5 @@
 import clsx from 'clsx'
+import { Dropdown } from '@components/common'
 import {
   Account,
   Apartment,
@@ -8,7 +9,6 @@ import {
   Swap,
   WhiteLogo,
 } from '@components/icons'
-import { Dropdown } from '@components/common'
 
 const Header = () => {
   return (

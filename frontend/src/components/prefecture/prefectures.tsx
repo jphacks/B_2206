@@ -230,3 +230,5 @@ export const prefectures = {
     },
   ],
 }
+
+// export default prefectures

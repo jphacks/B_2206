@@ -1,8 +1,11 @@
+import clsx from 'clsx'
 import type { NextPage } from 'next'
-import Link from 'next/link'
+import { MODERN_BROWSERSLIST_TARGET } from 'next/dist/shared/lib/constants'
 import Head from 'next/head'
 import Image from 'next/image'
-import styles from '@styles/Home.module.css'
+import Link from 'next/link'
+import { useEffect } from 'react'
+import { useRecoilState } from 'recoil'
 import {
   Card,
   FillCard,
@@ -11,12 +14,9 @@ import {
   Textarea,
   PrimaryButton,
 } from '@components/common'
-import { useRecoilState } from 'recoil'
 import { userState } from '@components/store/Auth/auth'
 import { conditionState } from '@components/store/Condition/condition'
-import clsx from 'clsx'
-import { MODERN_BROWSERSLIST_TARGET } from 'next/dist/shared/lib/constants'
-import { useEffect } from 'react'
+import styles from '@styles/Home.module.css'
 
 const recoilDefaultValue = {
   id: 1,

@@ -2,9 +2,8 @@ import clsx from 'clsx'
 import Head from 'next/head'
 import React from 'react'
 
-import Header from '@components/Layout/Header'
-
 import s from './MainLayout.module.css'
+import Header from '@components/Layout/Header'
 
 interface User {
   id: number

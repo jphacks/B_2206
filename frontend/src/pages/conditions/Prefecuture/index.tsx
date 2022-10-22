@@ -1,12 +1,11 @@
-import styles from '@styles/Home.module.css'
-import { Card, PrimaryButton, Radio, ProgressBar } from '@components/common'
-import { useRecoilState } from 'recoil'
-import { conditionState } from '@components/store/Condition/condition'
-import { prefectures } from './prefectures'
-import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import { getWithSet, getPostWithSet } from '@api/api_methods'
-import next from 'next'
+import { useEffect, useState } from 'react'
+import { useRecoilState } from 'recoil'
+
+import { getPostWithSet } from '@api/api_methods'
+import { Card, PrimaryButton, Radio, ProgressBar } from '@components/common'
+import { prefectures } from '@components/prefecture/prefectures'
+import { conditionState } from '@components/store/Condition/condition'
 
 interface Props {
   nextModalName: string
@@ -107,7 +106,7 @@ function Prefecture(props: Props): JSX.Element {
       <div>
         {prefectures.areas.map((area) => {
           return (
-            <div>
+            <div key={area.name}>
               <div className={'py-5'}>
                 <p className={'pb-2 text-lg'}>{area.name}</p>
                 <div className={'flex flex-row flex-wrap gap-5'}>
@@ -118,6 +117,7 @@ function Prefecture(props: Props): JSX.Element {
                     }
                     return (
                       <Radio
+                        key={prefecture.id}
                         name={'prefecture'}
                         onChange={() => {
                           prefectureChangeHandler(
@@ -200,7 +200,7 @@ function Prefecture(props: Props): JSX.Element {
       {postRes?.results?.map((result: PostResult, index: number) => {
         if (index == 0) {
           return (
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-3" key={index}>
               <div className="flex flex-row items-center gap-3">
                 <p className="text-primary-2 text-lg">都道府県</p>
                 <p>{result.address1}</p>
@@ -303,44 +303,38 @@ function Prefecture(props: Props): JSX.Element {
   )
 
   return (
-    <div className={styles.container}>
-      <main className={styles.main}>
-        <div className="w-full">
-          {modalName === Modals.search && (
-            <ProgressBar pointName={pointName} nowPoint={1} />
-          )}
-          {modalName === Modals.postCode && (
-            <ProgressBar pointName={pointNamePostCode} nowPoint={1} />
-          )}
+    <div className="w-full">
+      {modalName === Modals.search && (
+        <ProgressBar pointName={pointName} nowPoint={1} />
+      )}
+      {modalName === Modals.postCode && (
+        <ProgressBar pointName={pointNamePostCode} nowPoint={1} />
+      )}
 
-          <Card width={'w-4/5'}>
-            <div className={'flex flex-row justify-around py-5'}>
-              <Radio
-                name={'slectSetting'}
-                onClick={() => changeModalHandler('search')}
-                defaultChecked={true}
-                id={'search'}
-              >
-                エリアから探す
-              </Radio>
-              <Radio
-                name={'slectSetting'}
-                onClick={() => changeModalHandler('postCode')}
-                id={'postCode'}
-              >
-                郵便番号から探す
-              </Radio>
-            </div>
-            <div
-              className={'border-primary-1 mb-5 border-2 border-dashed'}
-            ></div>
-            <div>
-              {modalName === Modals.search && SearchModal}
-              {modalName === Modals.postCode && PostCodeModal}
-            </div>
-          </Card>
+      <Card width={'w-4/5'}>
+        <div className={'flex flex-row justify-around py-5'}>
+          <Radio
+            name={'slectSetting'}
+            onClick={() => changeModalHandler('search')}
+            defaultChecked={true}
+            id={'search'}
+          >
+            エリアから探す
+          </Radio>
+          <Radio
+            name={'slectSetting'}
+            onClick={() => changeModalHandler('postCode')}
+            id={'postCode'}
+          >
+            郵便番号から探す
+          </Radio>
         </div>
-      </main>
+        <div className={'border-primary-1 mb-5 border-2 border-dashed'}></div>
+        <div>
+          {modalName === Modals.search && SearchModal}
+          {modalName === Modals.postCode && PostCodeModal}
+        </div>
+      </Card>
     </div>
   )
 }

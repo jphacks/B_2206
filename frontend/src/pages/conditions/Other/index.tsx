@@ -1,5 +1,8 @@
-import styles from '@styles/Home.module.css'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
+import { useRecoilState } from 'recoil'
+import { getWithSet } from '@api/api_methods'
 import {
   Card,
   PrimaryButton,
@@ -9,11 +12,8 @@ import {
   ProgressBar,
 } from '@components/common'
 import { Close } from '@components/icons'
-import { selector, useRecoilState } from 'recoil'
 import { conditionState } from '@components/store/Condition/condition'
-import { useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
-import { getWithSet } from '@api/api_methods'
+import styles from '@styles/Home.module.css'
 
 interface Props {
   morePrevModalName: string
@@ -187,7 +187,7 @@ function Other(props: Props): JSX.Element {
       return <p>指定なし</p>
     } else {
       return options.map((option) => {
-        return <p>{option}</p>
+        return <p key={option}>{option}</p>
       })
     }
   }
@@ -287,17 +287,21 @@ function Other(props: Props): JSX.Element {
               {condition.cityNames.map((city: any, index: any) => {
                 if (index == 0 && city.includes('区')) {
                   return (
-                    <div className={'flex flex-row gap-3'}>
+                    <div className={'flex flex-row gap-3'} key={index}>
                       <p>{cities?.at(0)?.name}</p>
                       <p>{city}</p>
                     </div>
                   )
                 } else if (index == 5) {
-                  return <p>ほか {condition.cityNames.length - 5} 市区町村</p>
+                  return (
+                    <p key={index}>
+                      ほか {condition.cityNames.length - 5} 市区町村
+                    </p>
+                  )
                 } else if (index >= 6) {
                   return
                 } else {
-                  return <p>{city}</p>
+                  return <p key={index}>{city}</p>
                 }
               })}
             </div>
@@ -314,7 +318,7 @@ function Other(props: Props): JSX.Element {
                     >
                       <option>下限無し</option>
                       {priceOptions.map((price) => {
-                        return <option>{price}</option>
+                        return <option key={price}>{price}</option>
                       })}
                     </Select>
                     <p className={'text-xl'}>~</p>
@@ -325,7 +329,7 @@ function Other(props: Props): JSX.Element {
                     >
                       <option>上限無し</option>
                       {priceOptions.map((price) => {
-                        return <option>{price}</option>
+                        return <option key={price}>{price}</option>
                       })}
                     </Select>
                   </div>
@@ -335,6 +339,7 @@ function Other(props: Props): JSX.Element {
                     {morePriceOption.map((option) => {
                       return (
                         <LabelButton
+                          key={option}
                           name={option}
                           onClick={() => {
                             selectArrayHandler(
@@ -354,6 +359,7 @@ function Other(props: Props): JSX.Element {
                     {roomTypes.map((roomType) => {
                       return (
                         <LabelButton
+                          key={roomType}
                           name={roomType}
                           onClick={() => {
                             selectArrayHandler(
@@ -373,6 +379,7 @@ function Other(props: Props): JSX.Element {
                     {buildTypes.map((buildType) => {
                       return (
                         <LabelButton
+                          key={buildType}
                           name={buildType}
                           onClick={() => {
                             selectArrayHandler(
@@ -395,7 +402,7 @@ function Other(props: Props): JSX.Element {
                       }}
                     >
                       {times.map((time) => {
-                        return <option>{time}</option>
+                        return <option key={time}>{time}</option>
                       })}
                     </Select>
                   </div>
@@ -410,7 +417,7 @@ function Other(props: Props): JSX.Element {
                     >
                       <option>下限無し</option>
                       {roomArea.map((area) => {
-                        return <option>{area}</option>
+                        return <option key={area}>{area}</option>
                       })}
                     </Select>
                     <p className={'text-xl'}>~</p>
@@ -421,7 +428,7 @@ function Other(props: Props): JSX.Element {
                     >
                       <option>上限無し</option>
                       {roomArea.map((area) => {
-                        return <option>{area}</option>
+                        return <option key={area}>{area}</option>
                       })}
                     </Select>
                   </div>
@@ -435,7 +442,7 @@ function Other(props: Props): JSX.Element {
                       }}
                     >
                       {roomAge.map((age) => {
-                        return <option>{age}</option>
+                        return <option key={age}>{age}</option>
                       })}
                     </Select>
                   </div>
@@ -446,6 +453,7 @@ function Other(props: Props): JSX.Element {
                     {otherConditions.map((other) => {
                       return (
                         <LabelButton
+                          key={other}
                           name={other}
                           onClick={() => {
                             selectArrayHandler(
@@ -487,19 +495,21 @@ function Other(props: Props): JSX.Element {
                   {condition.cityNames.map((city: any, index: any) => {
                     if (index == 0 && city.includes('区')) {
                       return (
-                        <div className={'flex flex-row gap-3'}>
+                        <div className={'flex flex-row gap-3'} key={index}>
                           <p>{cities?.at(0)?.name}</p>
                           <p>{city}</p>
                         </div>
                       )
                     } else if (index == 5) {
                       return (
-                        <p>ほか {condition.cityNames.length - 5} 市区町村</p>
+                        <p key={index}>
+                          ほか {condition.cityNames.length - 5} 市区町村
+                        </p>
                       )
                     } else if (index >= 6) {
                       return
                     } else {
-                      return <p>{city}</p>
+                      return <p key={index}>{city}</p>
                     }
                   })}
                 </div>
@@ -514,7 +524,7 @@ function Other(props: Props): JSX.Element {
                   </div>
                   <div className={'mx-3 flex flex-row gap-4'}>
                     {priceOption.map((option) => {
-                      return <p>{option}</p>
+                      return <p key={option}>{option}</p>
                     })}
                   </div>
                 </div>

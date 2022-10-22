@@ -1,10 +1,9 @@
-import styles from '@styles/Home.module.css'
-import { Card, PrimaryButton, ProgressBar } from '@components/common'
-import { useRecoilState } from 'recoil'
-import { conditionState } from '@components/store/Condition/condition'
-import { getWithSet } from '@api/api_methods'
-import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
+import { useRecoilState } from 'recoil'
+import { getWithSet } from '@api/api_methods'
+import { Card, PrimaryButton, ProgressBar } from '@components/common'
+import { conditionState } from '@components/store/Condition/condition'
 
 interface Props {
   nextModalName: string
@@ -15,11 +14,6 @@ interface Props {
 interface City {
   id: string
   name: string
-  checked: boolean
-}
-
-interface CheckCity {
-  city: City
   checked: boolean
 }
 
@@ -158,7 +152,10 @@ function City(props: Props): JSX.Element {
                   district.name,
                 )
                 return (
-                  <div className={'mb-4 flex items-center gap-1'}>
+                  <div
+                    className={'mb-4 flex items-center gap-1'}
+                    key={district.id}
+                  >
                     <input
                       onChange={() => {
                         setFilterDistrict((filterDistricts) =>
@@ -226,11 +223,11 @@ function City(props: Props): JSX.Element {
               if (searchString == '' || city.name.includes(searchString)) {
                 let conditionCity = condition.cityNames?.includes(city.name)
                 return (
-                  <div className={'mb-4 flex items-center gap-1'}>
+                  <div className={'mb-4 flex items-center gap-1'} key={index}>
                     <input
                       onChange={() => {
                         setFilterCity((filterCities) =>
-                          filterCities.map((setCity) => {
+                          filterCities.map((setCity, key) => {
                             if (setCity.id == city.id) {
                               return {
                                 id: setCity.id,
@@ -286,7 +283,7 @@ function City(props: Props): JSX.Element {
             if (searchString == '' || town.name.includes(searchString)) {
               let conditionTown = condition.cityNames?.includes(town.name)
               return (
-                <div className={'mb-4 flex items-center gap-1'}>
+                <div className={'mb-4 flex items-center gap-1'} key={town.id}>
                   <input
                     onChange={() => {
                       setFilterTown((filterTowns) =>
@@ -348,7 +345,10 @@ function City(props: Props): JSX.Element {
                   village.name,
                 )
                 return (
-                  <div className={'mb-4 flex items-center gap-1'}>
+                  <div
+                    className={'mb-4 flex items-center gap-1'}
+                    key={village.id}
+                  >
                     <input
                       onChange={() => {
                         setFilterVillage((filterVillages) =>
@@ -438,113 +438,109 @@ function City(props: Props): JSX.Element {
   const pointName = ['都道府県の選択', '市区町村の選択', 'お部屋条件の選択']
 
   return (
-    <div className={styles.container}>
-      <main className={styles.main}>
-        <div className="w-full">
-          <ProgressBar pointName={pointName} nowPoint={2} />
-          <Card width={'w-4/5'}>
-            <div className={'flex justify-start pb-8'}>
-              <PrimaryButton
-                onClick={() => {
-                  props.setModalName(props.prevModalName)
-                }}
+    <div className="w-full">
+      <ProgressBar pointName={pointName} nowPoint={2} />
+      <Card width={'w-4/5'}>
+        <div className={'flex justify-start pb-8'}>
+          <PrimaryButton
+            onClick={() => {
+              props.setModalName(props.prevModalName)
+            }}
+          >
+            都道府県の選択に戻る
+          </PrimaryButton>
+        </div>
+        <div className={'text-primary-2 my-3 text-xl font-bold'}>
+          <p>{condition.prefectureName}-市区町村を選択</p>
+        </div>
+        <div>
+          <p className={'border-primary-1 mb-5 border-b-2 border-dashed'}>
+            市区町村にチェックを入れてください
+          </p>
+          <div>
+            <form
+              onSubmit={(e) => {
+                changeSearchHandler(e)
+              }}
+              className={'ml-auto w-3/5'}
+            >
+              <label
+                className={
+                  'sr-only mb-2 text-sm font-medium text-gray-900 dark:text-gray-300'
+                }
               >
-                都道府県の選択に戻る
-              </PrimaryButton>
-            </div>
-            <div className={'text-primary-2 my-3 text-xl font-bold'}>
-              <p>{condition.prefectureName}-市区町村を選択</p>
-            </div>
-            <div>
-              <p className={'border-primary-1 mb-5 border-b-2 border-dashed'}>
-                市区町村にチェックを入れてください
-              </p>
-              <div>
-                <form
+                Search
+              </label>
+              <div className={'relative'}>
+                <div
+                  className={
+                    'pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3'
+                  }
+                >
+                  <svg
+                    aria-hidden="true"
+                    className={'h-5 w-5 text-gray-500 dark:text-gray-400'}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                    ></path>
+                  </svg>
+                </div>
+                <input
+                  value={search}
+                  onChange={(e) => {
+                    fixSearchStringHandler(e)
+                  }}
                   onSubmit={(e) => {
+                    fixSearchStringHandler(e)
+                  }}
+                  type="search"
+                  id="default-search"
+                  className={
+                    'focus:border-primary-2 focus:ring-prymary-2 dark:focus:border-primary-1 dark:focus:ring-primary-1 block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 pl-10 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400'
+                  }
+                  placeholder="市区町村を選択"
+                />
+                <button
+                  onClick={(e) => {
                     changeSearchHandler(e)
                   }}
-                  className={'ml-auto w-3/5'}
+                  type="submit"
+                  className={
+                    'bg-primary-1 hover:bg-primary-2 absolute right-2.5 bottom-2.5 rounded-lg px-4 py-2 text-sm font-medium text-white focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
+                  }
                 >
-                  <label
-                    className={
-                      'sr-only mb-2 text-sm font-medium text-gray-900 dark:text-gray-300'
-                    }
-                  >
-                    Search
-                  </label>
-                  <div className={'relative'}>
-                    <div
-                      className={
-                        'pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3'
-                      }
-                    >
-                      <svg
-                        aria-hidden="true"
-                        className={'h-5 w-5 text-gray-500 dark:text-gray-400'}
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                        ></path>
-                      </svg>
-                    </div>
-                    <input
-                      value={search}
-                      onChange={(e) => {
-                        fixSearchStringHandler(e)
-                      }}
-                      onSubmit={(e) => {
-                        fixSearchStringHandler(e)
-                      }}
-                      type="search"
-                      id="default-search"
-                      className={
-                        'focus:border-primary-2 focus:ring-prymary-2 dark:focus:border-primary-1 dark:focus:ring-primary-1 block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 pl-10 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400'
-                      }
-                      placeholder="市区町村を選択"
-                    />
-                    <button
-                      onClick={(e) => {
-                        changeSearchHandler(e)
-                      }}
-                      type="submit"
-                      className={
-                        'bg-primary-1 hover:bg-primary-2 absolute right-2.5 bottom-2.5 rounded-lg px-4 py-2 text-sm font-medium text-white focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
-                      }
-                    >
-                      Search
-                    </button>
-                  </div>
-                </form>
+                  Search
+                </button>
               </div>
-              <div>{isSearch && SearchString}</div>
-              <div>
-                <ShowDistrict />
-                <ShowCity />
-                <ShowTown />
-                <ShowVillage />
-              </div>
-              <div className={'mt-8 mb-5 flex justify-center'}>
-                <PrimaryButton
-                  onClick={() => {
-                    submitCityHandler()
-                  }}
-                >
-                  お部屋の条件選択へ
-                </PrimaryButton>
-              </div>
-              <div className={'flex justify-center'}>{!select && Caution}</div>
-            </div>
-          </Card>
+            </form>
+          </div>
+          <div>{isSearch && SearchString}</div>
+          <div>
+            <ShowDistrict />
+            <ShowCity />
+            <ShowTown />
+            <ShowVillage />
+          </div>
+          <div className={'mt-8 mb-5 flex justify-center'}>
+            <PrimaryButton
+              onClick={() => {
+                submitCityHandler()
+              }}
+            >
+              お部屋の条件選択へ
+            </PrimaryButton>
+          </div>
+          <div className={'flex justify-center'}>{!select && Caution}</div>
         </div>
-      </main>
+      </Card>
     </div>
   )
 }
