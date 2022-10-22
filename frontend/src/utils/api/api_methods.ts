@@ -8,8 +8,7 @@ export const get = async (url: string) => {
       const data: any = results.data.data
       return data
     })
-    .catch((error) => {
-    })
+    .catch((error) => {})
 }
 
 export const getWithSet = async (url: string, set: Function) => {

@@ -5,7 +5,6 @@ import React from 'react'
 import s from './MainLayout.module.css'
 import Header from '@components/Layout/Header'
 
-
 interface User {
   id: number
   name: string
