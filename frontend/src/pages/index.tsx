@@ -57,48 +57,48 @@ const Home: NextPage = () => {
       </Head>
 
       <main className={styles.main}>
-        <div className="grid w-full grid-cols-2">
-          <FillCard width={'w-4/5'}>
+        <div className="grid w-full sm:grid-cols-1 lg:grid-cols-2">
+          <FillCard width={'w-1/1'} m="m-5">
             <Link href="/conditions">
               <div
-                className="py-20 text-center"
+                className="py-5 text-center lg:py-20"
                 onClick={() => setModeHandler('rent')}
               >
-                <p className="text-center text-8xl ">借りる</p>
-                <p className="text-center text-6xl ">Rent</p>
+                <p className="text-center text-4xl lg:text-8xl ">借りる</p>
+                <p className="text-center text-3xl lg:text-6xl ">Rent</p>
               </div>
             </Link>
           </FillCard>
-          <FillCard width={'w-4/5'}>
+          <FillCard width={'w-1/1'} m="m-5">
             <Link href="/conditions">
               <div
-                className="py-20 text-center"
+                className="py-5 text-center lg:py-20"
                 onClick={() => setModeHandler('lend')}
               >
-                <p className="text-center text-8xl ">貸す</p>
-                <p className="text-center text-6xl ">Lend</p>
+                <p className="text-center text-4xl lg:text-8xl ">貸す</p>
+                <p className="text-center text-3xl lg:text-6xl ">Lend</p>
               </div>
             </Link>
           </FillCard>
-          <FillCard width={'w-4/5'}>
+          <FillCard width={'w-1/1'} m="m-5">
             <Link href="/conditions">
               <div
-                className="py-20 text-center"
+                className="py-5 text-center lg:py-20"
                 onClick={() => setModeHandler('buy')}
               >
-                <p className="text-center text-8xl ">買う</p>
-                <p className="text-center text-6xl ">Buy</p>
+                <p className="text-center text-4xl lg:text-8xl ">買う</p>
+                <p className="text-center text-3xl lg:text-6xl ">Buy</p>
               </div>
             </Link>
           </FillCard>
-          <FillCard width={'w-4/5'}>
+          <FillCard width={'w-1/1'} m="m-5">
             <Link href="/conditions">
               <div
-                className="py-20 text-center"
+                className="py-5 text-center lg:py-20"
                 onClick={() => setModeHandler('sell')}
               >
-                <p className="text-center text-8xl ">売る</p>{' '}
-                <p className="text-center text-6xl ">Sell</p>
+                <p className="text-center text-4xl lg:text-8xl ">売る</p>
+                <p className="text-center text-3xl lg:text-6xl ">Sell</p>
               </div>
             </Link>
           </FillCard>
