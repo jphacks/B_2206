@@ -43,14 +43,14 @@ const Rentlist: NextPage = () => {
   }
   const companyInfo: CompanyInfo = {
     id: 1,
-    name: '長岡金型',
+    name: 'NUTMEG不動産',
     phoneNumber: '11112345678',
-    postCode: '9456666',
+    postCode: '9400000',
     prefecture: '新潟県',
-    city: '長岡市西陵町',
-    addressNumber: '2674-31',
-    buildingName: '長岡金型ビル',
-    website: 'https://nagaoka-kanagata.co.jp',
+    city: '長岡市',
+    addressNumber: '1-1',
+    buildingName: '',
+    website: 'https://nutfes.github.io/blog/',
     userId: 1,
     created_at: '',
     updated_at: '',
@@ -62,7 +62,7 @@ const Rentlist: NextPage = () => {
     sellerUserId: 2,
     status: 'オファー中',
     sellerMessage:
-      '新潟県長岡市で1Kの物件をお探しのあなたにオススメな物件があるのでご紹介します。ご興味があればご連絡ください。新潟県長岡市で1Kの物件をお探しのあなたにオススメな物件があるのでご紹介します。ご興味があればご連絡ください。新潟県長岡市で1Kの物件をお探しのあなたにオススメな物件があるのでご紹介します。ご興味があればご連絡ください。',
+      '新潟県長岡市で物件をお探しのあなたにオススメな物件があるのでご紹介します。ご興味があればご連絡ください。',
     created_at: '',
     updated_at: '',
   }
@@ -76,50 +76,33 @@ const Rentlist: NextPage = () => {
   }
   const area: Area = {
     id: 1,
-    postCode: 1110000,
-    prefecture: '北海道',
-    city: '札幌市',
-    addressNumber: '1-1-1',
-    buildingName: 'test',
+    postCode: 9400000,
+    prefecture: '新潟県',
+    city: '長岡市',
+    addressNumber: '1-1',
+    buildingName: '',
     created_at: '',
     updated_at: '',
   }
 
   const tagList: Tag[] = [
-    { id: 1, name: 'IHコンロ', created_at: '', updated_at: '' },
-    { id: 2, name: 'バス・トイレ別', created_at: '', updated_at: '' },
-    { id: 3, name: '1R', created_at: '', updated_at: '' },
-    { id: 4, name: '1K', created_at: '', updated_at: '' },
+    { id: 1, name: '1K', created_at: '', updated_at: '' },
+    { id: 2, name: '1DK', created_at: '', updated_at: '' },
+    { id: 3, name: '礼金なし', created_at: '', updated_at: '' },
   ]
   const tags = [
     {
-      name: '条件',
+      name: '間取り',
       tags: [tagList[0], tagList[1]],
     },
     {
-      name: '間取り',
-      tags: [tagList[2], tagList[3]],
+      name: '条件',
+      tags: [tagList[2]],
     },
   ]
   const valueList: Value[] = [
     {
       id: 1,
-      name: '20㎡',
-      value: 20,
-      limitId: 1,
-      created_at: '',
-      updated_at: '',
-    },
-    {
-      id: 2,
-      name: '30㎡',
-      value: 30,
-      limitId: 1,
-      created_at: '',
-      updated_at: '',
-    },
-    {
-      id: 3,
       name: '3万円',
       value: 3,
       limitId: 1,
@@ -127,17 +110,9 @@ const Rentlist: NextPage = () => {
       updated_at: '',
     },
     {
-      id: 4,
-      name: '4万円',
-      value: 4,
-      limitId: 1,
-      created_at: '',
-      updated_at: '',
-    },
-    {
-      id: 5,
-      name: '新築',
-      value: 0,
+      id: 2,
+      name: '5万円',
+      value: 5,
       limitId: 1,
       created_at: '',
       updated_at: '',
@@ -145,18 +120,14 @@ const Rentlist: NextPage = () => {
   ]
   const values = [
     {
-      name: '築年数',
+      name: '',
       values: [valueList[4]],
     },
   ]
   const ranges = [
     {
-      name: '面積',
-      values: [valueList[0], valueList[1]],
-    },
-    {
       name: '賃料',
-      values: [valueList[2], valueList[3]],
+      values: [valueList[0], valueList[1]],
     },
   ]
   const classifications = {
@@ -176,8 +147,7 @@ const Rentlist: NextPage = () => {
     request: requests,
     matching: matching,
   }
-  const dataList = [data, data, data, data]
-  // const displayData = [{ user: user, request: request, detail: detail }]
+  const dataList = [data]
 
   const userData = {
     user: user,
@@ -185,7 +155,7 @@ const Rentlist: NextPage = () => {
     companyInfo: companyInfo,
     matching: matching,
   }
-  const userDataList = [userData, userData, userData, userData, userData]
+  const userDataList = [userData]
 
   // 検索条件を表示する用のstate
   const [isConditionOpen, setIsConditionOpen] = useState<boolean>(false)
@@ -263,7 +233,7 @@ const Rentlist: NextPage = () => {
           </div>
           <div>
             <span className="border-primary-1 border-b-2 text-left text-xl font-bold">
-              希望する条件
+              私が希望する条件
             </span>
           </div>
           <div className="mt-1 grid grid-cols-3 gap-8 text-left">
@@ -350,8 +320,8 @@ const Rentlist: NextPage = () => {
                   <br />
                   <span className="text-sm">
                     {range.values.map((value: Value, index: number) => (
-                      <span key={value.id}>
-                        {value.name}
+                      <span key={value?.id}>
+                        {value?.name}
                         {index < range.values.length - 1 && '〜'}
                       </span>
                     ))}
@@ -368,7 +338,7 @@ const Rentlist: NextPage = () => {
                       <br />
                       <span className="text-sm">
                         {valuelist.values.map((value: Value) => (
-                          <span key={value.id}>{value.name}</span>
+                          <span key={value?.id}>{value?.name}</span>
                         ))}
                       </span>
                     </span>
@@ -402,7 +372,7 @@ const Rentlist: NextPage = () => {
           </div>
           <div>
             <span className="mt-3 text-left text-xl font-bold">
-              希望する条件
+              オファー内容
             </span>
           </div>
           <div className="border-primary-2 flex items-center justify-start border-t-2 border-dotted pt-2">
